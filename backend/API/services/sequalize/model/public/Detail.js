@@ -27,7 +27,7 @@ export default class Detail extends Model {
             key: 'idservices'
           }
         },
-        total: {
+        price: {
           type: DataTypes.DECIMAL,
           allowNull: false
         }

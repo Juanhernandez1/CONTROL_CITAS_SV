@@ -35,6 +35,10 @@ export default class Quote extends Model {
           type: DataTypes.JSONB,
           allowNull: false
         },
+        total: {
+          type: DataTypes.DECIMAL,
+          allowNull: false
+        },
         state: {
           type: DataTypes.STRING(555),
           allowNull: false

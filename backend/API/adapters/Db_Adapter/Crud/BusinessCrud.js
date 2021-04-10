@@ -1,10 +1,9 @@
 import CrudInterface from '../../../interface/CrudInterface';
-import { Model } from '../../../services';
 
 export default class BusinessCrud extends CrudInterface {
   static #instance;
 
-  constructor() {
+  constructor(Model) {
     super();
 
     if (BusinessCrud.#instance) {
@@ -12,7 +11,7 @@ export default class BusinessCrud extends CrudInterface {
     }
 
     BusinessCrud.#instance = this;
-    this.Model = Model.Business;
+    this.Model = Model;
     this.Config = {
       raw: true,
       nest: true
@@ -87,7 +86,15 @@ export default class BusinessCrud extends CrudInterface {
 
   Delete = async pk => {
     try {
-      await this.Model.destry(pk);
+      const FieldPk = this.Model.primaryKeyAttribute;
+      await this.Model.update(
+        { state: 'inactive' },
+        {
+          where: {
+            [FieldPk]: pk
+          }
+        }
+      );
 
       return { success: true };
     } catch (error) {

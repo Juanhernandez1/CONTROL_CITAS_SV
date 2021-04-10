@@ -5,6 +5,11 @@ import express, { json, urlencoded } from 'express';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 
+import session from 'express-session';
+import grant from 'grant';
+
+import GranConfig from './services/config/GrantConfig';
+
 // * Importando endpoint
 
 config();
@@ -21,10 +26,13 @@ const app = express();
  * // app.set('view engine', 'jade');
  */
 
+app.use(session({ secret: 'grant', saveUninitialized: true, resave: false }));
 app.use(logger('dev'));
 app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use(grant.express(GranConfig));
 /**
  * ? Ubicación de las Vistas que Cargaría el Motor de Visualización
  * // // app.use(express.static(path.join(__dirname, "public")));
@@ -33,6 +41,14 @@ app.use(cookieParser());
 /**
  * * Creando Endpoint
  */
+
+app.get('/handle_facebook_callback', (req, res) => {
+  res.end(JSON.stringify(req.session.grant.response, null, 2));
+});
+
+app.get('/handle_google_callback', (req, res) => {
+  res.end(JSON.stringify(req.session.grant.response, null, 2));
+});
 
 app.use('/API/Auth', (req, res) => {
   res.status(200).send({ message: 'probado endpoint' });

@@ -1,10 +1,9 @@
 import CrudInterface from '../../../interface/CrudInterface';
-import { Model } from '../../../services';
 
 export default class AddressCrud extends CrudInterface {
   static #instance;
 
-  constructor() {
+  constructor(Model) {
     super();
 
     if (AddressCrud.#instance) {
@@ -12,7 +11,7 @@ export default class AddressCrud extends CrudInterface {
     }
 
     AddressCrud.#instance = this;
-    this.Model = Model.Address;
+    this.Model = Model;
     this.Config = {
       raw: true,
       nest: true

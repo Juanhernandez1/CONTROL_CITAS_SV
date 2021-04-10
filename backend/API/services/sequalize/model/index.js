@@ -10,6 +10,7 @@ import _Service from './public/Service.js';
 import _Setting from './public/Setting.js';
 import _User from './public/User.js';
 const DataTypes = _sequelize.DataTypes;
+const Operations = _sequelize.Op;
 
 export default function initModels(sequelize) {
   const Access = _Access.init(sequelize, DataTypes);
@@ -80,6 +81,7 @@ export default function initModels(sequelize) {
     Quote,
     Service,
     Setting,
-    User
+    User,
+    Operations
   };
 }

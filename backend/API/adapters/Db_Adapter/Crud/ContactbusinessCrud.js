@@ -1,10 +1,9 @@
 import CrudInterface from '../../../interface/CrudInterface';
-import { Model } from '../../../services';
 
 export default class ContactbusinessCrud extends CrudInterface {
   static #instance;
 
-  constructor() {
+  constructor(Model) {
     super();
 
     if (ContactbusinessCrud.#instance) {
@@ -12,7 +11,7 @@ export default class ContactbusinessCrud extends CrudInterface {
     }
 
     ContactbusinessCrud.#instance = this;
-    this.Model = Model.Contactbusiness;
+    this.Model = Model;
     this.Config = {
       raw: true,
       nest: true

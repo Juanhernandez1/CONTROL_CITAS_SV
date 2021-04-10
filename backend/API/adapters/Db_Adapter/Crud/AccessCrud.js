@@ -1,10 +1,9 @@
 import CrudInterface from '../../../interface/CrudInterface';
-import { Model } from '../../../services';
 
 export default class AccessCrud extends CrudInterface {
   static #instance;
 
-  constructor(Encrypter) {
+  constructor(Encrypter, Model) {
     super();
 
     if (AccessCrud.#instance) {
@@ -12,7 +11,7 @@ export default class AccessCrud extends CrudInterface {
     }
 
     AccessCrud.#instance = this;
-    this.Model = Model.Access;
+    this.Model = Model;
     this.encrypter = Encrypter;
     this.Config = {
       raw: true,
@@ -25,7 +24,7 @@ export default class AccessCrud extends CrudInterface {
       const PasswordHash = this.encrypter.EncryptPassword(password);
 
       const data = await this.Model.findOne(
-        { where: { username, password: PasswordHash } },
+        { where: { username, password: PasswordHash }, attributes: ['iduser'] },
         this.Config
       );
 
