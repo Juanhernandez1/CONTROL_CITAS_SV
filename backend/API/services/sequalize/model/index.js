@@ -1,16 +1,14 @@
-import _sequelize from 'sequelize';
-import _Access from './public/Access.js';
-import _Address from './public/Address.js';
-import _Business from './public/Business.js';
-import _Contactbusiness from './public/Contactbusiness.js';
-import _Detail from './public/Detail.js';
-import _Freeday from './public/Freeday.js';
-import _Quote from './public/Quote.js';
-import _Service from './public/Service.js';
-import _Setting from './public/Setting.js';
-import _User from './public/User.js';
-const DataTypes = _sequelize.DataTypes;
-const Operations = _sequelize.Op;
+import { DataTypes, Op } from 'sequelize';
+import _Access from './public/Access';
+import _Address from './public/Address';
+import _Business from './public/Business';
+import _Contactbusiness from './public/Contactbusiness';
+import _Detail from './public/Detail';
+import _Freeday from './public/Freeday';
+import _Appointment from './public/Appointment';
+import _Service from './public/Service';
+import _Setting from './public/Setting';
+import _User from './public/User';
 
 export default function initModels(sequelize) {
   const Access = _Access.init(sequelize, DataTypes);
@@ -19,7 +17,7 @@ export default function initModels(sequelize) {
   const Contactbusiness = _Contactbusiness.init(sequelize, DataTypes);
   const Detail = _Detail.init(sequelize, DataTypes);
   const Freeday = _Freeday.init(sequelize, DataTypes);
-  const Quote = _Quote.init(sequelize, DataTypes);
+  const Appointment = _Appointment.init(sequelize, DataTypes);
   const Service = _Service.init(sequelize, DataTypes);
   const Setting = _Setting.init(sequelize, DataTypes);
   const User = _User.init(sequelize, DataTypes);
@@ -40,8 +38,11 @@ export default function initModels(sequelize) {
   Business.hasMany(Freeday, { as: 'freedays', foreignKey: 'idbusiness' });
 
   // * Relacion uno a muchos
-  Quote.belongsTo(Business, { as: 'QuoteidbusinessBusiness', foreignKey: 'idbusiness' });
-  Business.hasMany(Quote, { as: 'quotes', foreignKey: 'idbusiness' });
+  Appointment.belongsTo(Business, {
+    as: 'AppointmentidbusinessBusiness',
+    foreignKey: 'idbusiness'
+  });
+  Business.hasMany(Appointment, { as: 'appointment', foreignKey: 'idbusiness' });
 
   // * Relacion uno a muchos
   Service.belongsTo(Business, { as: 'ServiceidbusinessBusiness', foreignKey: 'idbusiness' });
@@ -52,8 +53,11 @@ export default function initModels(sequelize) {
   Business.hasOne(Setting, { as: 'setting', foreignKey: 'idbusiness' });
 
   // * Relacion uno a muchos
-  Detail.belongsTo(Quote, { as: 'DetailidappointmentQuote', foreignKey: 'idappointment' });
-  Quote.hasMany(Detail, { as: 'details', foreignKey: 'idappointment' });
+  Detail.belongsTo(Appointment, {
+    as: 'DetailidappointmentAppointment',
+    foreignKey: 'idappointment'
+  });
+  Appointment.hasMany(Detail, { as: 'details', foreignKey: 'idappointment' });
 
   // * Relacion uno a muchos
   Detail.belongsTo(Service, { as: 'DetailidservicesService', foreignKey: 'idservices' });
@@ -68,8 +72,8 @@ export default function initModels(sequelize) {
   User.hasOne(Business, { as: 'business', foreignKey: 'iduser' });
 
   // * Relacion uno a muchos
-  Quote.belongsTo(User, { as: 'QuoteiduserUser', foreignKey: 'iduser' });
-  User.hasMany(Quote, { as: 'quotes', foreignKey: 'iduser' });
+  Appointment.belongsTo(User, { as: 'AppointmentiduserUser', foreignKey: 'iduser' });
+  User.hasMany(Appointment, { as: 'appointment', foreignKey: 'iduser' });
 
   return {
     Access,
@@ -78,10 +82,10 @@ export default function initModels(sequelize) {
     Contactbusiness,
     Detail,
     Freeday,
-    Quote,
+    Appointment,
     Service,
     Setting,
     User,
-    Operations
+    Operations: Op
   };
 }

@@ -20,9 +20,9 @@ export default class ContactbusinessCrud extends CrudInterface {
 
   Create = async obj => {
     try {
-      await this.Model.create(obj);
+      const data = await this.Model.create(obj);
 
-      return { success: true };
+      return { data, success: true };
     } catch (error) {
       console.log(error);
 
@@ -36,12 +36,12 @@ export default class ContactbusinessCrud extends CrudInterface {
       const pk = obj[FieldPk];
       delete obj[FieldPk];
 
-      await this.Model.update(obj, {
+      const data = await this.Model.update(obj, {
         where: {
           [FieldPk]: pk
         }
       });
-      return { success: true };
+      return { data, success: true };
     } catch (error) {
       console.log(error);
       return { success: false };

@@ -1,7 +1,7 @@
 -- ***************************************************************************************
 -- * Base de Datos para Control de Citas de Tu negocio
 -- * Diseñada por:
--- * Version: 4.3.0
+-- * Version: 4.5.0
 -- * Ultima modificación: 8/04/2021
 -- * servidores de Bases de datos disponibles
 -- * - PostgreSQL
@@ -24,6 +24,7 @@ CREATE TABLE Usuarios (
 	Telefono VARCHAR ( 255 ) NOT NULL,
 	Correo VARCHAR ( 255 ) NOT NULL UNIQUE,
 	Uuid_Facebook VARCHAR ( 255 ) NULL UNIQUE,
+	Uuid_Google VARCHAR ( 255 ) NULL UNIQUE,
 	Estado VARCHAR ( 255 ) NOT NULL 
 );
 -- ***************************************************************************************

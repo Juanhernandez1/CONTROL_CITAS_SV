@@ -26,17 +26,22 @@ export default class User extends Model {
         },
         phone: {
           type: DataTypes.STRING(555),
-          allowNull: false
+          allowNull: true
         },
         email: {
           type: DataTypes.STRING(555),
-          allowNull: false,
+          allowNull: true,
           unique: 'users_email_key'
         },
         uuidfacebook: {
           type: DataTypes.STRING(555),
           allowNull: true,
           unique: 'users_uuidfacebook_key'
+        },
+        uuidgoogle: {
+          type: DataTypes.STRING(555),
+          allowNull: true,
+          unique: 'users_uuidgoogle_key'
         },
         state: {
           type: DataTypes.STRING(555),
@@ -63,6 +68,11 @@ export default class User extends Model {
             name: 'users_uuidfacebook_key',
             unique: true,
             fields: [{ name: 'uuidfacebook' }]
+          },
+          {
+            name: 'users_uuidgoogle_key',
+            unique: true,
+            fields: [{ name: 'uuidgoogle' }]
           },
           {
             name: 'users_uuiduser_key',

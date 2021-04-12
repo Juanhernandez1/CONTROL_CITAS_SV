@@ -1,7 +1,7 @@
 -- ***************************************************************************************
 -- * Database to Control Your Business Appointments
 -- * Designed by: Juan Hernandez
--- * Version: 4.3.0_en
+-- * Version: 4.5.0_en
 -- * Last Modification: 8/04/2021
 -- * Database Servers Available
 -- * - PostgreSQL
@@ -10,8 +10,8 @@
 -- ***************************************************************************************
 -- DROP DATABASE
 -- IF
--- 	EXISTS "QuotesDB";
--- CREATE DATABASE "QuotesDB";
+-- 	EXISTS "AppointmentDB";
+-- CREATE DATABASE "AppointmentDB";
 -- ***************************************************************************************
 -- * Users
 -- ***************************************************************************************
@@ -21,9 +21,10 @@ CREATE TABLE Users (
 	uuidUser VARCHAR ( 555 ) NOT NULL UNIQUE,
 	NAME VARCHAR ( 555 ) NOT NULL,
 	lastName VARCHAR ( 555 ) NOT NULL,
-	phone VARCHAR ( 555 ) NOT NULL,
-	email VARCHAR ( 555 ) NOT NULL UNIQUE,
+	phone VARCHAR ( 555 ) NULL,
+	email VARCHAR ( 555 ) NULL UNIQUE,
 	uuidFacebook VARCHAR ( 555 ) NULL UNIQUE,
+	uuidGoogle VARCHAR (555) NULL UNIQUE,
 	STATE VARCHAR ( 555 ) NOT NULL 
 );
 -- ***************************************************************************************
@@ -122,9 +123,9 @@ CREATE TABLE FreeDays (
 	STATE VARCHAR ( 555 ) NOT NULL 
 );
 -- ***************************************************************************************
--- * Quotes
+-- * appointment
 -- ***************************************************************************************
-CREATE TABLE Quotes (
+CREATE TABLE Appointment (
 	idAppointment bigserial NOT NULL,
 	PRIMARY KEY ( idAppointment ),
 	UuidAppointment VARCHAR (555) NOT NULL,
@@ -143,7 +144,7 @@ CREATE TABLE Details (
 	idDetails bigserial NOT NULL,
 	PRIMARY KEY ( idDetails ),
 	idAppointment BIGINT NOT NULL,
-	FOREIGN KEY ( idAppointment ) REFERENCES Quotes ( idAppointment ),
+	FOREIGN KEY ( idAppointment ) REFERENCES Appointment ( idAppointment ),
 	idServices BIGINT NOT NULL,
 	FOREIGN KEY ( idServices ) REFERENCES Services ( idServices ),
 	Price DECIMAL NOT NULL

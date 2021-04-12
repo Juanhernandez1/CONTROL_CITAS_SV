@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node API/bin/www.js",
     "start-dev": "babel-watch ./API/bin/www.js",
-    "GetModel": "sequelize-auto -o \"./API/services/sequalize/model/public\" -d QuotesDB -h localhost -u postgres -p 5432 -x postgres -e postgres --cm p --cf p --cp c -s public -l esm --sg",
+    "GetModel": "sequelize-auto -o \"./API/services/sequalize/model/public\" -d AppointmentDB -h localhost -u postgres -p 5432 -x postgres -e postgres --cm p --cf p --cp c -s public -l esm --sg",
     "transpilar": "babel backend -d API"
   },
   "engines": {
@@ -22,8 +22,10 @@
     "firebase": "^8.3.2",
     "firebase-admin": "^9.6.0",
     "grant": "^5.4.12",
+    "helmet": "^4.4.1",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
+    "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.33",
     "morgan": "~1.9.1",

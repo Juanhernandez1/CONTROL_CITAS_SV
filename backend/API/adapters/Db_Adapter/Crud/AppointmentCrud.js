@@ -1,16 +1,16 @@
 import CrudInterface from '../../../interface/CrudInterface';
 
-export default class QuoteCrud extends CrudInterface {
+export default class AppointmentCrud extends CrudInterface {
   static #instance;
 
   constructor(Model, Operations) {
     super();
 
-    if (QuoteCrud.#instance) {
-      return QuoteCrud.#instance;
+    if (AppointmentCrud.#instance) {
+      return AppointmentCrud.#instance;
     }
 
-    QuoteCrud.#instance = this;
+    AppointmentCrud.#instance = this;
     this.Model = Model;
     this.Operations = Operations;
     this.Config = {
@@ -19,24 +19,45 @@ export default class QuoteCrud extends CrudInterface {
     };
   }
 
-  GetPkForUsers = async pk => {
+  GetPkForUsers = async (pk, iduser) => {
     try {
       const data = await this.Model.findByPk(pk, {
+        where: { iduser },
         ...this.Config,
         include: [
           {
-            association: 'QuoteidbusinessBusiness',
-            attributes: ['businessname'],
-            include: [
-              { association: 'AddressidbusinessBusiness' },
-              { association: 'ContactbusinessIdbusinessBusiness' },
-              ...this.Config
-            ]
+            association: 'AppointmentidbusinessBusiness',
+            attributes: ['businessname']
           },
           {
-            association: 'DetailidappointmentQuote',
-            include: { association: 'DetailidservicesService' },
-            ...this.Config
+            association: 'DetailidappointmentAppointment',
+            include: { association: 'DetailidservicesService', attributes: ['servicename'] },
+            raw: true,
+            nest: true
+          }
+        ]
+      });
+
+      return { data, success: true };
+    } catch (error) {
+      console.log(error);
+
+      return { success: false };
+    }
+  };
+
+  GetPkForBusiness = async (pk, idbusiness) => {
+    try {
+      const data = await this.Model.findByPk(pk, {
+        where: { idbusiness },
+        ...this.Config,
+        include: [
+          { association: 'AppointmentiduserUser', attributes: ['name', 'lastname', 'phone'] },
+          {
+            association: 'DetailidappointmentAppointment',
+            include: { association: 'DetailidservicesService', attributes: ['servicename'] },
+            raw: true,
+            nest: true
           }
         ]
       });
@@ -56,29 +77,12 @@ export default class QuoteCrud extends CrudInterface {
         ...this.Config,
         include: [
           {
-            association: 'QuoteidbusinessBusiness',
+            association: 'AppointmentidbusinessBusiness',
             attributes: ['businessname']
-          }
-        ]
-      });
-
-      return { data, success: true };
-    } catch (error) {
-      console.log(error);
-
-      return { success: false };
-    }
-  };
-
-  GetPkForBusiness = async pk => {
-    try {
-      const data = await this.Model.findByPk(pk, {
-        ...this.Config,
-        include: [
-          { association: 'QuoteiduserUser', attributes: ['name', 'lastname', 'phone'] },
+          },
           {
-            association: 'DetailidappointmentQuote',
-            include: { association: 'DetailidservicesService' },
+            association: 'DetailidappointmentAppointment',
+            include: { association: 'DetailidservicesService', attributes: ['servicename'] },
             raw: true,
             nest: true
           }
@@ -93,11 +97,20 @@ export default class QuoteCrud extends CrudInterface {
     }
   };
 
-  GetAllForBusiness = async () => {
+  GetAllForBusiness = async idbusiness => {
     try {
       const data = await this.Model.findAll({
+        where: { idbusiness },
         ...this.Config,
-        include: [{ association: 'QuoteiduserUser', attributes: ['name', 'lastname'] }]
+        include: [
+          { association: 'AppointmentiduserUser', attributes: ['name', 'lastname', 'phone'] },
+          {
+            association: 'DetailidappointmentAppointment',
+            include: { association: 'DetailidservicesService', attributes: ['servicename'] },
+            raw: true,
+            nest: true
+          }
+        ]
       });
 
       return { data, success: true };

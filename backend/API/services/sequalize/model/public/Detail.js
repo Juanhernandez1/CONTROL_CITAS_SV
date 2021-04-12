@@ -15,7 +15,7 @@ export default class Detail extends Model {
           type: DataTypes.BIGINT,
           allowNull: false,
           references: {
-            model: 'quotes',
+            model: 'appointment',
             key: 'idappointment'
           }
         },

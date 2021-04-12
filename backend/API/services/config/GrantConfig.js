@@ -16,7 +16,7 @@ const GranConfig = {
         ? process.env.GOOGLE_URL_CALLBACK
         : '/handle_google_callback',
     scope: ['openid', 'email', 'profile'],
-    response: ['tokens', 'raw', 'jwt', 'profile']
+    response: ['tokens', 'raw', 'profile']
   },
   facebook: {
     key: process.env.FACEBOOK_CLIENT_ID,
@@ -27,7 +27,7 @@ const GranConfig = {
         ? process.env.FACEBOOK_URL_CALLBACK
         : '/handle_facebook_callback',
     scope: ['openid', 'email'],
-    response: ['tokens', 'raw', 'jwt', 'profile']
+    response: ['tokens', 'raw', 'profile']
   }
 };
 

@@ -3,7 +3,7 @@ import CrudInterface from '../../../interface/CrudInterface';
 export default class BusinessCrud extends CrudInterface {
   static #instance;
 
-  constructor(Model) {
+  constructor(Model, Operations) {
     super();
 
     if (BusinessCrud.#instance) {
@@ -12,6 +12,7 @@ export default class BusinessCrud extends CrudInterface {
 
     BusinessCrud.#instance = this;
     this.Model = Model;
+    this.Operatios = Operations;
     this.Config = {
       raw: true,
       nest: true
@@ -54,11 +55,34 @@ export default class BusinessCrud extends CrudInterface {
     }
   };
 
+  GetLikeName = async searchData => {
+    try {
+      const data = await this.Model.findAll({
+        ...this.Config,
+        where: {
+          title: {
+            [this.Operatios.like]: `%${searchData}%`
+          }
+        },
+        include: [
+          { association: 'AddressidbusinessBusiness' },
+          { association: 'ContactbusinessIdbusinessBusiness' }
+        ]
+      });
+
+      return { data, success: true };
+    } catch (error) {
+      console.log(error);
+
+      return { success: false };
+    }
+  };
+
   Create = async obj => {
     try {
-      await this.Model.create(obj);
+      const data = await this.Model.create(obj);
 
-      return { success: true };
+      return { data, success: true };
     } catch (error) {
       console.log(error);
 
@@ -72,12 +96,12 @@ export default class BusinessCrud extends CrudInterface {
       const pk = obj[FieldPk];
       delete obj[FieldPk];
 
-      await this.Model.update(obj, {
+      const data = await this.Model.update(obj, {
         where: {
           [FieldPk]: pk
         }
       });
-      return { success: true };
+      return { data, success: true };
     } catch (error) {
       console.log(error);
       return { success: false };
@@ -87,7 +111,7 @@ export default class BusinessCrud extends CrudInterface {
   Delete = async pk => {
     try {
       const FieldPk = this.Model.primaryKeyAttribute;
-      await this.Model.update(
+      const data = await this.Model.update(
         { state: 'inactive' },
         {
           where: {
@@ -96,7 +120,7 @@ export default class BusinessCrud extends CrudInterface {
         }
       );
 
-      return { success: true };
+      return { data, success: true };
     } catch (error) {
       console.log(error);
 

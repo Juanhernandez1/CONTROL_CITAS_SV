@@ -1,14 +1,13 @@
 import { config } from 'dotenv';
 import createError from 'http-errors';
 import express, { json, urlencoded } from 'express';
+import helmet from 'helmet';
 // import { join } from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 
 import session from 'express-session';
-import grant from 'grant';
-
-import GranConfig from './services/config/GrantConfig';
+import Grant from './services/Grant';
 
 // * Importando endpoint
 
@@ -32,7 +31,7 @@ app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use(grant.express(GranConfig));
+app.use(Grant);
 /**
  * ? Ubicación de las Vistas que Cargaría el Motor de Visualización
  * // // app.use(express.static(path.join(__dirname, "public")));

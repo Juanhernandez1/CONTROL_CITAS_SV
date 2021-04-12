@@ -1,7 +1,7 @@
 import _sequelize from 'sequelize';
 const { Model, Sequelize } = _sequelize;
 
-export default class Quote extends Model {
+export default class Appointment extends Model {
   static init(sequelize, DataTypes) {
     super.init(
       {
@@ -46,18 +46,18 @@ export default class Quote extends Model {
       },
       {
         sequelize,
-        tableName: 'quotes',
+        tableName: 'appointment',
         schema: 'public',
         timestamps: false,
         indexes: [
           {
-            name: 'quotes_pkey',
+            name: 'appointment_pkey',
             unique: true,
             fields: [{ name: 'idappointment' }]
           }
         ]
       }
     );
-    return Quote;
+    return Appointment;
   }
 }

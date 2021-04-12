@@ -20,7 +20,14 @@
         "cases": {
           "pascalCase": true
         },
-        "ignore": ["^index\\.js$", "^index\\.jsx$", "^App.test\\.js$", "^www\\.js$"]
+        "ignore": [
+          "^index\\.js$",
+          "^index\\.jsx$",
+          "^App.test\\.js$",
+          "^www\\.js$",
+          "^reportWebVitals\\.js",
+          "^setupTests\\.js"
+        ]
       }
     ]
   }
