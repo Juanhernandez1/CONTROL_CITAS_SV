@@ -1,0 +1,12 @@
+.content {
+  min-height: calc(100vh - 4rem);
+  padding: 3rem 0;
+}
+
+.site-layout-content {
+  background: #fff;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 3rem;
+  width: 80%;
+}

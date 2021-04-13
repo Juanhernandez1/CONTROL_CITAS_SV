@@ -1,0 +1,10 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo-container,
+.logo-container img {
+  height: 2rem;
+  width: 2rem;
+}
