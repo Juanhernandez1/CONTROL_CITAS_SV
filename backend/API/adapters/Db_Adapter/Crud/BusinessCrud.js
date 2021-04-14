@@ -9,24 +9,21 @@ export default class BusinessCrud extends CrudInterface {
     if (BusinessCrud.#instance) {
       return BusinessCrud.#instance;
     }
-
-    BusinessCrud.#instance = this;
     this.Model = Model;
     this.Operatios = Operations;
     this.Config = {
       raw: true,
       nest: true
     };
+
+    BusinessCrud.#instance = this;
   }
 
   GetPk = async pk => {
     try {
       const data = await this.Model.findByPk(pk, {
         ...this.Config,
-        include: [
-          { association: 'AddressidbusinessBusiness' },
-          { association: 'ContactbusinessIdbusinessBusiness' }
-        ]
+        include: [{ association: 'address' }, { association: 'contactbusiness' }]
       });
 
       return { data, success: true };
@@ -41,10 +38,7 @@ export default class BusinessCrud extends CrudInterface {
     try {
       const data = await this.Model.findAll({
         ...this.Config,
-        include: [
-          { association: 'AddressidbusinessBusiness' },
-          { association: 'ContactbusinessIdbusinessBusiness' }
-        ]
+        include: [{ association: 'address' }, { association: 'contactbusiness' }]
       });
 
       return { data, success: true };
@@ -60,14 +54,11 @@ export default class BusinessCrud extends CrudInterface {
       const data = await this.Model.findAll({
         ...this.Config,
         where: {
-          title: {
+          businessname: {
             [this.Operatios.like]: `%${searchData}%`
           }
         },
-        include: [
-          { association: 'AddressidbusinessBusiness' },
-          { association: 'ContactbusinessIdbusinessBusiness' }
-        ]
+        include: [{ association: 'address' }, { association: 'contactbusiness' }]
       });
 
       return { data, success: true };

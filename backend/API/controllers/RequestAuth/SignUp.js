@@ -26,7 +26,7 @@ export default class SignUp {
     this.AccessCrud = accessCrud;
   }
 
-  SignUpBusinessCreateTraditional(req, res) {
+  SignUpBusinessCreateTraditional = async (req, res) => {
     try {
       const { objUsers, obtAccess, objBusiness, obtSetting, objAddres, objContact } = req.body;
 
@@ -53,9 +53,9 @@ export default class SignUp {
       console.log(ERDB404);
       res.status(404).send(ERDB404);
     }
-  }
+  };
 
-  SignUpBusinessCreateGoogle(req, res) {
+  SignUpBusinessCreateGoogle = async (req, res) => {
     try {
       const { objBusiness, obtSetting, objAddres, objContact } = req.body;
       const GoogleProfiel = req.session.grant.response.profile;
@@ -92,9 +92,9 @@ export default class SignUp {
       console.log(ERDB404);
       res.status(404).send(ERDB404);
     }
-  }
+  };
 
-  SignUpUsersCreateTraditional(req, res) {
+  SignUpUsersCreateTraditional = async (req, res) => {
     try {
       const { objUsers, obtAccess } = req.body;
 
@@ -110,9 +110,9 @@ export default class SignUp {
       console.log(ERDB404);
       res.status(404).send(ERDB404);
     }
-  }
+  };
 
-  SignUpUserCreateGoogle(req, res) {
+  SignUpUserCreateGoogle = async (req, res) => {
     try {
       const { objUsers, obtAccess } = req.body;
 
@@ -128,9 +128,9 @@ export default class SignUp {
       console.log(ERDB404);
       res.status(404).send(ERDB404);
     }
-  }
+  };
 
-  SignUpUsersCreateFacebook(req, res) {
+  SignUpUsersCreateFacebook = async (req, res) => {
     try {
       const { objUsers, obtAccess } = req.body;
 
@@ -146,5 +146,5 @@ export default class SignUp {
       console.log(ERDB404);
       res.status(404).send(ERDB404);
     }
-  }
+  };
 }

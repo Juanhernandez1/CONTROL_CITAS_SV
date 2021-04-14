@@ -1,9 +1,13 @@
-var express = require('express');
-var router = express.Router();
+import { Router } from 'express';
+import Versiones from './Versiones';
+import controllers from '../controllers';
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+const Routes = Router();
 
-module.exports = router;
+const objVersion = Versiones(Router, controllers);
+
+const { RutasV1 } = objVersion;
+// * ruta de version
+Routes.use('/v1', RutasV1);
+
+export default Routes;

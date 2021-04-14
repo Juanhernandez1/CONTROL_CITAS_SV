@@ -1,14 +1,16 @@
-import { Model } from '../../services';
 import AccessCrud from './Crud/AccessCrud';
 import AddressCrud from './Crud/AddressCrud';
 import BusinessCrud from './Crud/BusinessCrud';
 import ContactbusinessCrud from './Crud/ContactbusinessCrud';
 import DetailCrud from './Crud/DetailCrud';
 import FreedayCrud from './Crud/FreedayCrud';
-import QuoteCrud from './Crud/QuoteCrud';
+import AppointmentCrud from './Crud/AppointmentCrud';
 import ServiceCrud from './Crud/ServiceCrud';
 import SettingCrud from './Crud/SettingCrud';
 import UserCrud from './Crud/UserCrud';
+import services from '../../services';
+
+const { Model, Encrypt } = services;
 
 const {
   Access,
@@ -17,7 +19,7 @@ const {
   Contactbusiness,
   Detail,
   Freeday,
-  Quote,
+  Appointment,
   Service,
   Setting,
   User,
@@ -25,16 +27,16 @@ const {
 } = Model;
 
 const RootCrudAdapter = {
-  accessCrud: new AccessCrud(Access),
+  accessCrud: new AccessCrud(Encrypt, Access),
   addressCrud: new AddressCrud(Address),
-  businessCrud: new BusinessCrud(Business),
-  contactbusiness: new ContactbusinessCrud(Contactbusiness),
-  detail: new DetailCrud(Detail),
-  freeday: new FreedayCrud(Freeday),
-  quote: new QuoteCrud(Quote, Operations),
-  service: new ServiceCrud(Service),
-  setting: SettingCrud(Setting),
-  user: UserCrud(User)
+  businessCrud: new BusinessCrud(Business, Operations),
+  contactbusinessCrud: new ContactbusinessCrud(Contactbusiness),
+  detailCrud: new DetailCrud(Detail),
+  freedayCrud: new FreedayCrud(Freeday),
+  appointmentCrud: new AppointmentCrud(Appointment, Operations),
+  serviceCrud: new ServiceCrud(Service),
+  settingCrud: new SettingCrud(Setting),
+  userCrud: new UserCrud(User)
 };
 
 export default RootCrudAdapter;

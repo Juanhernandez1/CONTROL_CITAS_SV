@@ -1,13 +1,13 @@
 import { config } from 'dotenv';
 import createError from 'http-errors';
 import express, { json, urlencoded } from 'express';
-import helmet from 'helmet';
 // import { join } from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 
 import session from 'express-session';
 import Grant from './services/Grant';
+import Routes from './routes';
 
 // * Importando endpoint
 
@@ -53,9 +53,7 @@ app.use('/API/Auth', (req, res) => {
   res.status(200).send({ message: 'probado endpoint' });
 });
 
-app.use('/API', (req, res) => {
-  res.status(200).send({ message: 'probado endpoint' });
-});
+app.use('/API', Routes);
 
 /**
  * * Captura las solicitudes no encontradas en los Endpoint

@@ -1,17 +1,16 @@
-// * Objeto de configracion para conectarse a la base de datos
-const { config } = require('dotenv');
+import { config } from 'dotenv';
 config();
 
-const DbConfig = {
-  url: process.env.DATABASE_URL === undefined ? process.env.DATABASE_URL : null,
+const ConfiguracionDb = {
+  url: process.env.DATABASE_URL,
   configuracionCnUrl: {
     dialect: 'postgres',
     protocol: 'postgres',
     ssl: true,
     dialectOptions: {
       ssl: {
-        require: true,
-        rejectUnauthorized: false
+        require: true, // This will help you. But you will see nwe error
+        rejectUnauthorized: false // This line will fix new error
       }
     }
   },
@@ -25,4 +24,5 @@ const DbConfig = {
     host: process.env.DB_HOST
   }
 };
-export default DbConfig;
+
+export default ConfiguracionDb;

@@ -1,18 +1,46 @@
 // * Archivo raiz de servicios
 import { Sequelize } from 'sequelize';
-import Encrypt from './Bcrypt';
-import DbConfig from './config/ConfiguracionDb';
-import firebaseConfig from './config/FirebaseConfig';
+import Encrypt from './bcrypt';
+import ConfiguracionDb from './config/ConfiguracionDb';
 import MomentSv from './moment';
 import ConnectionDb from './sequalize';
 import initModels from './sequalize/model';
 
-const connectionDb = new ConnectionDb(Sequelize, DbConfig);
+const Connection = new ConnectionDb(Sequelize, ConfiguracionDb);
+const { conexion } = Connection;
 
-const Model = initModels(connectionDb);
+const {
+  Access,
+  Address,
+  Appointment,
+  Business,
+  Contactbusiness,
+  Detail,
+  Freeday,
+  Service,
+  Setting,
+  User,
+  Operations
+} = initModels(conexion);
 
-export default {
+const Model = {
+  Access,
+  Address,
+  Appointment,
+  Business,
+  Contactbusiness,
+  Detail,
+  Freeday,
+  Service,
+  Setting,
+  User,
+  Operations
+};
+
+const services = {
   Model,
   Encrypt,
   MomentSv
 };
+
+export default services;
