@@ -626,11 +626,6 @@ es-to-primitive@^1.2.1:
     is-date-object "^1.0.1"
     is-symbol "^1.0.2"
 
-es6-interface@^3.1.4:
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/es6-interface/-/es6-interface-3.1.4.tgz#0fbea134d2b2c07b88272d32758d1502b80194e4"
-  integrity sha512-ajK0ValuEjAZLay/EiTiLR2cTlzj8KFtJIiU9aqmky0tFHuHIyHmpr8b4GqO2teXNUHdg9IfrQOW2i1sQ87mlQ==
-
 escalade@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/escalade/-/escalade-3.1.1.tgz#d8cfdc7000965c5a0174b4a82eaa5c0552742e40"
