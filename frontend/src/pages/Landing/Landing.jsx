@@ -1,13 +1,11 @@
-import { Button, Card, Form, Input } from 'antd';
+import { Card } from 'antd';
 import React from 'react';
 
-import { messages } from '../../config/messages';
+import SearchBusiness from '../../components/form/SearchBusiness';
 import Banner from '../../assets/images/banner.jpg';
 import './Landing.css';
 
 const { Meta } = Card;
-const { Item } = Form;
-const { onRequired } = messages;
 
 const Landing = () => {
   return (
@@ -15,18 +13,7 @@ const Landing = () => {
       <div className="banner-container">
         <img src={Banner} alt="Banner" />
       </div>
-      <div className="landing-search">
-        <Form className="landing-form" layout="inline" name="landingForm">
-          <Item name="businessSearch" rules={[{ required: true, message: onRequired }]}>
-            <Input placeholder="Buscar negocio" />
-          </Item>
-          <Item>
-            <Button htmlType="submit" type="primary">
-              Buscar
-            </Button>
-          </Item>
-        </Form>
-      </div>
+      <SearchBusiness />
       <div className="cards-container">
         <Card
           hoverable
