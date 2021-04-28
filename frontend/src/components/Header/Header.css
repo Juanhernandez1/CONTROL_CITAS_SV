@@ -1,10 +1,17 @@
 .header {
   display: flex;
+}
+
+.header-space-between {
   justify-content: space-between;
 }
 
-.logo-container,
-.logo-container img {
+.header-flex-end {
+  justify-content: flex-end;
+}
+
+.header__logo-container,
+.header__logo-container img {
   height: 2rem;
   width: 2rem;
 }

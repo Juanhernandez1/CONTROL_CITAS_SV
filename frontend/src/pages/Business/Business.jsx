@@ -1,16 +1,18 @@
-import { List, Card } from 'antd';
-import React, { useState } from 'react';
+import { Card, List, Typography } from 'antd';
+import React, { useContext, useState } from 'react';
 
-import SearchBusiness from '../../components/form/SearchBusiness';
 import BusinessDetailModal from '../../components/DetailBusinessModal';
+import SearchBusiness from '../../components/form/SearchBusiness';
+import { GlobalContext } from '../../context/GlobalState';
 import { business } from '../../utils/mock';
 import './Business.css';
 
 const { Meta } = Card;
+const { Title } = Typography;
 
 const Business = () => {
+  const { businessSelected, setBusinessSelected } = useContext(GlobalContext);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [businessSelected, setBusinessSelected] = useState(null);
   const gridConfig = { gutter: 48, xs: 1, sm: 2, md: 2, lg: 3, xl: 3, xxl: 3 };
 
   const paginationConfig = {
@@ -43,6 +45,7 @@ const Business = () => {
   return (
     <>
       <SearchBusiness />
+      <Title level={2}>Resultados de Búsqueda:</Title>
       <List
         className="business-list"
         dataSource={business}
@@ -50,13 +53,7 @@ const Business = () => {
         pagination={paginationConfig}
         renderItem={renderListItem}
       />
-      {businessSelected && (
-        <BusinessDetailModal
-          businessInfo={businessSelected}
-          onCancel={closeModal}
-          visible={isModalVisible}
-        />
-      )}
+      {businessSelected && <BusinessDetailModal onCancel={closeModal} visible={isModalVisible} />}
     </>
   );
 };
