@@ -2,5 +2,6 @@
 export const paths = {
   home: '/',
   businessResult: '/business',
-  businessDetail: (id = '') => `/business-detail/${id}`
+  businessDetail: (id = '') => `/business-detail/${id}`,
+  notFound: '*'
 };

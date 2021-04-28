@@ -7,6 +7,7 @@ import { Layout, LayoutHeader } from './Layout';
 import Business from './pages/Business';
 import BusinessDetail from './pages/BusinessDetail';
 import Landing from './pages/Landing';
+import NotFound from './pages/NotFound';
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
             component={BusinessDetail}
             layout={Layout}
           />
+          <Route path={paths.notFound} component={NotFound} layout={LayoutHeader} />
         </Switch>
       </GlobalProvider>
     </Router>
