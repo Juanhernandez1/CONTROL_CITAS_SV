@@ -1,4 +1,7 @@
 // eslint-disable-next-line unicorn/filename-case
 export const paths = {
-  home: '/'
+  home: '/',
+  businessResult: '/business',
+  businessDetail: (id = '') => `/business-detail/${id}`,
+  notFound: '*'
 };
