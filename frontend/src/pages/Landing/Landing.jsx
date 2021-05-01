@@ -1,8 +1,6 @@
-import { Card } from 'antd';
+import { Card, Row, Typography } from 'antd';
 import React from 'react';
-
 import SearchBusiness from '../../components/form/SearchBusiness';
-import Banner from '../../assets/images/banner.jpg';
 import './Landing.css';
 
 const { Meta } = Card;
@@ -10,9 +8,12 @@ const { Meta } = Card;
 const Landing = () => {
   return (
     <div className="landing">
-      <div className="banner-container">
-        <img src={Banner} alt="Banner" />
-      </div>
+      {/* <div className="banner-container">
+        <img src={Banner} alt="Banner" /> ----> Apply after banner is selected
+      </div> */}
+      <Row justify="center">
+        <Typography.Title>Control de Citas</Typography.Title>
+      </Row>
       <SearchBusiness />
       <div className="cards-container">
         <Card

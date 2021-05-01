@@ -10,3 +10,19 @@
   padding: 3rem;
   width: 80%;
 }
+
+.logo-container {
+  align-items: center;
+  display: flex;
+  height: 4rem;
+}
+
+.logo-image-container {
+  margin-left: 2rem;
+}
+
+.logo-image-container,
+.logo-image-container img {
+  height: 2rem;
+  width: 2rem;
+}
