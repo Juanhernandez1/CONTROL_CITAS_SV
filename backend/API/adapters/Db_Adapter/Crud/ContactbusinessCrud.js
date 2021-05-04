@@ -18,15 +18,39 @@ export default class ContactbusinessCrud extends CrudInterface {
     };
   }
 
+  Find = async email => {
+    try {
+      const data = await this.Model.findOne({ where: { email } });
+
+      return { data, success: true };
+    } catch (error) {
+      const { message, type, path, origin } = error.errors[0];
+
+      return {
+        success: false,
+        message,
+        type,
+        path,
+        origin
+      };
+    }
+  };
+
   Create = async obj => {
     try {
       const data = await this.Model.create(obj);
 
       return { data, success: true };
     } catch (error) {
-      console.log(error);
+      const { message, type, path, origin } = error.errors[0];
 
-      return { success: false };
+      return {
+        success: false,
+        message,
+        type,
+        path,
+        origin
+      };
     }
   };
 
@@ -43,8 +67,15 @@ export default class ContactbusinessCrud extends CrudInterface {
       });
       return { data, success: true };
     } catch (error) {
-      console.log(error);
-      return { success: false };
+      const { message, type, path, origin } = error.errors[0];
+
+      return {
+        success: false,
+        message,
+        type,
+        path,
+        origin
+      };
     }
   };
 }

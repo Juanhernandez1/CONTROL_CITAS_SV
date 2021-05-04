@@ -1,10 +1,9 @@
 import EncryptInterface from '../../interface/ EncryptInterface';
-import { Encrypt } from '../../services';
 
 export default class EncryptPassword extends EncryptInterface {
   static #instance;
 
-  constructor() {
+  constructor(Encrypt) {
     super();
     if (EncryptPassword.#instance) {
       return EncryptPassword.#instance;
@@ -14,13 +13,13 @@ export default class EncryptPassword extends EncryptInterface {
     this.salt = Encrypt.salt;
   }
 
-  ComparePassword = async (hashPassword, password) => {
+  ComparePassword = (hashPassword, password) => {
     const valid = this.encrypter.compareSync(password, hashPassword);
     return valid;
   };
 
-  EncryptPassword = async password => {
-    const hash = await this.encrypter.hashSync(password, this.salt);
+  EncryptUserPassword = password => {
+    const hash = this.encrypter.hashSync(password, this.salt);
     return hash;
   };
 }

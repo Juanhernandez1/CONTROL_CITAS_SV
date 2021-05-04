@@ -30,7 +30,7 @@ export default class Setting extends Model {
           type: DataTypes.STRING(555),
           allowNull: false
         },
-        taa: {
+        tba: {
           type: DataTypes.STRING(555),
           allowNull: false
         },

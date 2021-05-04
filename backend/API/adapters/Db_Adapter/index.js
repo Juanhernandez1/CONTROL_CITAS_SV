@@ -9,8 +9,10 @@ import ServiceCrud from './Crud/ServiceCrud';
 import SettingCrud from './Crud/SettingCrud';
 import UserCrud from './Crud/UserCrud';
 import services from '../../services';
+import EncryptPassword from '../Encrypt_Adapter';
+import LastFiveDays from '../../domain/Date/LastFiveDays';
 
-const { Model, Encrypt } = services;
+const { Model, Encrypt, MomentSv } = services;
 
 const {
   Access,
@@ -27,13 +29,13 @@ const {
 } = Model;
 
 const RootCrudAdapter = {
-  accessCrud: new AccessCrud(Encrypt, Access),
+  accessCrud: new AccessCrud(new EncryptPassword(Encrypt), Access),
   addressCrud: new AddressCrud(Address),
   businessCrud: new BusinessCrud(Business, Operations),
   contactbusinessCrud: new ContactbusinessCrud(Contactbusiness),
   detailCrud: new DetailCrud(Detail),
   freedayCrud: new FreedayCrud(Freeday),
-  appointmentCrud: new AppointmentCrud(Appointment, Operations),
+  appointmentCrud: new AppointmentCrud(Appointment, Operations, LastFiveDays, MomentSv),
   serviceCrud: new ServiceCrud(Service),
   settingCrud: new SettingCrud(Setting),
   userCrud: new UserCrud(User)

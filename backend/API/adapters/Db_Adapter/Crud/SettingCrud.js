@@ -33,14 +33,22 @@ export default class SettingCrud extends CrudInterface {
   };
 
   Create = async obj => {
+    console.log(obj);
     try {
-      await this.Model.create(obj);
+      const data = await this.Model.create(obj);
 
-      return { success: true };
+      return { data, success: true };
     } catch (error) {
       console.log(error);
+      const { message, type, path, origin } = error.errors[0];
 
-      return { success: false };
+      return {
+        success: false,
+        message,
+        type,
+        path,
+        origin
+      };
     }
   };
 

@@ -38,8 +38,12 @@ export default class BusinessCrud extends CrudInterface {
     try {
       const data = await this.Model.findAll({
         ...this.Config,
+        offset: 1,
+        limit: 1,
         include: [{ association: 'address' }, { association: 'contactbusiness' }]
       });
+
+      console.log(data);
 
       return { data, success: true };
     } catch (error) {
@@ -71,13 +75,20 @@ export default class BusinessCrud extends CrudInterface {
 
   Create = async obj => {
     try {
+      console.log(obj);
       const data = await this.Model.create(obj);
 
       return { data, success: true };
     } catch (error) {
-      console.log(error);
+      const { message, type, path, origin } = error.errors[0];
 
-      return { success: false };
+      return {
+        success: false,
+        message,
+        type,
+        path,
+        origin
+      };
     }
   };
 

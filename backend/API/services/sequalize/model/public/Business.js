@@ -24,6 +24,10 @@ export default class Business extends Model {
           type: DataTypes.STRING(555),
           allowNull: false
         },
+        imageurlbusiness: {
+          type: DataTypes.STRING(555),
+          allowNull: false
+        },
         iduser: {
           type: DataTypes.BIGINT,
           allowNull: false,
