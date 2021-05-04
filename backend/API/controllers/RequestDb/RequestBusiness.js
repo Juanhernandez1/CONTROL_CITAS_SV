@@ -74,18 +74,52 @@ export default class RequestBusiness {
     try {
       const { objBusiness, obtSetting, objAddres, objContact } = req.body;
 
-      const Business = await this.BusinessCrud.Create(objBusiness);
+      const ContactFindEmail = await this.ContactbusinessCrud.Find(objContact.email);
 
-      obtSetting.idbusiness = Business.idbusiness;
-      objAddres.idbusiness = Business.idbusiness;
-      objContact.idbusiness = Business.idbusiness;
+      if (ContactFindEmail.data === null) {
+        const Business = await this.BusinessCrud.Create(objBusiness);
+        const { data } = Business;
 
-      const BusinessAddess = await this.AddressCrud.Create(objAddres);
-      const BusinessSetting = await this.SettingCrud.Create(obtSetting);
-      const BusinessContact = await this.ContactbusinessCrud.Create(objContact);
+        if (Business.success) {
+          objAddres.idbusiness = data.idbusiness;
+          objContact.idbusiness = data.idbusiness;
+          obtSetting.idbusiness = data.idbusiness;
 
-      if (BusinessContact.success) res.status(201).send(Business);
+          console.log({ objBusiness, obtSetting, objAddres, objContact });
+
+          const BusinessAddess = await this.AddressCrud.Create(objAddres);
+          const BusinessContact = await this.ContactbusinessCrud.Create(objContact);
+          const BusinessSetting = await this.SettingCrud.Create(obtSetting);
+
+          if (BusinessContact.success && BusinessSetting.success && BusinessAddess.success) {
+            res.status(201).send({
+              Business: Business,
+              BusinessContact: BusinessContact,
+              BusinessSetting: BusinessSetting,
+              BusinessAddess: BusinessAddess
+            });
+          } else {
+            res.status(409).send({
+              Business: Business,
+              BusinessContact: BusinessContact,
+              BusinessSetting: BusinessSetting,
+              BusinessAddess: BusinessAddess
+            });
+          }
+        } else {
+          res.status(409).send(Business);
+        }
+      } else {
+        res
+          .status(409)
+          .send(
+            ContactFindEmail.success
+              ? { ...ContactFindEmail, data: 'mail exists' }
+              : ContactFindEmail
+          );
+      }
     } catch (error) {
+      console.log(error);
       const { ERDB404 } = ErrorMessages;
       console.log(ERDB404);
       res.status(404).send(ERDB404);

@@ -3,7 +3,6 @@ const { Model, Sequelize } = _sequelize;
 
 export default class Access extends Model {
   static init(sequelize, DataTypes) {
-    console.log(1);
     super.init(
       {
         iduser: {

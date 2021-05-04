@@ -1,11 +1,13 @@
-export default function RoutesBusiness(router, RequestBusiness) {
+export default function RoutesBusiness(router, RequestUsers) {
   // * rutas de instancia
-  const RI = router();
+  const BusinessRoutes = router();
 
-  const { RequestBusinessGetAll, RequestBusinessGetLikeName } = RequestBusiness;
+  const { RequestBusinessGetAll, RequestBusinessGetLikeName, RequestBusinessCreate } = RequestUsers;
   // * get
-  RI.get('/GetAll', RequestBusinessGetAll);
-  RI.get('/SearchByName/:Search', RequestBusinessGetLikeName);
+  BusinessRoutes.get('/GetAll', RequestBusinessGetAll);
+  BusinessRoutes.get('/SearchByName/:Search', RequestBusinessGetLikeName);
 
-  return RI;
+  BusinessRoutes.post('/Create', RequestBusinessCreate);
+
+  return BusinessRoutes;
 }

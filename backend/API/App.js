@@ -70,7 +70,22 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.send({
+    error:
+      err.status >= 404
+        ? {
+            status: 404,
+            message: 'Solicitud No encontrada \u{1F50D} \u{26A0}',
+            success: true
+          }
+        : {
+            status: 500,
+            message: 'Error Interno Del Servidor \u{2757} ',
+            sugerencia:
+              'Intentar mas tarde \u{1F550} o Notifique al encargado de Soporte \u{1F514}',
+            success: true
+          }
+  });
 });
 
 /**

@@ -1,15 +1,21 @@
 import adapters from '../adapters';
+import RequestUsers from './RequestDb/ RequestUsers';
+import RequestAppoiment from './RequestDb/RequestAppoiment';
 import RequestBusiness from './RequestDb/RequestBusiness';
 
 const { RootCrudAdapter } = adapters;
 
 const {
+  accessCrud,
+  addressCrud,
   businessCrud,
   contactbusinessCrud,
-  addressCrud,
+  detailCrud,
   freedayCrud,
+  appointmentCrud,
+  serviceCrud,
   settingCrud,
-  appointmentCrud
+  userCrud
 } = RootCrudAdapter;
 
 const controllers = {
@@ -20,7 +26,9 @@ const controllers = {
     freedayCrud,
     settingCrud,
     appointmentCrud
-  )
+  ),
+  RequestUsers: new RequestUsers(userCrud, accessCrud, appointmentCrud),
+  RequestAppoiment: new RequestAppoiment(appointmentCrud)
 };
 
 export default controllers;

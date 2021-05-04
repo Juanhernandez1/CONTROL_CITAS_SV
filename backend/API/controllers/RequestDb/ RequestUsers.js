@@ -13,13 +13,77 @@ export default class RequestUsers {
     this.AppointmentCrud = appointmentCrud;
   }
 
+  RequestUsersGetPk = async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      const User = await this.UserCrud.GetPk(id);
+
+      if (User.success) res.status(User.data ? 200 : 204).send(User);
+    } catch (error) {
+      const { ERDB404 } = ErrorMessages;
+      console.log(ERDB404);
+      res.status(404).send(ERDB404);
+    }
+  };
+
+  RequestUsersCreate = async (req, res) => {
+    try {
+      const { objUser, objAccess } = req.body;
+      console.log(objUser, objAccess);
+      const User = await this.UserCrud.Create(objUser);
+
+      const { data } = User;
+      console.log(User);
+      if (User.success) {
+        objAccess.iduser = data.iduser;
+        const Acces = await this.AccessCrud.Create(objAccess);
+
+        if (Acces.success) {
+          delete Acces.password;
+          res.status(201).send({ User, Acces });
+        } else {
+          res.status(409).send({ User, Acces });
+        }
+      } else {
+        res.status(409).send(User);
+      }
+    } catch (error) {
+      const { ERDB404 } = ErrorMessages;
+      console.log(ERDB404);
+      res.status(404).send(ERDB404);
+    }
+  };
+
   RequestUsersUpdate = async (req, res) => {
     try {
       const objUser = req.body;
 
-      const Business = this.UserCrud.Update(objUser);
+      const User = await this.UserCrud.Update(objUser);
 
-      if (objUser.success) res.status(202).send(objUser);
+      if (User.success) {
+        res.status(202).send(User);
+      } else {
+        res.status(409).send(User);
+      }
+    } catch (error) {
+      const { ERDB404 } = ErrorMessages;
+      console.log(ERDB404);
+      res.status(404).send(ERDB404);
+    }
+  };
+
+  RequestUsersDelete = async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      const User = await this.UserCrud.Delete(id);
+
+      if (User.success) {
+        res.status(202).send(User);
+      } else {
+        res.status(409).send(User);
+      }
     } catch (error) {
       const { ERDB404 } = ErrorMessages;
       console.log(ERDB404);
@@ -31,9 +95,13 @@ export default class RequestUsers {
     try {
       const objAcces = req.body;
 
-      const UsersAccess = this.AccessCrud.Update(objAcces);
+      const UsersAccess = await this.AccessCrud.Update(objAcces);
 
-      if (UsersAccess.success) res.status(202).send(UsersAccess);
+      if (UsersAccess.success) {
+        res.status(202).send(UsersAccess);
+      } else {
+        res.status(409).send(UsersAccess);
+      }
     } catch (error) {
       const { ERDB404 } = ErrorMessages;
       console.log(ERDB404);

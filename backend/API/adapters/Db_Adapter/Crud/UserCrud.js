@@ -23,24 +23,27 @@ export default class UserCrud extends CrudInterface {
       const data = await this.Model.findByPk(pk, {
         ...this.Config
       });
-
       return { data, success: true };
     } catch (error) {
-      console.log(error);
-
       return { success: false };
     }
   };
 
   Create = async obj => {
     try {
-      await this.Model.create(obj);
+      const data = await this.Model.create(obj);
 
-      return { success: true };
+      return { data, success: true };
     } catch (error) {
-      console.log(error);
+      const { message, type, path, origin } = error.errors[0];
 
-      return { success: false };
+      return {
+        success: false,
+        message,
+        type,
+        path,
+        origin
+      };
     }
   };
 
@@ -50,23 +53,31 @@ export default class UserCrud extends CrudInterface {
       const pk = obj[FieldPk];
       delete obj[FieldPk];
 
-      await this.Model.update(obj, {
+      const data = await this.Model.update(obj, {
         where: {
           [FieldPk]: pk
         }
       });
+
       return { success: true };
     } catch (error) {
-      console.log(error);
-      return { success: false };
+      const { message, type, path, origin } = error.errors[0];
+
+      return {
+        success: false,
+        message,
+        type,
+        path,
+        origin
+      };
     }
   };
 
   Delete = async pk => {
     try {
       const FieldPk = this.Model.primaryKeyAttribute;
-      await this.Model.update(
-        { state: 'inactive' },
+      const data = await this.Model.update(
+        { state: 'inactivo' },
         {
           where: {
             [FieldPk]: pk
@@ -76,9 +87,15 @@ export default class UserCrud extends CrudInterface {
 
       return { success: true };
     } catch (error) {
-      console.log(error);
+      const { message, type, path, origin } = error.errors[0];
 
-      return { success: false };
+      return {
+        success: false,
+        message,
+        type,
+        path,
+        origin
+      };
     }
   };
 }

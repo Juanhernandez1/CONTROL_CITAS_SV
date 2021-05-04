@@ -1,7 +1,7 @@
 -- ***************************************************************************************
 -- * Database to Control Your Business Appointments
 -- * Designed by: Juan Hernandez
--- * Version: 4.5.0_en
+-- * Version: 4.5.3_en
 -- * Last Modification: 8/04/2021
 -- * Database Servers Available
 -- * - PostgreSQL
@@ -47,6 +47,7 @@ CREATE TABLE Business (
 	uuidBusiness VARCHAR ( 555 ) NOT NULL UNIQUE,
 	businessName VARCHAR ( 555 ) NOT NULL,
 	Description VARCHAR ( 555 ) NOT NULL,
+	imageUrlBusiness  VARCHAR ( 555 ) NOT NULL,
 	idUser BIGINT NOT NULL UNIQUE,
 	FOREIGN KEY ( idUser ) REFERENCES Users ( idUser ),
 	STATE VARCHAR ( 555 ) NOT NULL 
@@ -90,7 +91,7 @@ CREATE TABLE settings (
 	timeEnds VARCHAR ( 555 ) NOT NULL,
 	nsa VARCHAR ( 555 ) NOT NULL,
 	ta VARCHAR ( 555 ) NOT NULL,
-	taa VARCHAR ( 555 ) NOT NULL,
+	tba VARCHAR ( 555 ) NOT NULL,
 	ad VARCHAR ( 555 ) NOT NULL,
 	workingDays VARCHAR ( 555 ) NOT NULL,
 	lunchTime INT NOT NULL,

@@ -32,23 +32,27 @@ export default class AccessCrud extends CrudInterface {
 
       return { data, success: true, valid };
     } catch (error) {
-      console.log(error);
-
       return { success: false };
     }
   };
 
   Create = async obj => {
     try {
-      obj.password = this.encrypter.EncryptPassword(obj.password);
+      obj.password = this.encrypter.EncryptUserPassword(obj.password);
 
-      await this.Model.create(obj);
+      const data = await this.Model.create(obj);
 
-      return { success: true };
+      return { data, success: true };
     } catch (error) {
-      console.log(error);
+      const { message, type, path, origin } = error.errors[0];
 
-      return { success: false };
+      return {
+        success: false,
+        message,
+        type,
+        path,
+        origin
+      };
     }
   };
 
@@ -58,19 +62,21 @@ export default class AccessCrud extends CrudInterface {
       const FieldPk = this.Model.primaryKeyAttribute;
       const pk = obj[FieldPk];
       delete obj[FieldPk];
+
       // buscar el regitro de acceso correco
       const useracces = await this.Model.findByPk(pk, this.Config);
+
       // comparar las contrasemas ingresada para determinar si se actualiza la contraseña o no
       const valid = this.encrypter.ComparePassword(useracces.password, obj.password);
 
       if (valid) {
-        delete obj.password;
+        obj.password = useracces.password;
       } else {
         // encriptar contraseña a actualizar
-        obj.password = this.encrypter.EncryptPassword(obj.password);
+        obj.password = this.encrypter.EncryptUserPassword(obj.password);
       }
 
-      await this.Model.update(obj, {
+      const data = await this.Model.update(obj, {
         where: {
           [FieldPk]: pk
         }
@@ -78,9 +84,15 @@ export default class AccessCrud extends CrudInterface {
 
       return { success: true };
     } catch (error) {
-      console.log(error);
+      const { message, type, path, origin } = error.errors[0];
 
-      return { success: false };
+      return {
+        success: false,
+        message,
+        type,
+        path,
+        origin
+      };
     }
   };
 }
