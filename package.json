@@ -20,7 +20,8 @@
   "bugs": {},
   "homepage": "",
   "dependencies": {
-    "concurrently": "^6.0.0"
+    "concurrently": "^6.0.0",
+    "cross-env": "^7.0.3"
   },
   "engines": {
     "node": "14.x"
@@ -35,7 +36,6 @@
     "@babel/plugin-transform-runtime": "^7.13.10",
     "@babel/preset-env": "^7.13.12",
     "babel-eslint": "^10.1.0",
-    "cross-env": "^7.0.3",
     "eslint": "^7.23.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-config-standard": "^16.0.2",
