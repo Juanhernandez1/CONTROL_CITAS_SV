@@ -21,12 +21,7 @@
   "homepage": "",
   "dependencies": {
     "concurrently": "^6.0.0",
-    "cross-env": "^7.0.3"
-  },
-  "engines": {
-    "node": "14.x"
-  },
-  "devDependencies": {
+    "cross-env": "^7.0.3",
     "@babel/cli": "^7.13.14",
     "@babel/core": "^7.13.14",
     "@babel/eslint-parser": "^7.13.14",
@@ -35,7 +30,12 @@
     "@babel/plugin-syntax-class-properties": "^7.12.13",
     "@babel/plugin-transform-runtime": "^7.13.10",
     "@babel/preset-env": "^7.13.12",
-    "@babel/runtime": "^7.14.0",
+    "@babel/runtime": "^7.14.0"
+  },
+  "engines": {
+    "node": "14.x"
+  },
+  "devDependencies": {
     "babel-eslint": "^10.1.0",
     "eslint": "^7.23.0",
     "eslint-config-prettier": "^8.1.0",
