@@ -25,6 +25,7 @@ const controllers = {
     addressCrud,
     freedayCrud,
     settingCrud,
+    serviceCrud,
     appointmentCrud
   ),
   RequestUsers: new RequestUsers(userCrud, accessCrud, appointmentCrud),

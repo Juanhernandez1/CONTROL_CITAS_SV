@@ -8,6 +8,7 @@ export default class RequestBusiness {
     addressCrud,
     freedayCrud,
     settingCrud,
+    servicesCrud,
     appointmentCrud
   ) {
     if (RequestBusiness.#instance) {
@@ -18,14 +19,16 @@ export default class RequestBusiness {
     this.AddressCrud = addressCrud;
     this.FreedayCrud = freedayCrud;
     this.SettingCrud = settingCrud;
+    this.ServicesCrud = servicesCrud;
     this.AppointmentCrud = appointmentCrud;
     RequestBusiness.#instance = this;
   }
 
   RequestBusinessGetAll = async (req, res) => {
     try {
-      const DataList = await this.BusinessCrud.GetAll();
-      if (DataList.success) res.status(200).send(DataList);
+      const { page } = req.params;
+      const BusinessList = await this.BusinessCrud.GetAll(parseInt(page));
+      if (BusinessList.success) res.status(BusinessList.data ? 200 : 204).send(BusinessList);
     } catch (error) {
       const { ERDB404 } = ErrorMessages;
       console.log(ERDB404, error);
@@ -35,11 +38,11 @@ export default class RequestBusiness {
 
   RequestBusinessGetLikeName = async (req, res) => {
     try {
-      console.log(req.params.Search);
-      const searchData = req.params.Search;
-      const DataList = await this.BusinessCrud.GetLikeName(searchData);
-      if (DataList.success) res.status(200).send(DataList);
+      const { search, page } = req.params;
+      const BusinessList = await this.BusinessCrud.GetLikeName(search, parseInt(page));
+      if (BusinessList.success) res.status(BusinessList.data ? 200 : 204).send(BusinessList);
     } catch (error) {
+      console.log(error);
       const { ERDB404 } = ErrorMessages;
       console.log(ERDB404);
       res.status(404).send(ERDB404);
@@ -48,21 +51,9 @@ export default class RequestBusiness {
 
   RequestBusinessGetPk = async (req, res) => {
     try {
-      const pk = req.params.Pk;
-      const Data = await this.BusinessCrud.GetPk(pk);
-      if (Data.success) res.status(200).send(Data);
-    } catch (error) {
-      const { ERDB404 } = ErrorMessages;
-      console.log(ERDB404);
-      res.status(404).send(ERDB404);
-    }
-  };
-
-  RequestBusinessSettingGetPk = async (req, res) => {
-    try {
-      const pk = req.params.Pk;
-      const Data = await this.SettingCrud.GetPk(pk);
-      if (Data.success) res.status(200).send(Data);
+      const { id } = req.params;
+      const Business = await this.BusinessCrud.GetPk(id);
+      if (Business.success) res.status(Business.data ? 200 : 204).send(Business);
     } catch (error) {
       const { ERDB404 } = ErrorMessages;
       console.log(ERDB404);
@@ -126,16 +117,75 @@ export default class RequestBusiness {
     }
   };
 
+  RequestBusinessUpdate = async (req, res) => {
+    try {
+      const objBusiness = req.body;
+
+      const Business = await this.BusinessCrud.Update(objBusiness);
+
+      if (Business.data[0] === 1) res.status(202).send(Business);
+      else res.status(406).send({ ...Business, success: false });
+    } catch (error) {
+      const { ERDB404 } = ErrorMessages;
+      console.log(ERDB404);
+      res.status(404).send(ERDB404);
+    }
+  };
+
+  RequestBusinessDelete = async (req, res) => {
+    try {
+      const { id } = req.params;
+      console.log(id);
+      const Business = await this.BusinessCrud.Delete(id);
+      if (Business.data[0] === 1) res.status(202).send(Business);
+      else res.status(406).send({ ...Business, success: false });
+    } catch (error) {
+      console.log(error);
+      const { ERDB404 } = ErrorMessages;
+      console.log(ERDB404);
+      res.status(404).send(ERDB404);
+    }
+  };
+
+  RequestBusinessSettingGetPk = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const BusinessSetting = await this.SettingCrud.GetPk(id);
+      if (BusinessSetting.success)
+        res.status(BusinessSetting.data ? 200 : 204).send(BusinessSetting);
+    } catch (error) {
+      const { ERDB404 } = ErrorMessages;
+      console.log(ERDB404);
+
+      res.status(404).send(ERDB404);
+    }
+  };
+
   RequestBusinessSettingUpdate = async (req, res) => {
     try {
       const obtSetting = req.body;
 
       const BusinessSetting = await this.SettingCrud.Update(obtSetting);
 
-      if (BusinessSetting.success) res.status(202).send(BusinessSetting);
+      if (BusinessSetting.data[0] === 1) res.status(202).send(BusinessSetting);
+      else res.status(406).send({ ...BusinessSetting, success: false });
     } catch (error) {
       const { ERDB404 } = ErrorMessages;
       console.log(ERDB404);
+      res.status(404).send(ERDB404);
+    }
+  };
+
+  RequestBusinessAddressGetPk = async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      const BusinessAddess = await this.AddressCrud.GetPk(id);
+      if (BusinessAddess.success) res.status(BusinessAddess.data ? 200 : 204).send(BusinessAddess);
+    } catch (error) {
+      const { ERDB404 } = ErrorMessages;
+      console.log(ERDB404);
+
       res.status(404).send(ERDB404);
     }
   };
@@ -144,30 +194,28 @@ export default class RequestBusiness {
     try {
       const objAddres = req.body;
 
-      const Business = await this.BusinessCrud.Update(objAddres);
+      const BusinessAddess = await this.AddressCrud.Update(objAddres);
 
-      objAddres.idbusiness = Business.idbusiness;
-
-      const BusinessAddess = await this.AddressCrud.Create(objAddres);
-
-      if (BusinessAddess.success) res.status(202).send(BusinessAddess);
+      if (BusinessAddess.data[0] === 1) res.status(202).send(BusinessAddess);
+      else res.status(406).send({ ...BusinessAddess, success: false });
     } catch (error) {
+      console.log(error);
       const { ERDB404 } = ErrorMessages;
       console.log(ERDB404);
       res.status(404).send(ERDB404);
     }
   };
 
-  RequestBusinessUpdate = async (req, res) => {
+  RequestBusinessContacGetPk = async (req, res) => {
     try {
-      const objBusiness = req.body;
-
-      const Business = await this.BusinessCrud.Update(objBusiness);
-
-      if (Business.success) res.status(202).send(Business);
+      const { id } = req.params;
+      const BusinessContact = await this.ContactbusinessCrud.GetPk(id);
+      if (BusinessContact.success)
+        res.status(BusinessContact.data ? 200 : 204).send(BusinessContact);
     } catch (error) {
       const { ERDB404 } = ErrorMessages;
       console.log(ERDB404);
+
       res.status(404).send(ERDB404);
     }
   };
@@ -178,7 +226,8 @@ export default class RequestBusiness {
 
       const BusinessContact = await this.ContactbusinessCrud.Update(objContact);
 
-      if (BusinessContact.success) res.status(202).send(BusinessContact);
+      if (BusinessContact.data[0] === 1) res.status(202).send(BusinessContact);
+      else res.status(406).send({ ...BusinessContact, success: false });
     } catch (error) {
       const { ERDB404 } = ErrorMessages;
       console.log(ERDB404);
@@ -186,12 +235,75 @@ export default class RequestBusiness {
     }
   };
 
-  RequestBusinessDelete = async (req, res) => {
+  RequestBusinessServicesGetAll = async (req, res) => {
     try {
-      const pk = req.params.Pk;
-      const Data = await this.BusinessCrud.Delete(pk);
-      if (Data.success) res.status(202).send(Data);
+      const { idbusiness } = req.params;
+      const ServicesList = await this.ServicesCrud.GetAll(idbusiness);
+      if (ServicesList.success) res.status(ServicesList.data ? 200 : 204).send(ServicesList);
     } catch (error) {
+      const { ERDB404 } = ErrorMessages;
+      console.log(ERDB404, error);
+      res.status(404).send(ERDB404);
+    }
+  };
+
+  RequestBusinessServicesGetPk = async (req, res) => {
+    try {
+      const { idbusiness, id } = req.params;
+      const BusinessService = await this.ServicesCrud.GetPk(idbusiness, id);
+      if (BusinessService.success)
+        res.status(BusinessService.data ? 200 : 204).send(BusinessService);
+    } catch (error) {
+      const { ERDB404 } = ErrorMessages;
+      console.log(ERDB404);
+      res.status(404).send(ERDB404);
+    }
+  };
+
+  // * no testeado
+  RequestBusinessServicesCreate = async (req, res) => {
+    try {
+      const { objServices } = req.body;
+
+      const BusinessService = await this.ServicesCrud.Create(objServices);
+
+      if (BusinessService.success) {
+        res.status(201).send(BusinessService);
+      } else {
+        res.status(409).send(BusinessService);
+      }
+    } catch (error) {
+      console.log(error);
+      const { ERDB404 } = ErrorMessages;
+      console.log(ERDB404);
+      res.status(404).send(ERDB404);
+    }
+  };
+
+  RequestBusinessServicesUpdate = async (req, res) => {
+    try {
+      const objBusiness = req.body;
+
+      const Business = await this.ServicesCrud.Update(objBusiness);
+
+      if (Business.data[0] === 1) res.status(202).send(Business);
+      else res.status(406).send({ ...Business, success: false });
+    } catch (error) {
+      const { ERDB404 } = ErrorMessages;
+      console.log(ERDB404);
+      res.status(404).send(ERDB404);
+    }
+  };
+
+  RequestBusinessServicesDelete = async (req, res) => {
+    try {
+      const { id } = req.params;
+      console.log(id);
+      const Business = await this.ServicesCrud.Delete(id);
+      if (Business.data[0] === 1) res.status(202).send(Business);
+      else res.status(406).send({ ...Business, success: false });
+    } catch (error) {
+      console.log(error);
       const { ERDB404 } = ErrorMessages;
       console.log(ERDB404);
       res.status(404).send(ERDB404);

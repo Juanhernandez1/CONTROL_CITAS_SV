@@ -1,4 +1,5 @@
 import CrudInterface from '../../../interface/CrudInterface';
+import pagination from '../../../assets/pagination';
 
 export default class BusinessCrud extends CrudInterface {
   static #instance;
@@ -28,24 +29,32 @@ export default class BusinessCrud extends CrudInterface {
 
       return { data, success: true };
     } catch (error) {
-      console.log(error);
-
       return { success: false };
     }
   };
 
-  GetAll = async () => {
+  GetAll = async page => {
+    const { getPreviousPage, getOffset, getNextPage } = pagination;
     try {
-      const data = await this.Model.findAll({
+      const { count, rows } = await this.Model.findAndCountAll({
         ...this.Config,
-        offset: 1,
-        limit: 1,
-        include: [{ association: 'address' }, { association: 'contactbusiness' }]
+        offset: getOffset(page, 6),
+        limit: 6,
+        include: [{ association: 'address' }, { association: 'contactbusiness' }],
+        where: {
+          state: 'Activo'
+        }
       });
 
-      console.log(data);
-
-      return { data, success: true };
+      return {
+        previousPage: getPreviousPage(page),
+        currentPage: page,
+        nextPage: getNextPage(page, 6, count),
+        total: count,
+        limit: 6,
+        data: rows,
+        success: true
+      };
     } catch (error) {
       console.log(error);
 
@@ -53,19 +62,31 @@ export default class BusinessCrud extends CrudInterface {
     }
   };
 
-  GetLikeName = async searchData => {
+  GetLikeName = async (searchData, page) => {
+    const { getPreviousPage, getOffset, getNextPage } = pagination;
     try {
-      const data = await this.Model.findAll({
+      const { count, rows } = await this.Model.findAndCountAll({
         ...this.Config,
         where: {
           businessname: {
             [this.Operatios.like]: `%${searchData}%`
-          }
+          },
+          state: 'Activo'
         },
+        offset: getOffset(page, 6),
+        limit: 6,
         include: [{ association: 'address' }, { association: 'contactbusiness' }]
       });
 
-      return { data, success: true };
+      return {
+        previousPage: getPreviousPage(page),
+        currentPage: page,
+        nextPage: getNextPage(page, 6, count),
+        total: count,
+        limit: 6,
+        data: rows,
+        success: true
+      };
     } catch (error) {
       console.log(error);
 
@@ -105,16 +126,24 @@ export default class BusinessCrud extends CrudInterface {
       });
       return { data, success: true };
     } catch (error) {
-      console.log(error);
-      return { success: false };
+      const { message, type, path, origin } = error.errors[0];
+
+      return {
+        success: false,
+        message,
+        type,
+        path,
+        origin
+      };
     }
   };
 
   Delete = async pk => {
+    console.log(pk);
     try {
       const FieldPk = this.Model.primaryKeyAttribute;
       const data = await this.Model.update(
-        { state: 'inactive' },
+        { state: 'inactivo' },
         {
           where: {
             [FieldPk]: pk
@@ -124,9 +153,15 @@ export default class BusinessCrud extends CrudInterface {
 
       return { data, success: true };
     } catch (error) {
-      console.log(error);
+      const { message, type, path, origin } = error.errors[0];
 
-      return { success: false };
+      return {
+        success: false,
+        message,
+        type,
+        path,
+        origin
+      };
     }
   };
 }

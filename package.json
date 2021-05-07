@@ -8,6 +8,7 @@
     "start": "cross-env concurrently --kill-others \"cd frontend && npm start\" \"cd backend && npm rum start-dev\"",
     "start-Front": "cross-env concurrently --kill-others \"cd frontend && npm start\" ",
     "start-Back": "cross-env concurrently --kill-others  \"cd backend && npm rum start-dev\"",
+    "transpilar": "babel backend/API -d API",
     "formatG": "prettier --write .",
     "formatH": "pretty-quick"
   },
@@ -20,8 +21,18 @@
   "dependencies": {
     "concurrently": "^6.0.0"
   },
+  "engines": {
+    "node": "14.x"
+  },
   "devDependencies": {
+    "@babel/cli": "^7.13.14",
+    "@babel/core": "^7.13.14",
     "@babel/eslint-parser": "^7.13.14",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-proposal-private-methods": "^7.13.0",
+    "@babel/plugin-syntax-class-properties": "^7.12.13",
+    "@babel/plugin-transform-runtime": "^7.13.10",
+    "@babel/preset-env": "^7.13.12",
     "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.23.0",

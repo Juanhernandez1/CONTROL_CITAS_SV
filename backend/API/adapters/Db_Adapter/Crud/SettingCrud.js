@@ -33,13 +33,11 @@ export default class SettingCrud extends CrudInterface {
   };
 
   Create = async obj => {
-    console.log(obj);
     try {
       const data = await this.Model.create(obj);
 
       return { data, success: true };
     } catch (error) {
-      console.log(error);
       const { message, type, path, origin } = error.errors[0];
 
       return {
@@ -58,12 +56,12 @@ export default class SettingCrud extends CrudInterface {
       const pk = obj[FieldPk];
       delete obj[FieldPk];
 
-      await this.Model.update(obj, {
+      const data = await this.Model.update(obj, {
         where: {
           [FieldPk]: pk
         }
       });
-      return { success: true };
+      return { data, success: true };
     } catch (error) {
       console.log(error);
       return { success: false };

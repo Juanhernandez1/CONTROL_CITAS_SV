@@ -36,6 +36,20 @@ export default class ContactbusinessCrud extends CrudInterface {
     }
   };
 
+  GetPk = async pk => {
+    try {
+      const data = await this.Model.findByPk(pk, {
+        ...this.Config
+      });
+
+      return { data, success: true };
+    } catch (error) {
+      console.log(error);
+
+      return { success: false };
+    }
+  };
+
   Create = async obj => {
     try {
       const data = await this.Model.create(obj);

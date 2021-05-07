@@ -18,10 +18,26 @@ export default class ServiceCrud extends CrudInterface {
     };
   }
 
-  GetAll = async () => {
+  GetPk = async (idbusiness, pk) => {
+    try {
+      const data = await this.Model.findByPk(pk, {
+        ...this.Config,
+        where: { idbusiness }
+      });
+
+      return { data, success: true };
+    } catch (error) {
+      console.log(error);
+
+      return { success: false };
+    }
+  };
+
+  GetAll = async idbusiness => {
     try {
       const data = await this.Model.findAll({
-        ...this.Config
+        ...this.Config,
+        where: { idbusiness }
       });
 
       return { data, success: true };

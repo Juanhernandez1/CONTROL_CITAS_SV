@@ -18,6 +18,20 @@ export default class AddressCrud extends CrudInterface {
     };
   }
 
+  GetPk = async pk => {
+    try {
+      const data = await this.Model.findByPk(pk, {
+        ...this.Config
+      });
+
+      return { data, success: true };
+    } catch (error) {
+      console.log(error);
+
+      return { success: false };
+    }
+  };
+
   Create = async obj => {
     try {
       const data = await this.Model.create(obj);
@@ -38,16 +52,17 @@ export default class AddressCrud extends CrudInterface {
 
   Update = async obj => {
     try {
+      console.log(obj);
       const FieldPk = this.Model.primaryKeyAttribute;
       const pk = obj[FieldPk];
       delete obj[FieldPk];
 
-      await this.Model.update(obj, {
+      const data = await this.Model.update(obj, {
         where: {
           [FieldPk]: pk
         }
       });
-      return { success: true };
+      return { data, success: true };
     } catch (error) {
       const { message, type, path, origin } = error.errors[0];
 
