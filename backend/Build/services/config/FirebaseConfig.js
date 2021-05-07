@@ -1,11 +1,11 @@
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
-exports["default"] = void 0;
+exports['default'] = void 0;
 
-var _dotenv = require("dotenv");
+var _dotenv = require('dotenv');
 
 // * objeto de configuracion para conectarse con firebase
 (0, _dotenv.config)();
@@ -19,4 +19,4 @@ var firebaseConfig = {
   measurementId: process.env.MEASUREMENTI
 };
 var _default = firebaseConfig;
-exports["default"] = _default;
+exports['default'] = _default;

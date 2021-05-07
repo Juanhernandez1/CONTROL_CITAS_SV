@@ -1,17 +1,17 @@
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
-exports["default"] = Rutass;
+exports['default'] = Rutass;
 
 function Rutass(router, control) {
   var todos = control.todos,
-      create = control.create,
-      eliminar = control.eliminar,
-      actualizar = control.actualizar,
-      findOneLike = control.findOneLike,
-      getOne = control.getOne; // * get
+    create = control.create,
+    eliminar = control.eliminar,
+    actualizar = control.actualizar,
+    findOneLike = control.findOneLike,
+    getOne = control.getOne; // * get
 
   router.get('/todos', todos);
   router.get('/buscarPorId/:id', getOne);
@@ -21,6 +21,6 @@ function Rutass(router, control) {
 
   router.put('/actualizar', actualizar); // * delete
 
-  router["delete"]('/eliminar/:id', eliminar);
+  router['delete']('/eliminar/:id', eliminar);
   return router;
 }

@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
-exports["default"] = RoutesAppoiment;
+exports['default'] = RoutesAppoiment;
 
 function RoutesAppoiment(router, RequestAppoiment) {
   // * rutas de instancia

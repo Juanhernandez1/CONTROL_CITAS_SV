@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
-exports["default"] = void 0;
+exports['default'] = void 0;
 
 var getOffset = function getOffset(page, limit) {
   return page * limit - limit;
@@ -31,4 +31,4 @@ var pagination = {
   getNextPage: getNextPage
 };
 var _default = pagination;
-exports["default"] = _default;
+exports['default'] = _default;

@@ -1,11 +1,11 @@
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
-exports["default"] = void 0;
+exports['default'] = void 0;
 
-var _dotenv = require("dotenv");
+var _dotenv = require('dotenv');
 
 (0, _dotenv.config)();
 var ConfiguracionDb = {
@@ -19,7 +19,6 @@ var ConfiguracionDb = {
         require: true,
         // This will help you. But you will see nwe error
         rejectUnauthorized: false // This line will fix new error
-
       }
     }
   },
@@ -34,4 +33,4 @@ var ConfiguracionDb = {
   }
 };
 var _default = ConfiguracionDb;
-exports["default"] = _default;
+exports['default'] = _default;

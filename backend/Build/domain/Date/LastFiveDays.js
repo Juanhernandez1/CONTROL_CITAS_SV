@@ -1,15 +1,15 @@
-"use strict";
+'use strict';
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+var _interopRequireDefault = require('@babel/runtime/helpers/interopRequireDefault');
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
-exports["default"] = void 0;
+exports['default'] = void 0;
 
-var _services = _interopRequireDefault(require("../../services"));
+var _services = _interopRequireDefault(require('../../services'));
 
-var MomentSv = _services["default"].MomentSv;
+var MomentSv = _services['default'].MomentSv;
 
 function LastFiveDays() {
   var ListFiveDays = [];
@@ -33,4 +33,4 @@ function LastFiveDays() {
 }
 
 var _default = LastFiveDays;
-exports["default"] = _default;
+exports['default'] = _default;

@@ -1,30 +1,30 @@
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
-exports["default"] = RoutesBusiness;
+exports['default'] = RoutesBusiness;
 
 function RoutesBusiness(router, RequestUsers) {
   // * rutas de instancia
   var BusinessRoutes = router();
   var RequestBusinessGetPk = RequestUsers.RequestBusinessGetPk,
-      RequestBusinessGetAll = RequestUsers.RequestBusinessGetAll,
-      RequestBusinessGetLikeName = RequestUsers.RequestBusinessGetLikeName,
-      RequestBusinessCreate = RequestUsers.RequestBusinessCreate,
-      RequestBusinessUpdate = RequestUsers.RequestBusinessUpdate,
-      RequestBusinessDelete = RequestUsers.RequestBusinessDelete,
-      RequestBusinessSettingGetPk = RequestUsers.RequestBusinessSettingGetPk,
-      RequestBusinessSettingUpdate = RequestUsers.RequestBusinessSettingUpdate,
-      RequestBusinessAddressGetPk = RequestUsers.RequestBusinessAddressGetPk,
-      RequestBusinessAddressUpdate = RequestUsers.RequestBusinessAddressUpdate,
-      RequestBusinessContacGetPk = RequestUsers.RequestBusinessContacGetPk,
-      RequestBusinessContactUpdate = RequestUsers.RequestBusinessContactUpdate,
-      RequestBusinessServicesGetAll = RequestUsers.RequestBusinessServicesGetAll,
-      RequestBusinessServicesGetPk = RequestUsers.RequestBusinessServicesGetPk,
-      RequestBusinessServicesCreate = RequestUsers.RequestBusinessServicesCreate,
-      RequestBusinessServicesUpdate = RequestUsers.RequestBusinessServicesUpdate,
-      RequestBusinessServicesDelete = RequestUsers.RequestBusinessServicesDelete; // * get
+    RequestBusinessGetAll = RequestUsers.RequestBusinessGetAll,
+    RequestBusinessGetLikeName = RequestUsers.RequestBusinessGetLikeName,
+    RequestBusinessCreate = RequestUsers.RequestBusinessCreate,
+    RequestBusinessUpdate = RequestUsers.RequestBusinessUpdate,
+    RequestBusinessDelete = RequestUsers.RequestBusinessDelete,
+    RequestBusinessSettingGetPk = RequestUsers.RequestBusinessSettingGetPk,
+    RequestBusinessSettingUpdate = RequestUsers.RequestBusinessSettingUpdate,
+    RequestBusinessAddressGetPk = RequestUsers.RequestBusinessAddressGetPk,
+    RequestBusinessAddressUpdate = RequestUsers.RequestBusinessAddressUpdate,
+    RequestBusinessContacGetPk = RequestUsers.RequestBusinessContacGetPk,
+    RequestBusinessContactUpdate = RequestUsers.RequestBusinessContactUpdate,
+    RequestBusinessServicesGetAll = RequestUsers.RequestBusinessServicesGetAll,
+    RequestBusinessServicesGetPk = RequestUsers.RequestBusinessServicesGetPk,
+    RequestBusinessServicesCreate = RequestUsers.RequestBusinessServicesCreate,
+    RequestBusinessServicesUpdate = RequestUsers.RequestBusinessServicesUpdate,
+    RequestBusinessServicesDelete = RequestUsers.RequestBusinessServicesDelete; // * get
 
   BusinessRoutes.get('/GetPk/:id', RequestBusinessGetPk);
   BusinessRoutes.get('/GetAll/:page', RequestBusinessGetAll);
@@ -44,7 +44,7 @@ function RoutesBusiness(router, RequestUsers) {
   BusinessRoutes.put('/Address/Update', RequestBusinessAddressUpdate);
   BusinessRoutes.put('/Service/Update', RequestBusinessServicesUpdate); // * delete
 
-  BusinessRoutes["delete"]('/Delete/:id', RequestBusinessDelete);
+  BusinessRoutes['delete']('/Delete/:id', RequestBusinessDelete);
   BusinessRoutes.put('/Service/Delete/:id', RequestBusinessServicesDelete);
   return BusinessRoutes;
 }

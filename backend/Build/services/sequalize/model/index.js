@@ -1,57 +1,57 @@
-"use strict";
+'use strict';
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+var _interopRequireDefault = require('@babel/runtime/helpers/interopRequireDefault');
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
-exports["default"] = initModels;
+exports['default'] = initModels;
 
-var _sequelize2 = _interopRequireDefault(require("sequelize"));
+var _sequelize2 = _interopRequireDefault(require('sequelize'));
 
-var _Access2 = _interopRequireDefault(require("./public/Access.js"));
+var _Access2 = _interopRequireDefault(require('./public/Access.js'));
 
-var _Address2 = _interopRequireDefault(require("./public/Address.js"));
+var _Address2 = _interopRequireDefault(require('./public/Address.js'));
 
-var _Appointment2 = _interopRequireDefault(require("./public/Appointment.js"));
+var _Appointment2 = _interopRequireDefault(require('./public/Appointment.js'));
 
-var _Business2 = _interopRequireDefault(require("./public/Business.js"));
+var _Business2 = _interopRequireDefault(require('./public/Business.js'));
 
-var _Contactbusiness2 = _interopRequireDefault(require("./public/Contactbusiness.js"));
+var _Contactbusiness2 = _interopRequireDefault(require('./public/Contactbusiness.js'));
 
-var _Detail2 = _interopRequireDefault(require("./public/Detail.js"));
+var _Detail2 = _interopRequireDefault(require('./public/Detail.js'));
 
-var _Freeday2 = _interopRequireDefault(require("./public/Freeday.js"));
+var _Freeday2 = _interopRequireDefault(require('./public/Freeday.js'));
 
-var _Service2 = _interopRequireDefault(require("./public/Service.js"));
+var _Service2 = _interopRequireDefault(require('./public/Service.js'));
 
-var _Setting2 = _interopRequireDefault(require("./public/Setting.js"));
+var _Setting2 = _interopRequireDefault(require('./public/Setting.js'));
 
-var _User2 = _interopRequireDefault(require("./public/User.js"));
+var _User2 = _interopRequireDefault(require('./public/User.js'));
 
-var DataTypes = _sequelize2["default"].DataTypes;
-var Op = _sequelize2["default"].Op;
+var DataTypes = _sequelize2['default'].DataTypes;
+var Op = _sequelize2['default'].Op;
 
 function initModels(sequelize) {
-  var Access = _Access2["default"].init(sequelize, DataTypes);
+  var Access = _Access2['default'].init(sequelize, DataTypes);
 
-  var Address = _Address2["default"].init(sequelize, DataTypes);
+  var Address = _Address2['default'].init(sequelize, DataTypes);
 
-  var Appointment = _Appointment2["default"].init(sequelize, DataTypes);
+  var Appointment = _Appointment2['default'].init(sequelize, DataTypes);
 
-  var Business = _Business2["default"].init(sequelize, DataTypes);
+  var Business = _Business2['default'].init(sequelize, DataTypes);
 
-  var Contactbusiness = _Contactbusiness2["default"].init(sequelize, DataTypes);
+  var Contactbusiness = _Contactbusiness2['default'].init(sequelize, DataTypes);
 
-  var Detail = _Detail2["default"].init(sequelize, DataTypes);
+  var Detail = _Detail2['default'].init(sequelize, DataTypes);
 
-  var Freeday = _Freeday2["default"].init(sequelize, DataTypes);
+  var Freeday = _Freeday2['default'].init(sequelize, DataTypes);
 
-  var Service = _Service2["default"].init(sequelize, DataTypes);
+  var Service = _Service2['default'].init(sequelize, DataTypes);
 
-  var Setting = _Setting2["default"].init(sequelize, DataTypes);
+  var Setting = _Setting2['default'].init(sequelize, DataTypes);
 
-  var User = _User2["default"].init(sequelize, DataTypes);
+  var User = _User2['default'].init(sequelize, DataTypes);
 
   Detail.belongsTo(Appointment, {
     as: 'DetailidappointmentAppointment',
