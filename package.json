@@ -8,7 +8,7 @@
     "start": "cross-env concurrently --kill-others \"cd frontend && npm start\" \"cd backend && npm rum start-dev\"",
     "postinstall": "cross-env concurrently \"cd frontend && npm install\" \" cd backend && npm install\"",
     "start-Front": "cross-env concurrently --kill-others \"cd frontend && npm start\" ",
-    "start-Back": "cross-env concurrently --kill-others \"cd backend && npm start\"",
+    "start-Back": "cross-env concurrently \"cd backend && npm start\"",
     "transpilar": "cross-env concurrently --kill-others \"cd backend && npm run transpilar\"",
     "formatG": "prettier --write .",
     "formatH": "pretty-quick"
