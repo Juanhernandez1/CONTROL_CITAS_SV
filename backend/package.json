@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node API/bin/www.js",
+    "start": "node ./Build/bin/www.js",
     "start-dev": "babel-watch ./API/bin/www.js",
     "GetModel": "sequelize-auto -o \"./API/services/sequalize/model/public\" -d AppointmentDB -h localhost -u postgres -p 5432 -x postgres -e postgres --cm p --cf p --cp c -s public -l esm --sg",
-    "transpilar": "babel backend -d API"
+    "transpilar": "babel API -d Build"
   },
   "engines": {
     "node": "14.x"
@@ -35,8 +35,10 @@
   "devDependencies": {
     "@babel/cli": "^7.13.14",
     "@babel/core": "^7.13.14",
+    "@babel/eslint-parser": "^7.13.14",
     "@babel/plugin-proposal-class-properties": "^7.13.0",
     "@babel/plugin-proposal-private-methods": "^7.13.0",
+    "@babel/plugin-syntax-class-properties": "^7.12.13",
     "@babel/plugin-transform-runtime": "^7.13.10",
     "@babel/preset-env": "^7.13.12",
     "babel-watch": "^7.4.1",

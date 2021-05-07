@@ -1,1 +1,1 @@
-web: node API/bin/www.js
+web: npm run start-Back
