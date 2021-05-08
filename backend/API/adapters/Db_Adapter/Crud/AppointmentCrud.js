@@ -157,7 +157,7 @@ export default class AppointmentCrud extends CrudInterface {
     try {
       const FieldPk = this.Model.primaryKeyAttribute;
       await this.Model.update(
-        { state: 'inactive' },
+        { state: 'inactivo' },
         {
           where: {
             [FieldPk]: pk

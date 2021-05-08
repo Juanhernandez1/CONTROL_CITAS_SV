@@ -50,7 +50,7 @@ export default class BusinessCrud extends CrudInterface {
         previousPage: getPreviousPage(page),
         currentPage: page,
         nextPage: getNextPage(page, 6, count),
-        total: count,
+        totalPage: Math.ceil(count / 6),
         limit: 6,
         data: rows,
         success: true
@@ -82,7 +82,7 @@ export default class BusinessCrud extends CrudInterface {
         previousPage: getPreviousPage(page),
         currentPage: page,
         nextPage: getNextPage(page, 6, count),
-        total: count,
+        totalPage: Math.ceil(count / 6),
         limit: 6,
         data: rows,
         success: true

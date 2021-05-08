@@ -33,13 +33,20 @@ export default class ServiceCrud extends CrudInterface {
     }
   };
 
-  GetAll = async idbusiness => {
+  GetAll = async (idbusiness, state) => {
     try {
-      const data = await this.Model.findAll({
-        ...this.Config,
-        where: { idbusiness }
-      });
-
+      let data;
+      if (state !== undefined) {
+        data = await this.Model.findAll({
+          ...this.Config,
+          where: { idbusiness, state }
+        });
+      } else {
+        data = await this.Model.findAll({
+          ...this.Config,
+          where: { idbusiness }
+        });
+      }
       return { data, success: true };
     } catch (error) {
       console.log(error);
@@ -50,13 +57,19 @@ export default class ServiceCrud extends CrudInterface {
 
   Create = async obj => {
     try {
-      await this.Model.create(obj);
+      const data = await this.Model.create(obj);
 
-      return { success: true };
+      return { data, success: true };
     } catch (error) {
-      console.log(error);
+      const { message, type, path, origin } = error.errors[0];
 
-      return { success: false };
+      return {
+        success: false,
+        message,
+        type,
+        path,
+        origin
+      };
     }
   };
 
@@ -65,13 +78,12 @@ export default class ServiceCrud extends CrudInterface {
       const FieldPk = this.Model.primaryKeyAttribute;
       const pk = obj[FieldPk];
       delete obj[FieldPk];
-
-      await this.Model.update(obj, {
+      const data = await this.Model.update(obj, {
         where: {
           [FieldPk]: pk
         }
       });
-      return { success: true };
+      return { data, success: true };
     } catch (error) {
       console.log(error);
       return { success: false };
@@ -79,10 +91,11 @@ export default class ServiceCrud extends CrudInterface {
   };
 
   Delete = async pk => {
+    console.log(pk);
     try {
       const FieldPk = this.Model.primaryKeyAttribute;
-      await this.Model.update(
-        { state: 'inactive' },
+      const data = await this.Model.update(
+        { state: 'inactivo' },
         {
           where: {
             [FieldPk]: pk
@@ -90,7 +103,7 @@ export default class ServiceCrud extends CrudInterface {
         }
       );
 
-      return { success: true };
+      return { data, success: true };
     } catch (error) {
       console.log(error);
 

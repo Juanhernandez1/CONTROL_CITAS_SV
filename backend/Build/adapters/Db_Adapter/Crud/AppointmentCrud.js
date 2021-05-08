@@ -570,7 +570,7 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
                       _context7.next = 4;
                       return _this.Model.update(
                         {
-                          state: 'inactive'
+                          state: 'inactivo'
                         },
                         {
                           where: (0, _defineProperty2['default'])({}, FieldPk, pk)
