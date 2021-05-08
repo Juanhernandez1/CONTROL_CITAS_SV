@@ -21,6 +21,7 @@ function RoutesBusiness(router, RequestUsers) {
     RequestBusinessContacGetPk = RequestUsers.RequestBusinessContacGetPk,
     RequestBusinessContactUpdate = RequestUsers.RequestBusinessContactUpdate,
     RequestBusinessServicesGetAll = RequestUsers.RequestBusinessServicesGetAll,
+    RequestBusinessServicesGetAllClient = RequestUsers.RequestBusinessServicesGetAllClient,
     RequestBusinessServicesGetPk = RequestUsers.RequestBusinessServicesGetPk,
     RequestBusinessServicesCreate = RequestUsers.RequestBusinessServicesCreate,
     RequestBusinessServicesUpdate = RequestUsers.RequestBusinessServicesUpdate,
@@ -33,18 +34,19 @@ function RoutesBusiness(router, RequestUsers) {
   BusinessRoutes.get('/Address/GetPk/:id', RequestBusinessAddressGetPk);
   BusinessRoutes.get('/Contact/GetPk/:id', RequestBusinessContacGetPk);
   BusinessRoutes.get('/Services/GetPk/:idbusiness/:id', RequestBusinessServicesGetPk);
-  BusinessRoutes.get('/Services/GetAll/:idbusiness', RequestBusinessServicesGetAll); // * post
+  BusinessRoutes.get('/Services/GetAll/:idbusiness', RequestBusinessServicesGetAll);
+  BusinessRoutes.get('/Services/GetAll/:idbusiness/Client', RequestBusinessServicesGetAllClient); // * post
 
   BusinessRoutes.post('/Create', RequestBusinessCreate);
-  BusinessRoutes.put('/Service/Create', RequestBusinessServicesCreate); // * put
+  BusinessRoutes.post('/Services/Create', RequestBusinessServicesCreate); // * put
 
   BusinessRoutes.put('/Update', RequestBusinessUpdate);
   BusinessRoutes.put('/Settings/Update', RequestBusinessSettingUpdate);
   BusinessRoutes.put('/Contact/Update', RequestBusinessContactUpdate);
   BusinessRoutes.put('/Address/Update', RequestBusinessAddressUpdate);
-  BusinessRoutes.put('/Service/Update', RequestBusinessServicesUpdate); // * delete
+  BusinessRoutes.put('/Services/Update', RequestBusinessServicesUpdate); // * delete
 
   BusinessRoutes['delete']('/Delete/:id', RequestBusinessDelete);
-  BusinessRoutes.put('/Service/Delete/:id', RequestBusinessServicesDelete);
+  BusinessRoutes['delete']('/Services/Delete/:id', RequestBusinessServicesDelete);
   return BusinessRoutes;
 }

@@ -206,7 +206,7 @@ var ServiceCrud = /*#__PURE__*/ (function (_CrudInterface) {
       'GetAll',
       /*#__PURE__*/ (function () {
         var _ref2 = (0, _asyncToGenerator2['default'])(
-          /*#__PURE__*/ _regenerator['default'].mark(function _callee2(idbusiness) {
+          /*#__PURE__*/ _regenerator['default'].mark(function _callee2(idbusiness, state) {
             var data;
             return _regenerator['default'].wrap(
               function _callee2$(_context2) {
@@ -214,7 +214,33 @@ var ServiceCrud = /*#__PURE__*/ (function (_CrudInterface) {
                   switch ((_context2.prev = _context2.next)) {
                     case 0:
                       _context2.prev = 0;
-                      _context2.next = 3;
+
+                      if (!(state !== undefined)) {
+                        _context2.next = 7;
+                        break;
+                      }
+
+                      _context2.next = 4;
+                      return _this.Model.findAll(
+                        _objectSpread(
+                          _objectSpread({}, _this.Config),
+                          {},
+                          {
+                            where: {
+                              idbusiness: idbusiness,
+                              state: state
+                            }
+                          }
+                        )
+                      );
+
+                    case 4:
+                      data = _context2.sent;
+                      _context2.next = 10;
+                      break;
+
+                    case 7:
+                      _context2.next = 9;
                       return _this.Model.findAll(
                         _objectSpread(
                           _objectSpread({}, _this.Config),
@@ -227,22 +253,24 @@ var ServiceCrud = /*#__PURE__*/ (function (_CrudInterface) {
                         )
                       );
 
-                    case 3:
+                    case 9:
                       data = _context2.sent;
+
+                    case 10:
                       return _context2.abrupt('return', {
                         data: data,
                         success: true
                       });
 
-                    case 7:
-                      _context2.prev = 7;
+                    case 13:
+                      _context2.prev = 13;
                       _context2.t0 = _context2['catch'](0);
                       console.log(_context2.t0);
                       return _context2.abrupt('return', {
                         success: false
                       });
 
-                    case 11:
+                    case 17:
                     case 'end':
                       return _context2.stop();
                   }
@@ -250,12 +278,12 @@ var ServiceCrud = /*#__PURE__*/ (function (_CrudInterface) {
               },
               _callee2,
               null,
-              [[0, 7]]
+              [[0, 13]]
             );
           })
         );
 
-        return function (_x3) {
+        return function (_x3, _x4) {
           return _ref2.apply(this, arguments);
         };
       })()
@@ -266,6 +294,8 @@ var ServiceCrud = /*#__PURE__*/ (function (_CrudInterface) {
       /*#__PURE__*/ (function () {
         var _ref3 = (0, _asyncToGenerator2['default'])(
           /*#__PURE__*/ _regenerator['default'].mark(function _callee3(obj) {
+            var data, _error$errors$, message, type, path, origin;
+
             return _regenerator['default'].wrap(
               function _callee3$(_context3) {
                 while (1) {
@@ -276,19 +306,29 @@ var ServiceCrud = /*#__PURE__*/ (function (_CrudInterface) {
                       return _this.Model.create(obj);
 
                     case 3:
+                      data = _context3.sent;
                       return _context3.abrupt('return', {
+                        data: data,
                         success: true
                       });
 
-                    case 6:
-                      _context3.prev = 6;
+                    case 7:
+                      _context3.prev = 7;
                       _context3.t0 = _context3['catch'](0);
-                      console.log(_context3.t0);
+                      (_error$errors$ = _context3.t0.errors[0]),
+                        (message = _error$errors$.message),
+                        (type = _error$errors$.type),
+                        (path = _error$errors$.path),
+                        (origin = _error$errors$.origin);
                       return _context3.abrupt('return', {
-                        success: false
+                        success: false,
+                        message: message,
+                        type: type,
+                        path: path,
+                        origin: origin
                       });
 
-                    case 10:
+                    case 11:
                     case 'end':
                       return _context3.stop();
                   }
@@ -296,12 +336,12 @@ var ServiceCrud = /*#__PURE__*/ (function (_CrudInterface) {
               },
               _callee3,
               null,
-              [[0, 6]]
+              [[0, 7]]
             );
           })
         );
 
-        return function (_x4) {
+        return function (_x5) {
           return _ref3.apply(this, arguments);
         };
       })()
@@ -312,7 +352,7 @@ var ServiceCrud = /*#__PURE__*/ (function (_CrudInterface) {
       /*#__PURE__*/ (function () {
         var _ref4 = (0, _asyncToGenerator2['default'])(
           /*#__PURE__*/ _regenerator['default'].mark(function _callee4(obj) {
-            var FieldPk, pk;
+            var FieldPk, pk, data;
             return _regenerator['default'].wrap(
               function _callee4$(_context4) {
                 while (1) {
@@ -328,19 +368,21 @@ var ServiceCrud = /*#__PURE__*/ (function (_CrudInterface) {
                       });
 
                     case 6:
+                      data = _context4.sent;
                       return _context4.abrupt('return', {
+                        data: data,
                         success: true
                       });
 
-                    case 9:
-                      _context4.prev = 9;
+                    case 10:
+                      _context4.prev = 10;
                       _context4.t0 = _context4['catch'](0);
                       console.log(_context4.t0);
                       return _context4.abrupt('return', {
                         success: false
                       });
 
-                    case 13:
+                    case 14:
                     case 'end':
                       return _context4.stop();
                   }
@@ -348,12 +390,12 @@ var ServiceCrud = /*#__PURE__*/ (function (_CrudInterface) {
               },
               _callee4,
               null,
-              [[0, 9]]
+              [[0, 10]]
             );
           })
         );
 
-        return function (_x5) {
+        return function (_x6) {
           return _ref4.apply(this, arguments);
         };
       })()
@@ -364,38 +406,41 @@ var ServiceCrud = /*#__PURE__*/ (function (_CrudInterface) {
       /*#__PURE__*/ (function () {
         var _ref5 = (0, _asyncToGenerator2['default'])(
           /*#__PURE__*/ _regenerator['default'].mark(function _callee5(pk) {
-            var FieldPk;
+            var FieldPk, data;
             return _regenerator['default'].wrap(
               function _callee5$(_context5) {
                 while (1) {
                   switch ((_context5.prev = _context5.next)) {
                     case 0:
-                      _context5.prev = 0;
+                      console.log(pk);
+                      _context5.prev = 1;
                       FieldPk = _this.Model.primaryKeyAttribute;
-                      _context5.next = 4;
+                      _context5.next = 5;
                       return _this.Model.update(
                         {
-                          state: 'inactive'
+                          state: 'inactivo'
                         },
                         {
                           where: (0, _defineProperty2['default'])({}, FieldPk, pk)
                         }
                       );
 
-                    case 4:
+                    case 5:
+                      data = _context5.sent;
                       return _context5.abrupt('return', {
+                        data: data,
                         success: true
                       });
 
-                    case 7:
-                      _context5.prev = 7;
-                      _context5.t0 = _context5['catch'](0);
+                    case 9:
+                      _context5.prev = 9;
+                      _context5.t0 = _context5['catch'](1);
                       console.log(_context5.t0);
                       return _context5.abrupt('return', {
                         success: false
                       });
 
-                    case 11:
+                    case 13:
                     case 'end':
                       return _context5.stop();
                   }
@@ -403,12 +448,12 @@ var ServiceCrud = /*#__PURE__*/ (function (_CrudInterface) {
               },
               _callee5,
               null,
-              [[0, 7]]
+              [[1, 9]]
             );
           })
         );
 
-        return function (_x6) {
+        return function (_x7) {
           return _ref5.apply(this, arguments);
         };
       })()
