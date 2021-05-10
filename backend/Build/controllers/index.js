@@ -15,7 +15,8 @@ var _RequestAppoiment = _interopRequireDefault(require('./RequestDb/RequestAppoi
 
 var _RequestBusiness = _interopRequireDefault(require('./RequestDb/RequestBusiness'));
 
-var RootCrudAdapter = _adapters['default'].RootCrudAdapter;
+var RootCrudAdapter = _adapters['default'].RootCrudAdapter,
+  AppointmentGen = _adapters['default'].AppointmentGen;
 var accessCrud = RootCrudAdapter.accessCrud,
   addressCrud = RootCrudAdapter.addressCrud,
   businessCrud = RootCrudAdapter.businessCrud,
@@ -34,10 +35,11 @@ var controllers = {
     freedayCrud,
     settingCrud,
     serviceCrud,
-    appointmentCrud
+    appointmentCrud,
+    AppointmentGen
   ),
   RequestUsers: new _RequestUsers['default'](userCrud, accessCrud, appointmentCrud),
-  RequestAppoiment: new _RequestAppoiment['default'](appointmentCrud)
+  RequestAppoiment: new _RequestAppoiment['default'](appointmentCrud, AppointmentGen)
 };
 var _default = controllers;
 exports['default'] = _default;

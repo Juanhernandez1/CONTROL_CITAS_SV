@@ -136,7 +136,7 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
 
   var _super = _createSuper(AppointmentCrud);
 
-  function AppointmentCrud(Model, Operations, LastFiveDays, MomentSv) {
+  function AppointmentCrud(Model, Operations) {
     var _this;
 
     (0, _classCallCheck2['default'])(this, AppointmentCrud);
@@ -608,13 +608,6 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
         };
       })()
     );
-    (0, _defineProperty2['default'])(
-      (0, _assertThisInitialized2['default'])(_this),
-      'TempAppointmentList',
-      function () {
-        return _this.LastFiveDays();
-      }
-    );
 
     if (_classStaticPrivateFieldSpecGet(AppointmentCrud, AppointmentCrud, _instance)) {
       return (0, _possibleConstructorReturn2['default'])(
@@ -632,8 +625,6 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
 
     _this.Model = Model;
     _this.Operations = Operations;
-    _this.LastFiveDays = LastFiveDays;
-    _this.MomentSv = MomentSv;
     _this.Config = {
       raw: true,
       nest: true

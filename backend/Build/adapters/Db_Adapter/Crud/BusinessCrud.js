@@ -289,22 +289,125 @@ var BusinessCrud = /*#__PURE__*/ (function (_CrudInterface) {
     );
     (0, _defineProperty2['default'])(
       (0, _assertThisInitialized2['default'])(_this),
-      'GetLikeName',
+      'GetAllNoPaginate',
       /*#__PURE__*/ (function () {
         var _ref3 = (0, _asyncToGenerator2['default'])(
-          /*#__PURE__*/ _regenerator['default'].mark(function _callee3(searchData, page) {
-            var getPreviousPage, getOffset, getNextPage, _yield$_this$Model$fi2, count, rows;
-
+          /*#__PURE__*/ _regenerator['default'].mark(function _callee3(state) {
+            var data;
             return _regenerator['default'].wrap(
               function _callee3$(_context3) {
                 while (1) {
                   switch ((_context3.prev = _context3.next)) {
                     case 0:
+                      _context3.prev = 0;
+                      console.log(state);
+
+                      if (!(state === 'ShowHide')) {
+                        _context3.next = 8;
+                        break;
+                      }
+
+                      _context3.next = 5;
+                      return _this.Model.findAll(
+                        _objectSpread(
+                          _objectSpread({}, _this.Config),
+                          {},
+                          {
+                            include: [
+                              {
+                                association: 'address'
+                              },
+                              {
+                                association: 'contactbusiness'
+                              }
+                            ],
+                            where: {
+                              state: state
+                            }
+                          }
+                        )
+                      );
+
+                    case 5:
+                      data = _context3.sent;
+                      _context3.next = 11;
+                      break;
+
+                    case 8:
+                      _context3.next = 10;
+                      return _this.Model.findAll(
+                        _objectSpread(
+                          _objectSpread({}, _this.Config),
+                          {},
+                          {
+                            include: [
+                              {
+                                association: 'address'
+                              },
+                              {
+                                association: 'contactbusiness'
+                              }
+                            ],
+                            where: {
+                              state: 'Activo'
+                            }
+                          }
+                        )
+                      );
+
+                    case 10:
+                      data = _context3.sent;
+
+                    case 11:
+                      return _context3.abrupt('return', {
+                        data: data,
+                        success: true
+                      });
+
+                    case 14:
+                      _context3.prev = 14;
+                      _context3.t0 = _context3['catch'](0);
+                      console.log(_context3.t0);
+                      return _context3.abrupt('return', {
+                        success: false
+                      });
+
+                    case 18:
+                    case 'end':
+                      return _context3.stop();
+                  }
+                }
+              },
+              _callee3,
+              null,
+              [[0, 14]]
+            );
+          })
+        );
+
+        return function (_x3) {
+          return _ref3.apply(this, arguments);
+        };
+      })()
+    );
+    (0, _defineProperty2['default'])(
+      (0, _assertThisInitialized2['default'])(_this),
+      'GetLikeName',
+      /*#__PURE__*/ (function () {
+        var _ref4 = (0, _asyncToGenerator2['default'])(
+          /*#__PURE__*/ _regenerator['default'].mark(function _callee4(searchData, page) {
+            var getPreviousPage, getOffset, getNextPage, _yield$_this$Model$fi2, count, rows;
+
+            return _regenerator['default'].wrap(
+              function _callee4$(_context4) {
+                while (1) {
+                  switch ((_context4.prev = _context4.next)) {
+                    case 0:
                       (getPreviousPage = _pagination['default'].getPreviousPage),
                         (getOffset = _pagination['default'].getOffset),
                         (getNextPage = _pagination['default'].getNextPage);
-                      _context3.prev = 1;
-                      _context3.next = 4;
+                      _context4.prev = 1;
+                      _context4.next = 4;
                       return _this.Model.findAndCountAll(
                         _objectSpread(
                           _objectSpread({}, _this.Config),
@@ -333,10 +436,10 @@ var BusinessCrud = /*#__PURE__*/ (function (_CrudInterface) {
                       );
 
                     case 4:
-                      _yield$_this$Model$fi2 = _context3.sent;
+                      _yield$_this$Model$fi2 = _context4.sent;
                       count = _yield$_this$Model$fi2.count;
                       rows = _yield$_this$Model$fi2.rows;
-                      return _context3.abrupt('return', {
+                      return _context4.abrupt('return', {
                         previousPage: getPreviousPage(page),
                         currentPage: page,
                         nextPage: getNextPage(page, 6, count),
@@ -347,73 +450,14 @@ var BusinessCrud = /*#__PURE__*/ (function (_CrudInterface) {
                       });
 
                     case 10:
-                      _context3.prev = 10;
-                      _context3.t0 = _context3['catch'](1);
-                      console.log(_context3.t0);
-                      return _context3.abrupt('return', {
+                      _context4.prev = 10;
+                      _context4.t0 = _context4['catch'](1);
+                      console.log(_context4.t0);
+                      return _context4.abrupt('return', {
                         success: false
                       });
 
                     case 14:
-                    case 'end':
-                      return _context3.stop();
-                  }
-                }
-              },
-              _callee3,
-              null,
-              [[1, 10]]
-            );
-          })
-        );
-
-        return function (_x3, _x4) {
-          return _ref3.apply(this, arguments);
-        };
-      })()
-    );
-    (0, _defineProperty2['default'])(
-      (0, _assertThisInitialized2['default'])(_this),
-      'Create',
-      /*#__PURE__*/ (function () {
-        var _ref4 = (0, _asyncToGenerator2['default'])(
-          /*#__PURE__*/ _regenerator['default'].mark(function _callee4(obj) {
-            var data, _error$errors$, message, type, path, origin;
-
-            return _regenerator['default'].wrap(
-              function _callee4$(_context4) {
-                while (1) {
-                  switch ((_context4.prev = _context4.next)) {
-                    case 0:
-                      _context4.prev = 0;
-                      console.log(obj);
-                      _context4.next = 4;
-                      return _this.Model.create(obj);
-
-                    case 4:
-                      data = _context4.sent;
-                      return _context4.abrupt('return', {
-                        data: data,
-                        success: true
-                      });
-
-                    case 8:
-                      _context4.prev = 8;
-                      _context4.t0 = _context4['catch'](0);
-                      (_error$errors$ = _context4.t0.errors[0]),
-                        (message = _error$errors$.message),
-                        (type = _error$errors$.type),
-                        (path = _error$errors$.path),
-                        (origin = _error$errors$.origin);
-                      return _context4.abrupt('return', {
-                        success: false,
-                        message: message,
-                        type: type,
-                        path: path,
-                        origin: origin
-                      });
-
-                    case 12:
                     case 'end':
                       return _context4.stop();
                   }
@@ -421,62 +465,71 @@ var BusinessCrud = /*#__PURE__*/ (function (_CrudInterface) {
               },
               _callee4,
               null,
-              [[0, 8]]
+              [[1, 10]]
             );
           })
         );
 
-        return function (_x5) {
+        return function (_x4, _x5) {
           return _ref4.apply(this, arguments);
         };
       })()
     );
     (0, _defineProperty2['default'])(
       (0, _assertThisInitialized2['default'])(_this),
-      'Update',
+      'GetLikeNameNoPage',
       /*#__PURE__*/ (function () {
         var _ref5 = (0, _asyncToGenerator2['default'])(
-          /*#__PURE__*/ _regenerator['default'].mark(function _callee5(obj) {
-            var FieldPk, pk, data, _error$errors$2, message, type, path, origin;
-
+          /*#__PURE__*/ _regenerator['default'].mark(function _callee5(searchData) {
+            var data;
             return _regenerator['default'].wrap(
               function _callee5$(_context5) {
                 while (1) {
                   switch ((_context5.prev = _context5.next)) {
                     case 0:
                       _context5.prev = 0;
-                      FieldPk = _this.Model.primaryKeyAttribute;
-                      pk = obj[FieldPk];
-                      delete obj[FieldPk];
-                      _context5.next = 6;
-                      return _this.Model.update(obj, {
-                        where: (0, _defineProperty2['default'])({}, FieldPk, pk)
-                      });
+                      _context5.next = 3;
+                      return _this.Model.findAll(
+                        _objectSpread(
+                          _objectSpread({}, _this.Config),
+                          {},
+                          {
+                            where: {
+                              businessname: (0, _defineProperty2['default'])(
+                                {},
+                                _this.Operatios.like,
+                                '%'.concat(searchData, '%')
+                              ),
+                              state: 'Activo'
+                            },
+                            include: [
+                              {
+                                association: 'address'
+                              },
+                              {
+                                association: 'contactbusiness'
+                              }
+                            ]
+                          }
+                        )
+                      );
 
-                    case 6:
+                    case 3:
                       data = _context5.sent;
                       return _context5.abrupt('return', {
                         data: data,
                         success: true
                       });
 
-                    case 10:
-                      _context5.prev = 10;
+                    case 7:
+                      _context5.prev = 7;
                       _context5.t0 = _context5['catch'](0);
-                      (_error$errors$2 = _context5.t0.errors[0]),
-                        (message = _error$errors$2.message),
-                        (type = _error$errors$2.type),
-                        (path = _error$errors$2.path),
-                        (origin = _error$errors$2.origin);
+                      console.log(_context5.t0);
                       return _context5.abrupt('return', {
-                        success: false,
-                        message: message,
-                        type: type,
-                        path: path,
-                        origin: origin
+                        success: false
                       });
 
-                    case 14:
+                    case 11:
                     case 'end':
                       return _context5.stop();
                   }
@@ -484,7 +537,7 @@ var BusinessCrud = /*#__PURE__*/ (function (_CrudInterface) {
               },
               _callee5,
               null,
-              [[0, 10]]
+              [[0, 7]]
             );
           })
         );
@@ -496,21 +549,143 @@ var BusinessCrud = /*#__PURE__*/ (function (_CrudInterface) {
     );
     (0, _defineProperty2['default'])(
       (0, _assertThisInitialized2['default'])(_this),
-      'Delete',
+      'Create',
       /*#__PURE__*/ (function () {
         var _ref6 = (0, _asyncToGenerator2['default'])(
-          /*#__PURE__*/ _regenerator['default'].mark(function _callee6(pk) {
-            var FieldPk, data, _error$errors$3, message, type, path, origin;
+          /*#__PURE__*/ _regenerator['default'].mark(function _callee6(obj) {
+            var data, _error$errors$, message, type, path, origin;
 
             return _regenerator['default'].wrap(
               function _callee6$(_context6) {
                 while (1) {
                   switch ((_context6.prev = _context6.next)) {
                     case 0:
-                      console.log(pk);
-                      _context6.prev = 1;
+                      _context6.prev = 0;
+                      console.log(obj);
+                      _context6.next = 4;
+                      return _this.Model.create(obj);
+
+                    case 4:
+                      data = _context6.sent;
+                      return _context6.abrupt('return', {
+                        data: data,
+                        success: true
+                      });
+
+                    case 8:
+                      _context6.prev = 8;
+                      _context6.t0 = _context6['catch'](0);
+                      (_error$errors$ = _context6.t0.errors[0]),
+                        (message = _error$errors$.message),
+                        (type = _error$errors$.type),
+                        (path = _error$errors$.path),
+                        (origin = _error$errors$.origin);
+                      return _context6.abrupt('return', {
+                        success: false,
+                        message: message,
+                        type: type,
+                        path: path,
+                        origin: origin
+                      });
+
+                    case 12:
+                    case 'end':
+                      return _context6.stop();
+                  }
+                }
+              },
+              _callee6,
+              null,
+              [[0, 8]]
+            );
+          })
+        );
+
+        return function (_x7) {
+          return _ref6.apply(this, arguments);
+        };
+      })()
+    );
+    (0, _defineProperty2['default'])(
+      (0, _assertThisInitialized2['default'])(_this),
+      'Update',
+      /*#__PURE__*/ (function () {
+        var _ref7 = (0, _asyncToGenerator2['default'])(
+          /*#__PURE__*/ _regenerator['default'].mark(function _callee7(obj) {
+            var FieldPk, pk, data, _error$errors$2, message, type, path, origin;
+
+            return _regenerator['default'].wrap(
+              function _callee7$(_context7) {
+                while (1) {
+                  switch ((_context7.prev = _context7.next)) {
+                    case 0:
+                      _context7.prev = 0;
                       FieldPk = _this.Model.primaryKeyAttribute;
-                      _context6.next = 5;
+                      pk = obj[FieldPk];
+                      delete obj[FieldPk];
+                      _context7.next = 6;
+                      return _this.Model.update(obj, {
+                        where: (0, _defineProperty2['default'])({}, FieldPk, pk)
+                      });
+
+                    case 6:
+                      data = _context7.sent;
+                      return _context7.abrupt('return', {
+                        data: data,
+                        success: true
+                      });
+
+                    case 10:
+                      _context7.prev = 10;
+                      _context7.t0 = _context7['catch'](0);
+                      (_error$errors$2 = _context7.t0.errors[0]),
+                        (message = _error$errors$2.message),
+                        (type = _error$errors$2.type),
+                        (path = _error$errors$2.path),
+                        (origin = _error$errors$2.origin);
+                      return _context7.abrupt('return', {
+                        success: false,
+                        message: message,
+                        type: type,
+                        path: path,
+                        origin: origin
+                      });
+
+                    case 14:
+                    case 'end':
+                      return _context7.stop();
+                  }
+                }
+              },
+              _callee7,
+              null,
+              [[0, 10]]
+            );
+          })
+        );
+
+        return function (_x8) {
+          return _ref7.apply(this, arguments);
+        };
+      })()
+    );
+    (0, _defineProperty2['default'])(
+      (0, _assertThisInitialized2['default'])(_this),
+      'Delete',
+      /*#__PURE__*/ (function () {
+        var _ref8 = (0, _asyncToGenerator2['default'])(
+          /*#__PURE__*/ _regenerator['default'].mark(function _callee8(pk) {
+            var FieldPk, data, _error$errors$3, message, type, path, origin;
+
+            return _regenerator['default'].wrap(
+              function _callee8$(_context8) {
+                while (1) {
+                  switch ((_context8.prev = _context8.next)) {
+                    case 0:
+                      console.log(pk);
+                      _context8.prev = 1;
+                      FieldPk = _this.Model.primaryKeyAttribute;
+                      _context8.next = 5;
                       return _this.Model.update(
                         {
                           state: 'inactivo'
@@ -521,21 +696,21 @@ var BusinessCrud = /*#__PURE__*/ (function (_CrudInterface) {
                       );
 
                     case 5:
-                      data = _context6.sent;
-                      return _context6.abrupt('return', {
+                      data = _context8.sent;
+                      return _context8.abrupt('return', {
                         data: data,
                         success: true
                       });
 
                     case 9:
-                      _context6.prev = 9;
-                      _context6.t0 = _context6['catch'](1);
-                      (_error$errors$3 = _context6.t0.errors[0]),
+                      _context8.prev = 9;
+                      _context8.t0 = _context8['catch'](1);
+                      (_error$errors$3 = _context8.t0.errors[0]),
                         (message = _error$errors$3.message),
                         (type = _error$errors$3.type),
                         (path = _error$errors$3.path),
                         (origin = _error$errors$3.origin);
-                      return _context6.abrupt('return', {
+                      return _context8.abrupt('return', {
                         success: false,
                         message: message,
                         type: type,
@@ -545,19 +720,19 @@ var BusinessCrud = /*#__PURE__*/ (function (_CrudInterface) {
 
                     case 13:
                     case 'end':
-                      return _context6.stop();
+                      return _context8.stop();
                   }
                 }
               },
-              _callee6,
+              _callee8,
               null,
               [[1, 9]]
             );
           })
         );
 
-        return function (_x7) {
-          return _ref6.apply(this, arguments);
+        return function (_x9) {
+          return _ref8.apply(this, arguments);
         };
       })()
     );

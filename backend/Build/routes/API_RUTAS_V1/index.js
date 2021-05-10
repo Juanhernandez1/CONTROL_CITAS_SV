@@ -21,6 +21,6 @@ function RV1(router, controllers) {
     RequestAppoiment = controllers.RequestAppoiment;
   RM.use('/Business', (0, _RoutesBusiness['default'])(router, RequestBusiness));
   RM.use('/Users', (0, _RoutesUsers['default'])(router, RequestUsers));
-  RM.use('/Appoiment', (0, _RoutesAppoiment['default'])(router, RequestAppoiment));
+  RM.use('/Appointment', (0, _RoutesAppoiment['default'])(router, RequestAppoiment));
   return RM;
 }
