@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import { withRouter, BrowserRouter as Router, Switch } from 'react-router-dom';
 
 import Route from './components/Route';
 import { paths } from './config/paths';
@@ -11,8 +11,8 @@ import NotFound from './pages/NotFound';
 
 const App = () => {
   return (
-    <Router>
-      <GlobalProvider>
+    <GlobalProvider>
+      <Router>
         <Switch>
           <Route exact path={paths.home} component={Landing} layout={LayoutHeader} />
           <Route exact path={paths.businessResult} component={Business} layout={LayoutHeader} />
@@ -24,8 +24,8 @@ const App = () => {
           />
           <Route path={paths.notFound} component={NotFound} layout={LayoutHeader} />
         </Switch>
-      </GlobalProvider>
-    </Router>
+      </Router>
+    </GlobalProvider>
   );
 };
 

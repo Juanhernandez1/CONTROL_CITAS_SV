@@ -1,13 +1,14 @@
 import { BookOutlined, CarryOutOutlined } from '@ant-design/icons';
 import { Layout as LayoutAnt, Menu } from 'antd';
 import React from 'react';
-
+import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import './Layout.css';
 
 const { Content, Sider } = LayoutAnt;
 
 export const Layout = ({ children }) => {
+  const history = useHistory();
   return (
     <LayoutAnt>
       <Sider>

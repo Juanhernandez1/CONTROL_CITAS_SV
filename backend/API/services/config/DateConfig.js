@@ -1,6 +1,6 @@
 // * Objeto de configracion para manipular fechas
 const DateConfig = {
-  locale: 'es-us',
+  locale: 'es-mx',
   timeZone: 'America/El_Salvador'
 };
 

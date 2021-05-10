@@ -24,7 +24,7 @@ const Header = ({ hasLogo = false }) => {
           <Link to={paths.home}>Inicio</Link>
         </Item>
         <Item key="2" icon={<StockOutlined />}>
-          Negocios
+          <Link to={paths.businessResult}> Negocios </Link>
         </Item>
         {!isLoggedIn && (
           <Item key="3" icon={<LoginOutlined />}>

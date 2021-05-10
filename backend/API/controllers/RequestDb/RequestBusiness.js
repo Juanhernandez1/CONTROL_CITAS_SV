@@ -9,7 +9,8 @@ export default class RequestBusiness {
     freedayCrud,
     settingCrud,
     servicesCrud,
-    appointmentCrud
+    appointmentCrud,
+    AppointmentGen
   ) {
     if (RequestBusiness.#instance) {
       return RequestBusiness.#instance;
@@ -21,6 +22,7 @@ export default class RequestBusiness {
     this.SettingCrud = settingCrud;
     this.ServicesCrud = servicesCrud;
     this.AppointmentCrud = appointmentCrud;
+    this.AppointmentGen = AppointmentGen;
     RequestBusiness.#instance = this;
   }
 
@@ -28,6 +30,18 @@ export default class RequestBusiness {
     try {
       const { page } = req.params;
       const BusinessList = await this.BusinessCrud.GetAll(parseInt(page));
+      if (BusinessList.success) res.status(BusinessList.data ? 200 : 204).send(BusinessList);
+    } catch (error) {
+      const { ERDB404 } = ErrorMessages;
+      console.log(ERDB404, error);
+      res.status(404).send(ERDB404);
+    }
+  };
+
+  RequestBusinessGetAllNoPaginate = async (req, res) => {
+    try {
+      const { state } = req.params;
+      const BusinessList = await this.BusinessCrud.GetAllNoPaginate(state);
       if (BusinessList.success) res.status(BusinessList.data ? 200 : 204).send(BusinessList);
     } catch (error) {
       const { ERDB404 } = ErrorMessages;
@@ -358,5 +372,19 @@ export default class RequestBusiness {
     }
   };
 
-  RequestBusinessResoveSetting = async (req, res) => {};
+  RequestBusinessResolveSetting = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const BusinessSetting = await this.SettingCrud.GetPk(id);
+      if (BusinessSetting.success)
+        res
+          .status(BusinessSetting.data ? 200 : 204)
+          .send(await this.AppointmentGen.GetHoursAppointment(BusinessSetting.data));
+    } catch (error) {
+      const { ERDB404 } = ErrorMessages;
+      console.log(ERDB404);
+
+      res.status(404).send(ERDB404);
+    }
+  };
 }

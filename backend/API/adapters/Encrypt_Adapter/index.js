@@ -1,4 +1,4 @@
-import EncryptInterface from '../../interface/ EncryptInterface';
+import EncryptInterface from '../../interface/EncryptInterface';
 
 export default class EncryptPassword extends EncryptInterface {
   static #instance;

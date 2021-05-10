@@ -2,9 +2,9 @@ export default function RoutesAppoiment(router, RequestAppoiment) {
   // * rutas de instancia
   const AppoimentRoutes = router();
 
-  const { RequestAppoimentTempList } = RequestAppoiment;
+  const { RequestAppoimentLastFiveDay } = RequestAppoiment;
   // * get
-  AppoimentRoutes.get('/TempList', RequestAppoimentTempList);
+  AppoimentRoutes.get('/LastFiveDay', RequestAppoimentLastFiveDay);
 
   return AppoimentRoutes;
 }

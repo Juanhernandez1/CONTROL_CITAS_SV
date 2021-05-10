@@ -10,7 +10,7 @@ export default function RV1(router, controllers) {
 
   RM.use('/Business', RoutesBusiness(router, RequestBusiness));
   RM.use('/Users', RoutesUsers(router, RequestUsers));
-  RM.use('/Appoiment', RoutesAppoiment(router, RequestAppoiment));
+  RM.use('/Appointment', RoutesAppoiment(router, RequestAppoiment));
 
   return RM;
 }

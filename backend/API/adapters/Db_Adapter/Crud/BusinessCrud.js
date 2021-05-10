@@ -62,6 +62,29 @@ export default class BusinessCrud extends CrudInterface {
     }
   };
 
+  GetAllNoPaginate = async state => {
+    try {
+      let data;
+      console.log(state);
+      if (state === 'ShowHide') {
+        data = await this.Model.findAll({
+          ...this.Config,
+          where: { state }
+        });
+      } else {
+        data = await this.Model.findAll({
+          ...this.Config,
+          where: { state: 'Activo' }
+        });
+      }
+      return { data, success: true };
+    } catch (error) {
+      console.log(error);
+
+      return { success: false };
+    }
+  };
+
   GetLikeName = async (searchData, page) => {
     const { getPreviousPage, getOffset, getNextPage } = pagination;
     try {

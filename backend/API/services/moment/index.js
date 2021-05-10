@@ -2,11 +2,15 @@ import moment from 'moment';
 import 'moment-timezone';
 import DateConfig from '../config/DateConfig';
 
-const MomentSv = moment();
+function MomentSv() {
+  const Moment = moment();
 
-const { locale, timeZone } = DateConfig;
-MomentSv.tz(timeZone);
+  const { locale, timeZone } = DateConfig;
+  Moment.tz(timeZone);
 
-MomentSv.locale(locale);
+  Moment.locale(locale);
+
+  return Moment;
+}
 
 export default MomentSv;

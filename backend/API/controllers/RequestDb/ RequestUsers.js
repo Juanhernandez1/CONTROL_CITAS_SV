@@ -109,6 +109,7 @@ export default class RequestUsers {
     }
   };
 
+  // * no test
   RequestUsersAppointmentGetAll = async (req, res) => {
     try {
       const iduser = req.param.iduser;

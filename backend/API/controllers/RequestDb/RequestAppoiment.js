@@ -2,20 +2,21 @@ import ErrorMessages from '../../assets/ErrorMessages';
 
 export default class RequestAppoiment {
   static #instance;
-  constructor(appointmentCrud) {
+  constructor(appointmentCrud, AppointmentGen) {
     if (RequestAppoiment.#instance) {
       return RequestAppoiment.#instance;
     }
 
-    RequestAppoiment.#instance = this;
     this.AppointmentCrud = appointmentCrud;
+    this.AppointmentGen = AppointmentGen;
+
+    RequestAppoiment.#instance = this;
   }
 
-  RequestAppoimentTempList = (req, res) => {
+  RequestAppoimentLastFiveDay = (req, res) => {
     try {
-      const AppointmentList = this.AppointmentCrud.TempAppointmentList();
-
-      if (AppointmentList) res.status(200).send(AppointmentList);
+      const LastFiveDay = this.AppointmentGen.GetLastFiveDays();
+      if (LastFiveDay) res.status(200).send(LastFiveDay);
     } catch (error) {
       console.log(error);
 

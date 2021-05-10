@@ -3,7 +3,7 @@ import RequestUsers from './RequestDb/ RequestUsers';
 import RequestAppoiment from './RequestDb/RequestAppoiment';
 import RequestBusiness from './RequestDb/RequestBusiness';
 
-const { RootCrudAdapter } = adapters;
+const { RootCrudAdapter, AppointmentGen } = adapters;
 
 const {
   accessCrud,
@@ -26,10 +26,11 @@ const controllers = {
     freedayCrud,
     settingCrud,
     serviceCrud,
-    appointmentCrud
+    appointmentCrud,
+    AppointmentGen
   ),
   RequestUsers: new RequestUsers(userCrud, accessCrud, appointmentCrud),
-  RequestAppoiment: new RequestAppoiment(appointmentCrud)
+  RequestAppoiment: new RequestAppoiment(appointmentCrud, AppointmentGen)
 };
 
 export default controllers;

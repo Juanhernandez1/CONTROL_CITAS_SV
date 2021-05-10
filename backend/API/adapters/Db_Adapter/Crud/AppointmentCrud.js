@@ -3,7 +3,7 @@ import CrudInterface from '../../../interface/CrudInterface';
 export default class AppointmentCrud extends CrudInterface {
   static #instance;
 
-  constructor(Model, Operations, LastFiveDays, MomentSv) {
+  constructor(Model, Operations) {
     super();
 
     if (AppointmentCrud.#instance) {
@@ -13,8 +13,6 @@ export default class AppointmentCrud extends CrudInterface {
     AppointmentCrud.#instance = this;
     this.Model = Model;
     this.Operations = Operations;
-    this.LastFiveDays = LastFiveDays;
-    this.MomentSv = MomentSv;
     this.Config = {
       raw: true,
       nest: true
@@ -171,9 +169,5 @@ export default class AppointmentCrud extends CrudInterface {
 
       return { success: false };
     }
-  };
-
-  TempAppointmentList = () => {
-    return this.LastFiveDays();
   };
 }
