@@ -33,7 +33,7 @@ const Business = () => {
   const renderListItem = item => (
     <List.Item>
       <Card
-        cover={<img alt="album" src={item.imageURL} />}
+        cover={<img alt="album" src={item.imageurlbusiness} />}
         hoverable
         onClick={() => showModal(item)}
       >

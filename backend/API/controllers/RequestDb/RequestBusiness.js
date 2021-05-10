@@ -63,6 +63,19 @@ export default class RequestBusiness {
     }
   };
 
+  RequestBusinessGetLikeNameNoPage = async (req, res) => {
+    try {
+      const { search } = req.params;
+      const BusinessList = await this.BusinessCrud.GetLikeNameNoPage(search);
+      if (BusinessList.success) res.status(BusinessList.data ? 200 : 204).send(BusinessList);
+    } catch (error) {
+      console.log(error);
+      const { ERDB404 } = ErrorMessages;
+      console.log(ERDB404);
+      res.status(404).send(ERDB404);
+    }
+  };
+
   RequestBusinessGetPk = async (req, res) => {
     try {
       const { id } = req.params;

@@ -119,6 +119,30 @@ export default class BusinessCrud extends CrudInterface {
     }
   };
 
+  GetLikeNameNoPage = async searchData => {
+    try {
+      const data = await this.Model.findAll({
+        ...this.Config,
+        where: {
+          businessname: {
+            [this.Operatios.like]: `%${searchData}%`
+          },
+          state: 'Activo'
+        },
+        include: [{ association: 'address' }, { association: 'contactbusiness' }]
+      });
+
+      return {
+        data,
+        success: true
+      };
+    } catch (error) {
+      console.log(error);
+
+      return { success: false };
+    }
+  };
+
   Create = async obj => {
     try {
       console.log(obj);
