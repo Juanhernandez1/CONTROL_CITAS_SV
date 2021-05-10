@@ -44,6 +44,7 @@ const Business = () => {
 
   useEffect(() => {
     const URL = 'http://localhost:3000/API/v1/Business/GetAllNoPage/Active';
+
     axios
       .get(URL, {
         headers: {
