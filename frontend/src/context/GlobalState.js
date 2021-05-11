@@ -2,7 +2,7 @@ import React, { createContext, useReducer } from 'react';
 
 import appReducer from './AppReducer';
 import { initialState } from './initialState';
-import { SET_BUSINESS_SEARCH, SET_BUSINESS_SELECTED, SET_SEARCH_BUSINESS_NAME } from './types';
+import { SET_BUSINESS_SELECTED, SET_SEARCH_BUSINESS_NAME } from './types';
 
 export const GlobalContext = createContext(initialState);
 
