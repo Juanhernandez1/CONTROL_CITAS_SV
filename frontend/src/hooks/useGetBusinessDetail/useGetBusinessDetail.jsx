@@ -1,8 +1,8 @@
 /* eslint-disable unicorn/filename-case */
 import { FacebookOutlined, InstagramOutlined, TwitterOutlined } from '@ant-design/icons';
 import { Button, Col, Image, Row, Typography } from 'antd';
-import React, { useContext } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
+import { Link as RouterLink, Redirect } from 'react-router-dom';
 
 import { GlobalContext } from '../../context/GlobalState';
 import { paths } from '../../config/paths';
@@ -11,7 +11,7 @@ const { Link, Paragraph, Title } = Typography;
 
 const useGetBusinessDetail = (isModal = false) => {
   const {
-    businessSelected: { imageURL, name, description, id }
+    businessSelected: { idbusiness, businessname, description, imageurlbusiness }
   } = useContext(GlobalContext);
 
   const ellipsisConfig = isModal ? { expandable: true, symbol: 'Leer más' } : null;
@@ -22,10 +22,10 @@ const useGetBusinessDetail = (isModal = false) => {
   const content = (
     <>
       <Row justify="center">
-        <Title>{name}</Title>
+        <Title>{businessname}</Title>
       </Row>
       <Row justify="center">
-        <Image width={400} src={imageURL} placeholder={imagePlaceholder} />
+        <Image width={400} src={imageurlbusiness} placeholder={imagePlaceholder} />
       </Row>
       <Row className="business-modal__detail">
         <Paragraph ellipsis={ellipsisConfig}>{description}</Paragraph>
@@ -33,13 +33,13 @@ const useGetBusinessDetail = (isModal = false) => {
       <Row justify="space-between">
         <div style={{ width: '40%' }}>
           <Row justify="start">
-            <Col span={colSpan}>
+            <Col span={colSpan} style={{ margin: '4px' }}>
               <FacebookOutlined style={iconStyle} />
             </Col>
-            <Col span={colSpan}>
+            <Col span={colSpan} style={{ margin: '4px' }}>
               <InstagramOutlined style={iconStyle} />
             </Col>
-            <Col span={colSpan}>
+            <Col span={colSpan} style={{ margin: '4px' }}>
               <TwitterOutlined style={iconStyle} />
             </Col>
           </Row>
@@ -57,12 +57,12 @@ const useGetBusinessDetail = (isModal = false) => {
 
   const footer = isModal
     ? [
-        <Row justify="space-between" key={id}>
+        <Row justify="space-between" key={idbusiness}>
           <Link href="/" target="_blank" rel="noreferrer noopener">
             Dirección
           </Link>
           <Button type="primary">
-            <RouterLink to={`${paths.businessDetail(id)}`}>Ir a gestión</RouterLink>
+            <RouterLink to={`${paths.businessDetail(idbusiness)}`}>Ir a gestión</RouterLink>
           </Button>
         </Row>
       ]

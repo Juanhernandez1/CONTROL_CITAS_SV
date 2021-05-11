@@ -1,5 +1,5 @@
 import { Card, List, Typography } from 'antd';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import BusinessDetailModal from '../../components/DetailBusinessModal';
 import SearchBusiness from '../../components/form/SearchBusiness';
@@ -11,7 +11,9 @@ const { Meta } = Card;
 const { Title } = Typography;
 
 const Business = () => {
-  const { businessSelected, setBusinessSelected } = useContext(GlobalContext);
+  const { businessSelected, setBusinessSelected, businessSearch, setBusinessSearch } = useContext(
+    GlobalContext
+  );
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [DataBusiness, setDataBusiness] = useState({});
   const [pagination, setPagination] = useState({
@@ -42,8 +44,14 @@ const Business = () => {
     </List.Item>
   );
 
-  useEffect(() => {
-    const URL = 'https://citasparatunegocio.herokuapp.com/API/v1/Business/GetAllNoPage/Active';
+  const setRequest = useCallback(() => {
+    let URL;
+
+    console.log(businessSearch);
+    if (businessSearch === undefined || businessSearch === '')
+      URL = 'https://citasparatunegocio.herokuapp.com/API/v1/Business/GetAllNoPage/Active';
+    else
+      URL = `https://citasparatunegocio.herokuapp.com/API/v1/Business//SearchByNameNoPage/${businessSearch}`;
 
     axios
       .get(URL, {
@@ -63,12 +71,21 @@ const Business = () => {
           defaultPageSize: 6
         });
       });
-  }, [setDataBusiness]);
+  }, [businessSearch, setDataBusiness]);
+
+  useEffect(() => {
+    setRequest();
+  }, [setRequest]);
 
   return (
     <>
       <SearchBusiness />
-      <Title level={2}>Resultados de Búsqueda:</Title>
+
+      <Title level={2}>
+        {businessSearch === undefined || businessSearch === ''
+          ? 'Negocios'
+          : 'Resultados de Búsqueda:'}
+      </Title>
       <List
         className="business-list"
         dataSource={DataBusiness.data}
