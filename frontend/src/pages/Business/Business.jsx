@@ -12,7 +12,7 @@ const { Meta } = Card;
 const { Title } = Typography;
 
 const Business = () => {
-  const { businessSelected, setBusinessSelected } = useContext(GlobalContext);
+  const { businessSelected, setBusinessSelected, businessSearchName } = useContext(GlobalContext);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const { business, isLoading } = useGetBusiness(errorMessage => {
@@ -50,7 +50,7 @@ const Business = () => {
   return (
     <>
       <SearchBusiness />
-      <Title level={2}>Resultados de Búsqueda:</Title>
+      <Title level={2}>{!businessSearchName ? 'Negocios' : 'Resultados de Búsqueda:'}</Title>
       <List
         className="business-list"
         dataSource={business}

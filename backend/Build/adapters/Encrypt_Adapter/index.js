@@ -23,7 +23,7 @@ var _getPrototypeOf2 = _interopRequireDefault(require('@babel/runtime/helpers/ge
 
 var _defineProperty2 = _interopRequireDefault(require('@babel/runtime/helpers/defineProperty'));
 
-var _EncryptInterface2 = _interopRequireDefault(require('../../interface/ EncryptInterface'));
+var _EncryptInterface2 = _interopRequireDefault(require('../../interface/EncryptInterface'));
 
 function _createSuper(Derived) {
   var hasNativeReflectConstruct = _isNativeReflectConstruct();

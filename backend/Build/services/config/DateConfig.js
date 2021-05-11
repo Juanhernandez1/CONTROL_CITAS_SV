@@ -6,7 +6,7 @@ Object.defineProperty(exports, '__esModule', {
 exports['default'] = void 0;
 // * Objeto de configracion para manipular fechas
 var DateConfig = {
-  locale: 'es-us',
+  locale: 'es-mx',
   timeZone: 'America/El_Salvador'
 };
 var _default = DateConfig;

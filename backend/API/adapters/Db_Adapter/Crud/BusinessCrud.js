@@ -69,11 +69,13 @@ export default class BusinessCrud extends CrudInterface {
       if (state === 'ShowHide') {
         data = await this.Model.findAll({
           ...this.Config,
+          include: [{ association: 'address' }, { association: 'contactbusiness' }],
           where: { state }
         });
       } else {
         data = await this.Model.findAll({
           ...this.Config,
+          include: [{ association: 'address' }, { association: 'contactbusiness' }],
           where: { state: 'Activo' }
         });
       }
@@ -108,6 +110,30 @@ export default class BusinessCrud extends CrudInterface {
         totalPage: Math.ceil(count / 6),
         limit: 6,
         data: rows,
+        success: true
+      };
+    } catch (error) {
+      console.log(error);
+
+      return { success: false };
+    }
+  };
+
+  GetLikeNameNoPage = async searchData => {
+    try {
+      const data = await this.Model.findAll({
+        ...this.Config,
+        where: {
+          businessname: {
+            [this.Operatios.like]: `%${searchData}%`
+          },
+          state: 'Activo'
+        },
+        include: [{ association: 'address' }, { association: 'contactbusiness' }]
+      });
+
+      return {
+        data,
         success: true
       };
     } catch (error) {

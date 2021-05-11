@@ -7,6 +7,7 @@ export default function RoutesBusiness(router, RequestUsers) {
     RequestBusinessGetAll,
     RequestBusinessGetAllNoPaginate,
     RequestBusinessGetLikeName,
+    RequestBusinessGetLikeNameNoPage,
     RequestBusinessCreate,
     RequestBusinessUpdate,
     RequestBusinessDelete,
@@ -29,6 +30,7 @@ export default function RoutesBusiness(router, RequestUsers) {
   BusinessRoutes.get('/GetAll/:page', RequestBusinessGetAll);
   BusinessRoutes.get('/GetAllNoPage/:state', RequestBusinessGetAllNoPaginate);
   BusinessRoutes.get('/SearchByName/:search/:page', RequestBusinessGetLikeName);
+  BusinessRoutes.get('/SearchByNameNoPage/:search', RequestBusinessGetLikeNameNoPage);
   BusinessRoutes.get('/Settings/GetPk/:id', RequestBusinessSettingGetPk);
   BusinessRoutes.get('/Address/GetPk/:id', RequestBusinessAddressGetPk);
   BusinessRoutes.get('/Contact/GetPk/:id', RequestBusinessContacGetPk);

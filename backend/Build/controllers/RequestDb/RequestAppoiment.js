@@ -56,15 +56,15 @@ function _classApplyDescriptorGet(receiver, descriptor) {
   return descriptor.value;
 }
 
-var RequestAppoiment = function RequestAppoiment(appointmentCrud) {
+var RequestAppoiment = function RequestAppoiment(appointmentCrud, AppointmentGen) {
   var _this = this;
 
   (0, _classCallCheck2['default'])(this, RequestAppoiment);
-  (0, _defineProperty2['default'])(this, 'RequestAppoimentTempList', function (req, res) {
+  (0, _defineProperty2['default'])(this, 'RequestAppoimentLastFiveDay', function (req, res) {
     try {
-      var AppointmentList = _this.AppointmentCrud.TempAppointmentList();
+      var LastFiveDay = _this.AppointmentGen.GetLastFiveDays();
 
-      if (AppointmentList) res.status(200).send(AppointmentList);
+      if (LastFiveDay) res.status(200).send(LastFiveDay);
     } catch (error) {
       console.log(error);
       var ERDB404 = _ErrorMessages['default'].ERDB404;
@@ -77,9 +77,10 @@ var RequestAppoiment = function RequestAppoiment(appointmentCrud) {
     return _classStaticPrivateFieldSpecGet(RequestAppoiment, RequestAppoiment, _instance);
   }
 
-  _classStaticPrivateFieldSpecSet(RequestAppoiment, RequestAppoiment, _instance, this);
-
   this.AppointmentCrud = appointmentCrud;
+  this.AppointmentGen = AppointmentGen;
+
+  _classStaticPrivateFieldSpecSet(RequestAppoiment, RequestAppoiment, _instance, this);
 };
 
 exports['default'] = RequestAppoiment;

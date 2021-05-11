@@ -2,13 +2,12 @@ import { Button, Form, Input } from 'antd';
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { GlobalContext } from '../../../context/GlobalState';
-import { messages } from '../../../config/messages';
 import { paths } from '../../../config/paths';
+import { GlobalContext } from '../../../context/GlobalState';
+
 import './SearchBusiness.css';
 
 const { Item } = Form;
-const { onRequired } = messages;
 
 const SearchBusiness = () => {
   const { setBusinessName } = useContext(GlobalContext);
@@ -22,7 +21,7 @@ const SearchBusiness = () => {
   return (
     <div className="search-business">
       <Form className="landing-form" layout="inline" name="landingForm" onFinish={handleSubmit}>
-        <Item name="businessSearch" rules={[{ required: true, message: onRequired }]}>
+        <Item name="businessSearch">
           <Input placeholder="Buscar negocio" />
         </Item>
         <Item>

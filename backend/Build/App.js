@@ -17,6 +17,8 @@ var _express = _interopRequireWildcard(require('express'));
 
 var _cookieParser = _interopRequireDefault(require('cookie-parser'));
 
+var _cors = _interopRequireDefault(require('cors'));
+
 var _morgan = _interopRequireDefault(require('morgan'));
 
 var _expressSession = _interopRequireDefault(require('express-session'));
@@ -95,6 +97,7 @@ app.use(
   })
 );
 app.use((0, _cookieParser['default'])());
+app.use((0, _cors['default'])());
 app.use(_Grant['default']);
 /**
  * ? Ubicación de las Vistas que Cargaría el Motor de Visualización

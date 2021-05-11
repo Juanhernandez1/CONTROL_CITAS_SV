@@ -10,7 +10,9 @@ function RoutesBusiness(router, RequestUsers) {
   var BusinessRoutes = router();
   var RequestBusinessGetPk = RequestUsers.RequestBusinessGetPk,
     RequestBusinessGetAll = RequestUsers.RequestBusinessGetAll,
+    RequestBusinessGetAllNoPaginate = RequestUsers.RequestBusinessGetAllNoPaginate,
     RequestBusinessGetLikeName = RequestUsers.RequestBusinessGetLikeName,
+    RequestBusinessGetLikeNameNoPage = RequestUsers.RequestBusinessGetLikeNameNoPage,
     RequestBusinessCreate = RequestUsers.RequestBusinessCreate,
     RequestBusinessUpdate = RequestUsers.RequestBusinessUpdate,
     RequestBusinessDelete = RequestUsers.RequestBusinessDelete,
@@ -25,17 +27,21 @@ function RoutesBusiness(router, RequestUsers) {
     RequestBusinessServicesGetPk = RequestUsers.RequestBusinessServicesGetPk,
     RequestBusinessServicesCreate = RequestUsers.RequestBusinessServicesCreate,
     RequestBusinessServicesUpdate = RequestUsers.RequestBusinessServicesUpdate,
-    RequestBusinessServicesDelete = RequestUsers.RequestBusinessServicesDelete; // * get
+    RequestBusinessServicesDelete = RequestUsers.RequestBusinessServicesDelete,
+    RequestBusinessResolveSetting = RequestUsers.RequestBusinessResolveSetting; // * get
 
   BusinessRoutes.get('/GetPk/:id', RequestBusinessGetPk);
   BusinessRoutes.get('/GetAll/:page', RequestBusinessGetAll);
+  BusinessRoutes.get('/GetAllNoPage/:state', RequestBusinessGetAllNoPaginate);
   BusinessRoutes.get('/SearchByName/:search/:page', RequestBusinessGetLikeName);
+  BusinessRoutes.get('/SearchByNameNoPage/:search', RequestBusinessGetLikeNameNoPage);
   BusinessRoutes.get('/Settings/GetPk/:id', RequestBusinessSettingGetPk);
   BusinessRoutes.get('/Address/GetPk/:id', RequestBusinessAddressGetPk);
   BusinessRoutes.get('/Contact/GetPk/:id', RequestBusinessContacGetPk);
   BusinessRoutes.get('/Services/GetPk/:idbusiness/:id', RequestBusinessServicesGetPk);
   BusinessRoutes.get('/Services/GetAll/:idbusiness', RequestBusinessServicesGetAll);
-  BusinessRoutes.get('/Services/GetAll/:idbusiness/Client', RequestBusinessServicesGetAllClient); // * post
+  BusinessRoutes.get('/Services/GetAll/:idbusiness/Client', RequestBusinessServicesGetAllClient);
+  BusinessRoutes.get('/Appointment/ResolveSetting/:id', RequestBusinessResolveSetting); // * post
 
   BusinessRoutes.post('/Create', RequestBusinessCreate);
   BusinessRoutes.post('/Services/Create', RequestBusinessServicesCreate); // * put

@@ -13,10 +13,14 @@ require('moment-timezone');
 
 var _DateConfig = _interopRequireDefault(require('../config/DateConfig'));
 
-var MomentSv = (0, _moment['default'])();
-var locale = _DateConfig['default'].locale,
-  timeZone = _DateConfig['default'].timeZone;
-MomentSv.tz(timeZone);
-MomentSv.locale(locale);
+function MomentSv() {
+  var Moment = (0, _moment['default'])();
+  var locale = _DateConfig['default'].locale,
+    timeZone = _DateConfig['default'].timeZone;
+  Moment.tz(timeZone);
+  Moment.locale(locale);
+  return Moment;
+}
+
 var _default = MomentSv;
 exports['default'] = _default;
