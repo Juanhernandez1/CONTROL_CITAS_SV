@@ -11,11 +11,14 @@ const { Item } = Form;
 
 const SearchBusiness = () => {
   const { setBusinessName } = useContext(GlobalContext);
-  const { push } = useHistory();
+  const {
+    location: { pathname },
+    push
+  } = useHistory();
 
   const handleSubmit = ({ businessSearch }) => {
     setBusinessName(businessSearch);
-    push(paths.businessResult);
+    pathname !== paths.businessResult && push(paths.businessResult);
   };
 
   return (
