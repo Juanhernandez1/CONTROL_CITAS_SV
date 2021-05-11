@@ -1,43 +1,35 @@
 import { Button, Form, Input } from 'antd';
-import React, { useContext, useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import { messages } from '../../../config/messages';
-import { GlobalContext } from '../../../context/GlobalState';
+import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+
 import { paths } from '../../../config/paths';
+import { GlobalContext } from '../../../context/GlobalState';
+
 import './SearchBusiness.css';
 
 const { Item } = Form;
-const { onRequired } = messages;
 
 const SearchBusiness = () => {
-  const { setBusinessSearch } = useContext(GlobalContext);
-  const [seacrh, SetSearch] = useState('');
+  const { setBusinessName } = useContext(GlobalContext);
+  const {
+    location: { pathname },
+    push
+  } = useHistory();
+
+  const handleSubmit = ({ businessSearch }) => {
+    setBusinessName(businessSearch);
+    pathname !== paths.businessResult && push(paths.businessResult);
+  };
+
   return (
     <div className="search-business">
-      <Form className="landing-form" layout="inline" name="landingForm">
-        <Item name="businessSearch" rules={[{ required: true, message: onRequired }]}>
-          <Input
-            placeholder="Buscar negocio"
-            value={seacrh}
-            onChange={e => {
-              if (e.target.value === '') setBusinessSearch('');
-              else SetSearch(e.target.value);
-            }}
-          />
+      <Form className="landing-form" layout="inline" name="landingForm" onFinish={handleSubmit}>
+        <Item name="businessSearch">
+          <Input placeholder="Buscar negocio" />
         </Item>
         <Item>
-          <Button
-            htmlType="submit"
-            type="primary"
-            onClick={() => {
-              setBusinessSearch(seacrh);
-            }}
-          >
-            {window.location.pathname === '/business' ? (
-              'Buscar'
-            ) : (
-              <RouterLink to={paths.businessResult}> Buscar </RouterLink>
-            )}
+          <Button htmlType="submit" type="primary">
+            Buscar
           </Button>
         </Item>
       </Form>

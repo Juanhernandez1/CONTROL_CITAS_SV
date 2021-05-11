@@ -1,4 +1,4 @@
-import { SET_BUSINESS_SELECTED, SET_BUSINESS_SEARCH } from './types';
+import { SET_BUSINESS_SELECTED, SET_SEARCH_BUSINESS_NAME } from './types';
 
 const appReducer = (state, action) => {
   switch (action.type) {
@@ -7,10 +7,10 @@ const appReducer = (state, action) => {
         ...state,
         businessSelected: action.payload
       };
-    case SET_BUSINESS_SEARCH:
+    case SET_SEARCH_BUSINESS_NAME:
       return {
         ...state,
-        businessSearch: action.payload
+        businessName: action.payload
       };
     default:
       return state;
