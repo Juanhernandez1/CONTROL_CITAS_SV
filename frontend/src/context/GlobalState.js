@@ -2,7 +2,7 @@ import React, { createContext, useReducer } from 'react';
 
 import appReducer from './AppReducer';
 import { initialState } from './initialState';
-import { SET_BUSINESS_SELECTED } from './types';
+import { SET_BUSINESS_SELECTED, SET_SEARCH_BUSINESS_NAME } from './types';
 
 export const GlobalContext = createContext(initialState);
 
@@ -13,11 +13,17 @@ export const GlobalProvider = ({ children }) => {
     dispatch({ type: SET_BUSINESS_SELECTED, payload: business });
   };
 
+  const setBusinessName = businessName => {
+    dispatch({ type: SET_SEARCH_BUSINESS_NAME, payload: businessName });
+  };
+
   return (
     <GlobalContext.Provider
       value={{
         businessSelected: state.businessSelected,
-        setBusinessSelected
+        businessSearchName: state.businessName,
+        setBusinessSelected,
+        setBusinessName
       }}
     >
       {children}
