@@ -3,6 +3,7 @@ import createError from 'http-errors';
 import express, { json, urlencoded } from 'express';
 // import { join } from 'path';
 import cookieParser from 'cookie-parser';
+import cros from 'cross';
 import logger from 'morgan';
 
 import session from 'express-session';
@@ -30,7 +31,7 @@ app.use(logger('dev'));
 app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
-
+app.use(cros());
 app.use(Grant);
 /**
  * ? Ubicación de las Vistas que Cargaría el Motor de Visualización

@@ -43,11 +43,12 @@ const Business = () => {
   );
 
   useEffect(() => {
-    const URL = 'http://localhost:3000/API/v1/Business/GetAllNoPage/Active';
+    const URL = 'https://citasparatunegocio.herokuapp.com/API/v1/Business/GetAllNoPage/Active';
 
     axios
       .get(URL, {
         headers: {
+          'Access-Control-Allow-Headers': 'Content-Type',
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
         }
