@@ -1,4 +1,4 @@
-import { withRouter, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 
 import Route from './components/Route';
 import { paths } from './config/paths';

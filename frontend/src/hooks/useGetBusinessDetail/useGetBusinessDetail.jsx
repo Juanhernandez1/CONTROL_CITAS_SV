@@ -1,11 +1,11 @@
 /* eslint-disable unicorn/filename-case */
 import { FacebookOutlined, InstagramOutlined, TwitterOutlined } from '@ant-design/icons';
 import { Button, Col, Image, Row, Typography } from 'antd';
-import React, { useContext, useEffect } from 'react';
-import { Link as RouterLink, Redirect } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
-import { GlobalContext } from '../../context/GlobalState';
 import { paths } from '../../config/paths';
+import { GlobalContext } from '../../context/GlobalState';
 
 const { Link, Paragraph, Title } = Typography;
 
