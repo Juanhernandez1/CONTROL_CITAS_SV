@@ -1107,36 +1107,74 @@ var RequestBusiness = function RequestBusiness(
   );
   (0, _defineProperty2['default'])(
     this,
-    'RequestBusinessServicesUpdate',
+    'RequestBusinessResolveSetting',
     /*#__PURE__*/ (function () {
       var _ref19 = (0, _asyncToGenerator2['default'])(
         /*#__PURE__*/ _regenerator['default'].mark(function _callee19(req, res) {
-          var objServices, BusinessService, ERDB404;
+          var _req$params3, id, date, dataList, BusinessSetting, ERDB404;
+
           return _regenerator['default'].wrap(
             function _callee19$(_context19) {
               while (1) {
                 switch ((_context19.prev = _context19.next)) {
                   case 0:
                     _context19.prev = 0;
-                    objServices = req.body;
+                    (_req$params3 = req.params), (id = _req$params3.id), (date = _req$params3.date);
                     _context19.next = 4;
-                    return _this.ServicesCrud.Update(objServices);
+                    return _this.AppointmentCrud.GetFullDate(date.replace(/-/g, '/'));
 
                   case 4:
-                    BusinessService = _context19.sent;
-                    if (BusinessService.data[0] === 1) res.status(202).send(BusinessService);
-                    else res.status(406).send(BusinessService);
-                    _context19.next = 13;
-                    break;
+                    dataList = _context19.sent;
+
+                    if (!dataList.success) {
+                      _context19.next = 17;
+                      break;
+                    }
+
+                    _context19.next = 8;
+                    return _this.SettingCrud.GetPk(id);
 
                   case 8:
-                    _context19.prev = 8;
-                    _context19.t0 = _context19['catch'](0);
+                    BusinessSetting = _context19.sent;
+
+                    if (!BusinessSetting.success) {
+                      _context19.next = 15;
+                      break;
+                    }
+
+                    _context19.t0 = res.status(BusinessSetting.data ? 200 : 204);
+                    _context19.next = 13;
+                    return _this.AppointmentGen.GetHoursAppointment(
+                      BusinessSetting.data,
+                      dataList.data
+                    );
+
+                  case 13:
+                    _context19.t1 = _context19.sent;
+
+                    _context19.t0.send.call(_context19.t0, _context19.t1);
+
+                  case 15:
+                    _context19.next = 18;
+                    break;
+
+                  case 17:
+                    res.status(200).send({
+                      mesagge: 'Fecha No valida'
+                    });
+
+                  case 18:
+                    _context19.next = 25;
+                    break;
+
+                  case 20:
+                    _context19.prev = 20;
+                    _context19.t2 = _context19['catch'](0);
                     ERDB404 = _ErrorMessages['default'].ERDB404;
                     console.log(ERDB404);
                     res.status(404).send(ERDB404);
 
-                  case 13:
+                  case 25:
                   case 'end':
                     return _context19.stop();
                 }
@@ -1144,7 +1182,7 @@ var RequestBusiness = function RequestBusiness(
             },
             _callee19,
             null,
-            [[0, 8]]
+            [[0, 20]]
           );
         })
       );
@@ -1156,37 +1194,36 @@ var RequestBusiness = function RequestBusiness(
   );
   (0, _defineProperty2['default'])(
     this,
-    'RequestBusinessServicesDelete',
+    'RequestBusinessServicesUpdate',
     /*#__PURE__*/ (function () {
       var _ref20 = (0, _asyncToGenerator2['default'])(
         /*#__PURE__*/ _regenerator['default'].mark(function _callee20(req, res) {
-          var id, BusinessService, ERDB404;
+          var objServices, BusinessService, ERDB404;
           return _regenerator['default'].wrap(
             function _callee20$(_context20) {
               while (1) {
                 switch ((_context20.prev = _context20.next)) {
                   case 0:
                     _context20.prev = 0;
-                    id = req.params.id;
+                    objServices = req.body;
                     _context20.next = 4;
-                    return _this.ServicesCrud.Delete(id);
+                    return _this.ServicesCrud.Update(objServices);
 
                   case 4:
                     BusinessService = _context20.sent;
                     if (BusinessService.data[0] === 1) res.status(202).send(BusinessService);
                     else res.status(406).send(BusinessService);
-                    _context20.next = 14;
+                    _context20.next = 13;
                     break;
 
                   case 8:
                     _context20.prev = 8;
                     _context20.t0 = _context20['catch'](0);
-                    console.log(_context20.t0);
                     ERDB404 = _ErrorMessages['default'].ERDB404;
                     console.log(ERDB404);
                     res.status(404).send(ERDB404);
 
-                  case 14:
+                  case 13:
                   case 'end':
                     return _context20.stop();
                 }
@@ -1206,35 +1243,37 @@ var RequestBusiness = function RequestBusiness(
   );
   (0, _defineProperty2['default'])(
     this,
-    'RequestBusinessAppointmentGetAll',
+    'RequestBusinessServicesDelete',
     /*#__PURE__*/ (function () {
       var _ref21 = (0, _asyncToGenerator2['default'])(
         /*#__PURE__*/ _regenerator['default'].mark(function _callee21(req, res) {
-          var idbusiness, DataList, ERDB404;
+          var id, BusinessService, ERDB404;
           return _regenerator['default'].wrap(
             function _callee21$(_context21) {
               while (1) {
                 switch ((_context21.prev = _context21.next)) {
                   case 0:
                     _context21.prev = 0;
-                    idbusiness = req.params.idbusiness;
+                    id = req.params.id;
                     _context21.next = 4;
-                    return _this.AppointmentCrud.GetAllForBusiness(idbusiness);
+                    return _this.ServicesCrud.Delete(id);
 
                   case 4:
-                    DataList = _context21.sent;
-                    if (DataList.success) res.status(200).send(DataList);
-                    _context21.next = 13;
+                    BusinessService = _context21.sent;
+                    if (BusinessService.data[0] === 1) res.status(202).send(BusinessService);
+                    else res.status(406).send(BusinessService);
+                    _context21.next = 14;
                     break;
 
                   case 8:
                     _context21.prev = 8;
                     _context21.t0 = _context21['catch'](0);
+                    console.log(_context21.t0);
                     ERDB404 = _ErrorMessages['default'].ERDB404;
                     console.log(ERDB404);
                     res.status(404).send(ERDB404);
 
-                  case 13:
+                  case 14:
                   case 'end':
                     return _context21.stop();
                 }
@@ -1254,23 +1293,20 @@ var RequestBusiness = function RequestBusiness(
   );
   (0, _defineProperty2['default'])(
     this,
-    'RequestBusinessAppointmentGetPk',
+    'RequestBusinessAppointmentGetAll',
     /*#__PURE__*/ (function () {
       var _ref22 = (0, _asyncToGenerator2['default'])(
         /*#__PURE__*/ _regenerator['default'].mark(function _callee22(req, res) {
-          var _req$body2, idappointmen, idbusiness, DataList, ERDB404;
-
+          var idbusiness, DataList, ERDB404;
           return _regenerator['default'].wrap(
             function _callee22$(_context22) {
               while (1) {
                 switch ((_context22.prev = _context22.next)) {
                   case 0:
                     _context22.prev = 0;
-                    (_req$body2 = req.body),
-                      (idappointmen = _req$body2.idappointmen),
-                      (idbusiness = _req$body2.idbusiness);
+                    idbusiness = req.params.idbusiness;
                     _context22.next = 4;
-                    return _this.AppointmentCrud.GetPkForBusiness(idappointmen, idbusiness);
+                    return _this.AppointmentCrud.GetAllForBusiness(idbusiness);
 
                   case 4:
                     DataList = _context22.sent;
@@ -1305,24 +1341,27 @@ var RequestBusiness = function RequestBusiness(
   );
   (0, _defineProperty2['default'])(
     this,
-    'RequestBusinessAppointmentDelete',
+    'RequestBusinessAppointmentGetPk',
     /*#__PURE__*/ (function () {
       var _ref23 = (0, _asyncToGenerator2['default'])(
         /*#__PURE__*/ _regenerator['default'].mark(function _callee23(req, res) {
-          var pk, Data, ERDB404;
+          var _req$body2, idappointmen, idbusiness, DataList, ERDB404;
+
           return _regenerator['default'].wrap(
             function _callee23$(_context23) {
               while (1) {
                 switch ((_context23.prev = _context23.next)) {
                   case 0:
                     _context23.prev = 0;
-                    pk = req.params.Pk;
+                    (_req$body2 = req.body),
+                      (idappointmen = _req$body2.idappointmen),
+                      (idbusiness = _req$body2.idbusiness);
                     _context23.next = 4;
-                    return _this.AppointmentCrud.Delete(pk);
+                    return _this.AppointmentCrud.GetPkForBusiness(idappointmen, idbusiness);
 
                   case 4:
-                    Data = _context23.sent;
-                    if (Data.success) res.status(202).send(Data);
+                    DataList = _context23.sent;
+                    if (DataList.success) res.status(200).send(DataList);
                     _context23.next = 13;
                     break;
 
@@ -1353,50 +1392,35 @@ var RequestBusiness = function RequestBusiness(
   );
   (0, _defineProperty2['default'])(
     this,
-    'RequestBusinessResolveSetting',
+    'RequestBusinessAppointmentDelete',
     /*#__PURE__*/ (function () {
       var _ref24 = (0, _asyncToGenerator2['default'])(
         /*#__PURE__*/ _regenerator['default'].mark(function _callee24(req, res) {
-          var id, BusinessSetting, ERDB404;
+          var pk, Data, ERDB404;
           return _regenerator['default'].wrap(
             function _callee24$(_context24) {
               while (1) {
                 switch ((_context24.prev = _context24.next)) {
                   case 0:
                     _context24.prev = 0;
-                    id = req.params.id;
+                    pk = req.params.Pk;
                     _context24.next = 4;
-                    return _this.SettingCrud.GetPk(id);
+                    return _this.AppointmentCrud.Delete(pk);
 
                   case 4:
-                    BusinessSetting = _context24.sent;
-
-                    if (!BusinessSetting.success) {
-                      _context24.next = 11;
-                      break;
-                    }
-
-                    _context24.t0 = res.status(BusinessSetting.data ? 200 : 204);
-                    _context24.next = 9;
-                    return _this.AppointmentGen.GetHoursAppointment(BusinessSetting.data);
-
-                  case 9:
-                    _context24.t1 = _context24.sent;
-
-                    _context24.t0.send.call(_context24.t0, _context24.t1);
-
-                  case 11:
-                    _context24.next = 18;
+                    Data = _context24.sent;
+                    if (Data.success) res.status(202).send(Data);
+                    _context24.next = 13;
                     break;
 
-                  case 13:
-                    _context24.prev = 13;
-                    _context24.t2 = _context24['catch'](0);
+                  case 8:
+                    _context24.prev = 8;
+                    _context24.t0 = _context24['catch'](0);
                     ERDB404 = _ErrorMessages['default'].ERDB404;
                     console.log(ERDB404);
                     res.status(404).send(ERDB404);
 
-                  case 18:
+                  case 13:
                   case 'end':
                     return _context24.stop();
                 }
@@ -1404,7 +1428,7 @@ var RequestBusiness = function RequestBusiness(
             },
             _callee24,
             null,
-            [[0, 13]]
+            [[0, 8]]
           );
         })
       );

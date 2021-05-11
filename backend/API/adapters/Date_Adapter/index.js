@@ -32,7 +32,7 @@ export default class AppointmentGen extends SettingResolve {
 
   GetLastFiveDays = () => this.LastFiveDays();
 
-  GetHoursAppointment = async Setting => {
+  GetHoursAppointment = async (Setting, dateList) => {
     const ListHours = [];
     const { timeends, starttime, nsa, ta, tba, ad } = Setting;
 
@@ -54,15 +54,25 @@ export default class AppointmentGen extends SettingResolve {
       }
       const time = hour >= 12 ? 'PM' : 'AM';
 
+      let valid = '0';
+      let state;
+
+      if (index <= dateList.length) {
+        valid = dateList[index - 1].uuidappointment.split('-')[0];
+        state = dateList[index - 1].state;
+      }
+
       if (hour <= EndTime.hour + 12) {
         ListHours.push({
           hour: hour > 12 ? hour - 12 : hour,
           minute: minute,
           time,
-          limitService: nsa
+          limitService: nsa,
+          state: parseInt(valid) === index ? state : 'O'
         });
       }
     }
+
     console.log(ListHours);
     return ListHours;
   };
