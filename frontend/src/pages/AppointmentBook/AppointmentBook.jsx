@@ -1,4 +1,4 @@
-import { Button, message, Row, Spin, Typography } from 'antd';
+import { Button, message, Row, Col, Spin, Typography } from 'antd';
 import { isEmpty } from 'lodash';
 import React, { useState } from 'react';
 
@@ -40,10 +40,13 @@ const AppointmentBook = () => {
       <Row justify="space-around">
         {isLastFiveDaysLoading && <Spin />}
         {lastFiveDays &&
-          lastFiveDays.map(({ fulldate }) => (
-            <Button key={fulldate} onClick={() => handleDateSelection(fulldate)}>
-              {fulldate}
-            </Button>
+          lastFiveDays.map(({ dayName, fulldate }) => (
+            <Col style={{ textAlign: 'center' }} key={fulldate}>
+              <h3>{dayName}</h3>
+              <Button key={fulldate} onClick={() => handleDateSelection(fulldate)}>
+                {fulldate}
+              </Button>
+            </Col>
           ))}
       </Row>
       <Row justify="center" className="table-container">
