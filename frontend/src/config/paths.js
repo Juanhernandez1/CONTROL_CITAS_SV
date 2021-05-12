@@ -3,5 +3,6 @@ export const paths = {
   home: '/',
   businessResult: '/business',
   businessDetail: (id = '') => `/business-detail/${id}`,
+  appointmentBook: (id = '') => `/appointment-book/${id}`,
   notFound: '*'
 };

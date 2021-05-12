@@ -1,0 +1,17 @@
+.ant-picker.ant-picker-middle.appointment-book__datepicker {
+  margin-left: 1rem;
+  width: 10rem;
+}
+
+.table-container {
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+}
+
+.time-table {
+  min-width: 50%;
+}
+
+.booking-button {
+  margin-left: 2rem;
+}

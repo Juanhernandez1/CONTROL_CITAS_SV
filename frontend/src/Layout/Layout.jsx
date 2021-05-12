@@ -1,13 +1,18 @@
 import { BookOutlined, CarryOutOutlined } from '@ant-design/icons';
 import { Layout as LayoutAnt, Menu } from 'antd';
 import React from 'react';
+import { Link, useParams } from 'react-router-dom';
 
+import { paths } from '../config/paths';
 import Header from '../components/Header';
+
 import './Layout.css';
 
 const { Content, Sider } = LayoutAnt;
 
 export const Layout = ({ children }) => {
+  const { id } = useParams();
+
   return (
     <LayoutAnt>
       <Sider>
@@ -21,7 +26,7 @@ export const Layout = ({ children }) => {
             Servicios
           </Menu.Item>
           <Menu.Item key="2" icon={<BookOutlined />}>
-            Libro de Citas
+            <Link to={paths.appointmentBook(id)}>Libro de Citas</Link>
           </Menu.Item>
         </Menu>
       </Sider>

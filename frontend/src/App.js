@@ -7,6 +7,7 @@ import { Layout, LayoutHeader } from './Layout';
 import Business from './pages/Business';
 import BusinessDetail from './pages/BusinessDetail';
 import Landing from './pages/Landing';
+import AppointmentBook from './pages/AppointmentBook';
 import NotFound from './pages/NotFound';
 
 const App = () => {
@@ -20,6 +21,12 @@ const App = () => {
             exact
             path={paths.businessDetail(':id')}
             component={BusinessDetail}
+            layout={Layout}
+          />
+          <Route
+            exact
+            path={paths.appointmentBook(':id')}
+            component={AppointmentBook}
             layout={Layout}
           />
           <Route path={paths.notFound} component={NotFound} layout={LayoutHeader} />
