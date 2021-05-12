@@ -1,5 +1,5 @@
 /* eslint-disable unicorn/filename-case */
 export const initialState = {
-  businessSelected: null,
+  businessSelected: {},
   businessName: ''
 };

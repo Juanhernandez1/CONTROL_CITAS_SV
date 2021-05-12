@@ -2,7 +2,7 @@
 import { FacebookOutlined, InstagramOutlined, TwitterOutlined } from '@ant-design/icons';
 import { Button, Col, Image, Row, Typography } from 'antd';
 import React, { useContext } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
 
 import { paths } from '../../config/paths';
 import { GlobalContext } from '../../context/GlobalState';
@@ -10,9 +10,12 @@ import { GlobalContext } from '../../context/GlobalState';
 const { Link, Paragraph, Title } = Typography;
 
 const useGetBusinessDetail = (isModal = false) => {
+  const { push } = useHistory();
   const {
     businessSelected: { idbusiness, businessname, description, imageurlbusiness }
   } = useContext(GlobalContext);
+
+  !idbusiness && push('/');
 
   const ellipsisConfig = isModal ? { expandable: true, symbol: 'Leer más' } : null;
   const imagePlaceholder = <Image preview={false} src="imageURL" width={400} />;
