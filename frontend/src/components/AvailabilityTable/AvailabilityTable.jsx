@@ -2,8 +2,8 @@ import { Button, message, Table, Tag } from 'antd';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import useGetData from '../../hooks/useGetData';
 import { business } from '../../config/urls';
+import useGetData from '../../hooks/useGetData';
 
 const AvailabilityTable = ({ handleTimeSelection, dateSelected }) => {
   const { id } = useParams();
@@ -16,7 +16,7 @@ const AvailabilityTable = ({ handleTimeSelection, dateSelected }) => {
 
   const dataTable = availability.map(({ hour, minute, time, state }) => {
     const timing = `${hour}:${minute} ${time}`;
-    const key = time;
+    const key = timing;
 
     return { time: timing, key, state };
   });
