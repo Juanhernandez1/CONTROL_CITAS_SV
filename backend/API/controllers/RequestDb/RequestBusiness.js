@@ -322,7 +322,7 @@ export default class RequestBusiness {
     try {
       const { id, date } = req.params;
 
-      const dataList = await this.AppointmentCrud.GetFullDate(date.replace(/-/g, '/'));
+      const dataList = await this.AppointmentCrud.GetFullDate(id, date.replace(/-/g, '/'));
 
       if (dataList.success) {
         const BusinessSetting = await this.SettingCrud.GetPk(id);

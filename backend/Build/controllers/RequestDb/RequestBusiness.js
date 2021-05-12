@@ -1121,7 +1121,7 @@ var RequestBusiness = function RequestBusiness(
                     _context19.prev = 0;
                     (_req$params3 = req.params), (id = _req$params3.id), (date = _req$params3.date);
                     _context19.next = 4;
-                    return _this.AppointmentCrud.GetFullDate(date.replace(/-/g, '/'));
+                    return _this.AppointmentCrud.GetFullDate(id, date.replace(/-/g, '/'));
 
                   case 4:
                     dataList = _context19.sent;

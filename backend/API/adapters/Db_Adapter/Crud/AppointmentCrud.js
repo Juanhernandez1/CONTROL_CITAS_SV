@@ -19,11 +19,11 @@ export default class AppointmentCrud extends CrudInterface {
     };
   }
 
-  GetFullDate = async date => {
-    console.log(date);
+  GetFullDate = async (id, date) => {
     try {
       const data = await this.Model.findAll({
         where: {
+          idbusiness: id,
           dateappointment: {
             fulldate: date
           }

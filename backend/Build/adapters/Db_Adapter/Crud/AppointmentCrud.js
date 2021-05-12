@@ -146,20 +146,20 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
       'GetFullDate',
       /*#__PURE__*/ (function () {
         var _ref = (0, _asyncToGenerator2['default'])(
-          /*#__PURE__*/ _regenerator['default'].mark(function _callee(date) {
+          /*#__PURE__*/ _regenerator['default'].mark(function _callee(id, date) {
             var data;
             return _regenerator['default'].wrap(
               function _callee$(_context) {
                 while (1) {
                   switch ((_context.prev = _context.next)) {
                     case 0:
-                      console.log(date);
-                      _context.prev = 1;
-                      _context.next = 4;
+                      _context.prev = 0;
+                      _context.next = 3;
                       return _this.Model.findAll(
                         _objectSpread(
                           {
                             where: {
+                              idbusiness: id,
                               dateappointment: {
                                 fulldate: date
                               }
@@ -169,22 +169,22 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
                         )
                       );
 
-                    case 4:
+                    case 3:
                       data = _context.sent;
                       return _context.abrupt('return', {
                         data: data,
                         success: true
                       });
 
-                    case 8:
-                      _context.prev = 8;
-                      _context.t0 = _context['catch'](1);
+                    case 7:
+                      _context.prev = 7;
+                      _context.t0 = _context['catch'](0);
                       console.log(_context.t0);
                       return _context.abrupt('return', {
                         success: false
                       });
 
-                    case 12:
+                    case 11:
                     case 'end':
                       return _context.stop();
                   }
@@ -192,12 +192,12 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
               },
               _callee,
               null,
-              [[1, 8]]
+              [[0, 7]]
             );
           })
         );
 
-        return function (_x) {
+        return function (_x, _x2) {
           return _ref.apply(this, arguments);
         };
       })()
@@ -276,7 +276,7 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
           })
         );
 
-        return function (_x2, _x3) {
+        return function (_x3, _x4) {
           return _ref2.apply(this, arguments);
         };
       })()
@@ -355,7 +355,7 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
           })
         );
 
-        return function (_x4, _x5) {
+        return function (_x5, _x6) {
           return _ref3.apply(this, arguments);
         };
       })()
@@ -433,7 +433,7 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
           })
         );
 
-        return function (_x6) {
+        return function (_x7) {
           return _ref4.apply(this, arguments);
         };
       })()
@@ -511,7 +511,7 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
           })
         );
 
-        return function (_x7) {
+        return function (_x8) {
           return _ref5.apply(this, arguments);
         };
       })()
@@ -557,7 +557,7 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
           })
         );
 
-        return function (_x8) {
+        return function (_x9) {
           return _ref6.apply(this, arguments);
         };
       })()
@@ -609,7 +609,7 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
           })
         );
 
-        return function (_x9) {
+        return function (_x10) {
           return _ref7.apply(this, arguments);
         };
       })()
@@ -664,7 +664,7 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
           })
         );
 
-        return function (_x10) {
+        return function (_x11) {
           return _ref8.apply(this, arguments);
         };
       })()
