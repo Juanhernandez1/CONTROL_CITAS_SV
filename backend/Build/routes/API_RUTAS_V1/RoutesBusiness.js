@@ -41,7 +41,7 @@ function RoutesBusiness(router, RequestUsers) {
   BusinessRoutes.get('/Services/GetPk/:idbusiness/:id', RequestBusinessServicesGetPk);
   BusinessRoutes.get('/Services/GetAll/:idbusiness', RequestBusinessServicesGetAll);
   BusinessRoutes.get('/Services/GetAll/:idbusiness/Client', RequestBusinessServicesGetAllClient);
-  BusinessRoutes.get('/Appointment/ResolveSetting/:id', RequestBusinessResolveSetting); // * post
+  BusinessRoutes.get('/Appointment/ResolveSetting/:id/:date', RequestBusinessResolveSetting); // * post
 
   BusinessRoutes.post('/Create', RequestBusinessCreate);
   BusinessRoutes.post('/Services/Create', RequestBusinessServicesCreate); // * put

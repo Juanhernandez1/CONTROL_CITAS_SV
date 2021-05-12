@@ -318,6 +318,29 @@ export default class RequestBusiness {
     }
   };
 
+  RequestBusinessResolveSetting = async (req, res) => {
+    try {
+      const { id, date } = req.params;
+
+      const dataList = await this.AppointmentCrud.GetFullDate(date.replace(/-/g, '/'));
+
+      if (dataList.success) {
+        const BusinessSetting = await this.SettingCrud.GetPk(id);
+        if (BusinessSetting.success)
+          res
+            .status(BusinessSetting.data ? 200 : 204)
+            .send(
+              await this.AppointmentGen.GetHoursAppointment(BusinessSetting.data, dataList.data)
+            );
+      } else res.status(200).send({ mesagge: 'Fecha No valida' });
+    } catch (error) {
+      const { ERDB404 } = ErrorMessages;
+      console.log(ERDB404);
+
+      res.status(404).send(ERDB404);
+    }
+  };
+
   // * no testeado
   RequestBusinessServicesUpdate = async (req, res) => {
     try {
@@ -381,22 +404,6 @@ export default class RequestBusiness {
     } catch (error) {
       const { ERDB404 } = ErrorMessages;
       console.log(ERDB404);
-      res.status(404).send(ERDB404);
-    }
-  };
-
-  RequestBusinessResolveSetting = async (req, res) => {
-    try {
-      const { id } = req.params;
-      const BusinessSetting = await this.SettingCrud.GetPk(id);
-      if (BusinessSetting.success)
-        res
-          .status(BusinessSetting.data ? 200 : 204)
-          .send(await this.AppointmentGen.GetHoursAppointment(BusinessSetting.data));
-    } catch (error) {
-      const { ERDB404 } = ErrorMessages;
-      console.log(ERDB404);
-
       res.status(404).send(ERDB404);
     }
   };

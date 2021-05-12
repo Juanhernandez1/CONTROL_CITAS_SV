@@ -143,18 +143,79 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
     _this = _super.call(this);
     (0, _defineProperty2['default'])(
       (0, _assertThisInitialized2['default'])(_this),
-      'GetPkForUsers',
+      'GetFullDate',
       /*#__PURE__*/ (function () {
         var _ref = (0, _asyncToGenerator2['default'])(
-          /*#__PURE__*/ _regenerator['default'].mark(function _callee(pk, iduser) {
+          /*#__PURE__*/ _regenerator['default'].mark(function _callee(date) {
             var data;
             return _regenerator['default'].wrap(
               function _callee$(_context) {
                 while (1) {
                   switch ((_context.prev = _context.next)) {
                     case 0:
-                      _context.prev = 0;
-                      _context.next = 3;
+                      console.log(date);
+                      _context.prev = 1;
+                      _context.next = 4;
+                      return _this.Model.findAll(
+                        _objectSpread(
+                          {
+                            where: {
+                              dateappointment: {
+                                fulldate: date
+                              }
+                            }
+                          },
+                          _this.Config
+                        )
+                      );
+
+                    case 4:
+                      data = _context.sent;
+                      return _context.abrupt('return', {
+                        data: data,
+                        success: true
+                      });
+
+                    case 8:
+                      _context.prev = 8;
+                      _context.t0 = _context['catch'](1);
+                      console.log(_context.t0);
+                      return _context.abrupt('return', {
+                        success: false
+                      });
+
+                    case 12:
+                    case 'end':
+                      return _context.stop();
+                  }
+                }
+              },
+              _callee,
+              null,
+              [[1, 8]]
+            );
+          })
+        );
+
+        return function (_x) {
+          return _ref.apply(this, arguments);
+        };
+      })()
+    );
+    (0, _defineProperty2['default'])(
+      (0, _assertThisInitialized2['default'])(_this),
+      'GetPkForUsers',
+      /*#__PURE__*/ (function () {
+        var _ref2 = (0, _asyncToGenerator2['default'])(
+          /*#__PURE__*/ _regenerator['default'].mark(function _callee2(pk, iduser) {
+            var data;
+            return _regenerator['default'].wrap(
+              function _callee2$(_context2) {
+                while (1) {
+                  switch ((_context2.prev = _context2.next)) {
+                    case 0:
+                      _context2.prev = 0;
+                      _context2.next = 3;
                       return _this.Model.findByPk(
                         pk,
                         _objectSpread(
@@ -172,85 +233,6 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
                               {
                                 association: 'AppointmentidbusinessBusiness',
                                 attributes: ['businessname']
-                              },
-                              {
-                                association: 'DetailidappointmentAppointment',
-                                include: {
-                                  association: 'DetailidservicesService',
-                                  attributes: ['servicename']
-                                },
-                                raw: true,
-                                nest: true
-                              }
-                            ]
-                          }
-                        )
-                      );
-
-                    case 3:
-                      data = _context.sent;
-                      return _context.abrupt('return', {
-                        data: data,
-                        success: true
-                      });
-
-                    case 7:
-                      _context.prev = 7;
-                      _context.t0 = _context['catch'](0);
-                      console.log(_context.t0);
-                      return _context.abrupt('return', {
-                        success: false
-                      });
-
-                    case 11:
-                    case 'end':
-                      return _context.stop();
-                  }
-                }
-              },
-              _callee,
-              null,
-              [[0, 7]]
-            );
-          })
-        );
-
-        return function (_x, _x2) {
-          return _ref.apply(this, arguments);
-        };
-      })()
-    );
-    (0, _defineProperty2['default'])(
-      (0, _assertThisInitialized2['default'])(_this),
-      'GetPkForBusiness',
-      /*#__PURE__*/ (function () {
-        var _ref2 = (0, _asyncToGenerator2['default'])(
-          /*#__PURE__*/ _regenerator['default'].mark(function _callee2(pk, idbusiness) {
-            var data;
-            return _regenerator['default'].wrap(
-              function _callee2$(_context2) {
-                while (1) {
-                  switch ((_context2.prev = _context2.next)) {
-                    case 0:
-                      _context2.prev = 0;
-                      _context2.next = 3;
-                      return _this.Model.findByPk(
-                        pk,
-                        _objectSpread(
-                          _objectSpread(
-                            {
-                              where: {
-                                idbusiness: idbusiness
-                              }
-                            },
-                            _this.Config
-                          ),
-                          {},
-                          {
-                            include: [
-                              {
-                                association: 'AppointmentiduserUser',
-                                attributes: ['name', 'lastname', 'phone']
                               },
                               {
                                 association: 'DetailidappointmentAppointment',
@@ -294,17 +276,17 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
           })
         );
 
-        return function (_x3, _x4) {
+        return function (_x2, _x3) {
           return _ref2.apply(this, arguments);
         };
       })()
     );
     (0, _defineProperty2['default'])(
       (0, _assertThisInitialized2['default'])(_this),
-      'GetAllForUsers',
+      'GetPkForBusiness',
       /*#__PURE__*/ (function () {
         var _ref3 = (0, _asyncToGenerator2['default'])(
-          /*#__PURE__*/ _regenerator['default'].mark(function _callee3(iduser) {
+          /*#__PURE__*/ _regenerator['default'].mark(function _callee3(pk, idbusiness) {
             var data;
             return _regenerator['default'].wrap(
               function _callee3$(_context3) {
@@ -313,12 +295,13 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
                     case 0:
                       _context3.prev = 0;
                       _context3.next = 3;
-                      return _this.Model.findAll(
+                      return _this.Model.findByPk(
+                        pk,
                         _objectSpread(
                           _objectSpread(
                             {
                               where: {
-                                iduser: iduser
+                                idbusiness: idbusiness
                               }
                             },
                             _this.Config
@@ -327,8 +310,8 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
                           {
                             include: [
                               {
-                                association: 'AppointmentidbusinessBusiness',
-                                attributes: ['businessname']
+                                association: 'AppointmentiduserUser',
+                                attributes: ['name', 'lastname', 'phone']
                               },
                               {
                                 association: 'DetailidappointmentAppointment',
@@ -372,17 +355,17 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
           })
         );
 
-        return function (_x5) {
+        return function (_x4, _x5) {
           return _ref3.apply(this, arguments);
         };
       })()
     );
     (0, _defineProperty2['default'])(
       (0, _assertThisInitialized2['default'])(_this),
-      'GetAllForBusiness',
+      'GetAllForUsers',
       /*#__PURE__*/ (function () {
         var _ref4 = (0, _asyncToGenerator2['default'])(
-          /*#__PURE__*/ _regenerator['default'].mark(function _callee4(idbusiness) {
+          /*#__PURE__*/ _regenerator['default'].mark(function _callee4(iduser) {
             var data;
             return _regenerator['default'].wrap(
               function _callee4$(_context4) {
@@ -396,7 +379,7 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
                           _objectSpread(
                             {
                               where: {
-                                idbusiness: idbusiness
+                                iduser: iduser
                               }
                             },
                             _this.Config
@@ -405,8 +388,8 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
                           {
                             include: [
                               {
-                                association: 'AppointmentiduserUser',
-                                attributes: ['name', 'lastname', 'phone']
+                                association: 'AppointmentidbusinessBusiness',
+                                attributes: ['businessname']
                               },
                               {
                                 association: 'DetailidappointmentAppointment',
@@ -457,10 +440,11 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
     );
     (0, _defineProperty2['default'])(
       (0, _assertThisInitialized2['default'])(_this),
-      'Create',
+      'GetAllForBusiness',
       /*#__PURE__*/ (function () {
         var _ref5 = (0, _asyncToGenerator2['default'])(
-          /*#__PURE__*/ _regenerator['default'].mark(function _callee5(obj) {
+          /*#__PURE__*/ _regenerator['default'].mark(function _callee5(idbusiness) {
+            var data;
             return _regenerator['default'].wrap(
               function _callee5$(_context5) {
                 while (1) {
@@ -468,22 +452,53 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
                     case 0:
                       _context5.prev = 0;
                       _context5.next = 3;
-                      return _this.Model.create(obj);
+                      return _this.Model.findAll(
+                        _objectSpread(
+                          _objectSpread(
+                            {
+                              where: {
+                                idbusiness: idbusiness
+                              }
+                            },
+                            _this.Config
+                          ),
+                          {},
+                          {
+                            include: [
+                              {
+                                association: 'AppointmentiduserUser',
+                                attributes: ['name', 'lastname', 'phone']
+                              },
+                              {
+                                association: 'DetailidappointmentAppointment',
+                                include: {
+                                  association: 'DetailidservicesService',
+                                  attributes: ['servicename']
+                                },
+                                raw: true,
+                                nest: true
+                              }
+                            ]
+                          }
+                        )
+                      );
 
                     case 3:
+                      data = _context5.sent;
                       return _context5.abrupt('return', {
+                        data: data,
                         success: true
                       });
 
-                    case 6:
-                      _context5.prev = 6;
+                    case 7:
+                      _context5.prev = 7;
                       _context5.t0 = _context5['catch'](0);
                       console.log(_context5.t0);
                       return _context5.abrupt('return', {
                         success: false
                       });
 
-                    case 10:
+                    case 11:
                     case 'end':
                       return _context5.stop();
                   }
@@ -491,7 +506,7 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
               },
               _callee5,
               null,
-              [[0, 6]]
+              [[0, 7]]
             );
           })
         );
@@ -503,39 +518,33 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
     );
     (0, _defineProperty2['default'])(
       (0, _assertThisInitialized2['default'])(_this),
-      'Update',
+      'Create',
       /*#__PURE__*/ (function () {
         var _ref6 = (0, _asyncToGenerator2['default'])(
           /*#__PURE__*/ _regenerator['default'].mark(function _callee6(obj) {
-            var FieldPk, pk;
             return _regenerator['default'].wrap(
               function _callee6$(_context6) {
                 while (1) {
                   switch ((_context6.prev = _context6.next)) {
                     case 0:
                       _context6.prev = 0;
-                      FieldPk = _this.Model.primaryKeyAttribute;
-                      pk = obj[FieldPk];
-                      delete obj[FieldPk];
-                      _context6.next = 6;
-                      return _this.Model.update(obj, {
-                        where: (0, _defineProperty2['default'])({}, FieldPk, pk)
-                      });
+                      _context6.next = 3;
+                      return _this.Model.create(obj);
 
-                    case 6:
+                    case 3:
                       return _context6.abrupt('return', {
                         success: true
                       });
 
-                    case 9:
-                      _context6.prev = 9;
+                    case 6:
+                      _context6.prev = 6;
                       _context6.t0 = _context6['catch'](0);
                       console.log(_context6.t0);
                       return _context6.abrupt('return', {
                         success: false
                       });
 
-                    case 13:
+                    case 10:
                     case 'end':
                       return _context6.stop();
                   }
@@ -543,7 +552,7 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
               },
               _callee6,
               null,
-              [[0, 9]]
+              [[0, 6]]
             );
           })
         );
@@ -555,11 +564,11 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
     );
     (0, _defineProperty2['default'])(
       (0, _assertThisInitialized2['default'])(_this),
-      'Delete',
+      'Update',
       /*#__PURE__*/ (function () {
         var _ref7 = (0, _asyncToGenerator2['default'])(
-          /*#__PURE__*/ _regenerator['default'].mark(function _callee7(pk) {
-            var FieldPk;
+          /*#__PURE__*/ _regenerator['default'].mark(function _callee7(obj) {
+            var FieldPk, pk;
             return _regenerator['default'].wrap(
               function _callee7$(_context7) {
                 while (1) {
@@ -567,7 +576,59 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
                     case 0:
                       _context7.prev = 0;
                       FieldPk = _this.Model.primaryKeyAttribute;
-                      _context7.next = 4;
+                      pk = obj[FieldPk];
+                      delete obj[FieldPk];
+                      _context7.next = 6;
+                      return _this.Model.update(obj, {
+                        where: (0, _defineProperty2['default'])({}, FieldPk, pk)
+                      });
+
+                    case 6:
+                      return _context7.abrupt('return', {
+                        success: true
+                      });
+
+                    case 9:
+                      _context7.prev = 9;
+                      _context7.t0 = _context7['catch'](0);
+                      console.log(_context7.t0);
+                      return _context7.abrupt('return', {
+                        success: false
+                      });
+
+                    case 13:
+                    case 'end':
+                      return _context7.stop();
+                  }
+                }
+              },
+              _callee7,
+              null,
+              [[0, 9]]
+            );
+          })
+        );
+
+        return function (_x9) {
+          return _ref7.apply(this, arguments);
+        };
+      })()
+    );
+    (0, _defineProperty2['default'])(
+      (0, _assertThisInitialized2['default'])(_this),
+      'Delete',
+      /*#__PURE__*/ (function () {
+        var _ref8 = (0, _asyncToGenerator2['default'])(
+          /*#__PURE__*/ _regenerator['default'].mark(function _callee8(pk) {
+            var FieldPk;
+            return _regenerator['default'].wrap(
+              function _callee8$(_context8) {
+                while (1) {
+                  switch ((_context8.prev = _context8.next)) {
+                    case 0:
+                      _context8.prev = 0;
+                      FieldPk = _this.Model.primaryKeyAttribute;
+                      _context8.next = 4;
                       return _this.Model.update(
                         {
                           state: 'inactivo'
@@ -578,33 +639,33 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
                       );
 
                     case 4:
-                      return _context7.abrupt('return', {
+                      return _context8.abrupt('return', {
                         success: true
                       });
 
                     case 7:
-                      _context7.prev = 7;
-                      _context7.t0 = _context7['catch'](0);
-                      console.log(_context7.t0);
-                      return _context7.abrupt('return', {
+                      _context8.prev = 7;
+                      _context8.t0 = _context8['catch'](0);
+                      console.log(_context8.t0);
+                      return _context8.abrupt('return', {
                         success: false
                       });
 
                     case 11:
                     case 'end':
-                      return _context7.stop();
+                      return _context8.stop();
                   }
                 }
               },
-              _callee7,
+              _callee8,
               null,
               [[0, 7]]
             );
           })
         );
 
-        return function (_x9) {
-          return _ref7.apply(this, arguments);
+        return function (_x10) {
+          return _ref8.apply(this, arguments);
         };
       })()
     );

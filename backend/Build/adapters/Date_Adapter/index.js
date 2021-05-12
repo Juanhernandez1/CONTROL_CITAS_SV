@@ -123,7 +123,7 @@ var AppointmentGen = /*#__PURE__*/ (function (_SettingResolve) {
       'GetHoursAppointment',
       /*#__PURE__*/ (function () {
         var _ref = (0, _asyncToGenerator2['default'])(
-          /*#__PURE__*/ _regenerator['default'].mark(function _callee(Setting) {
+          /*#__PURE__*/ _regenerator['default'].mark(function _callee(Setting, dateList) {
             var ListHours,
               timeends,
               starttime,
@@ -137,7 +137,9 @@ var AppointmentGen = /*#__PURE__*/ (function (_SettingResolve) {
               hour,
               minute,
               index,
-              time;
+              time,
+              valid,
+              state;
             return _regenerator['default'].wrap(function _callee$(_context) {
               while (1) {
                 switch ((_context.prev = _context.next)) {
@@ -167,13 +169,21 @@ var AppointmentGen = /*#__PURE__*/ (function (_SettingResolve) {
                       }
 
                       time = hour >= 12 ? 'PM' : 'AM';
+                      valid = '0';
+                      state = void 0;
+
+                      if (index <= dateList.length) {
+                        valid = dateList[index - 1].uuidappointment.split('-')[0];
+                        state = dateList[index - 1].state;
+                      }
 
                       if (hour <= EndTime.hour + 12) {
                         ListHours.push({
                           hour: hour > 12 ? hour - 12 : hour,
                           minute: minute,
                           time: time,
-                          limitService: nsa
+                          limitService: nsa,
+                          state: parseInt(valid) === index ? state : 'O'
                         });
                       }
                     }
@@ -190,7 +200,7 @@ var AppointmentGen = /*#__PURE__*/ (function (_SettingResolve) {
           })
         );
 
-        return function (_x) {
+        return function (_x, _x2) {
           return _ref.apply(this, arguments);
         };
       })()
