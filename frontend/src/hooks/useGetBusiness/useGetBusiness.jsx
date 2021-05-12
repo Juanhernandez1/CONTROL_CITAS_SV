@@ -1,7 +1,7 @@
 /* eslint-disable unicorn/filename-case */
 import { useContext, useEffect, useState } from 'react';
 
-import { getData } from '../../API/baseClient';
+import { getData } from '../../api/baseClient';
 import { business as getBusinessPath } from '../../config/urls';
 import { GlobalContext } from '../../context/GlobalState';
 
