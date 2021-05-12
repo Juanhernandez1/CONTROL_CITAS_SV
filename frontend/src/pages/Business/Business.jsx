@@ -1,4 +1,5 @@
 import { Card, List, message, Typography } from 'antd';
+import { isEmpty } from 'lodash';
 import React, { useContext, useState } from 'react';
 
 import BusinessDetailModal from '../../components/DetailBusinessModal';
@@ -59,7 +60,9 @@ const Business = () => {
         pagination={paginationConfig}
         renderItem={renderListItem}
       />
-      {businessSelected && <BusinessDetailModal onCancel={closeModal} visible={isModalVisible} />}
+      {!isEmpty(businessSelected) && (
+        <BusinessDetailModal onCancel={closeModal} visible={isModalVisible} />
+      )}
     </>
   );
 };
