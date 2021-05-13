@@ -54,6 +54,10 @@ app.use('/API/Auth', authRouter);
 
 app.use('/API', Routes);
 
+app.get('/politicas', function (req, res) {
+  res.sendFile('../export.html');
+});
+
 /**
  * * Captura las solicitudes no encontradas en los Endpoint
  * * enviando un error 404 al controlador de errores
