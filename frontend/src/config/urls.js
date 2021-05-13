@@ -3,5 +3,7 @@ export const business = {
   getBusinessByName: name => `/Business/SearchByNameNoPage/${name}`,
   getAllBusiness: '/Business/GetAllNoPage/Active',
   lastFiveDays: '/Appointment/LastFiveDay',
-  availability: (id, date) => `/Business/Appointment/ResolveSetting/${id}/${date}`
+  availability: (id, date) => `/Business/Appointment/ResolveSetting/${id}/${date}`,
+  getAllBusinessServicess: id => `/Business/Services/GetAll/${id}/Client`,
+  getBusinessPk: id => `/Business/GetPk/${id}`
 };

@@ -1,25 +1,12 @@
-import { Router } from 'express';
-import passport from 'passport';
-import controllers from '../controllers';
+export default function AuthRouter(router, controllers) {
+  // *Ruta modelo
+  const RAuth = router();
 
-const router = Router();
-const { crearUsuario } = controllers.Login;
-/* GET users listing. */
-router.post('/SingUP', crearUsuario);
+  const { CallbackGoogle, CallbackFacebook } = controllers;
 
-router.get(
-  '/auth/facebook',
-  passport.authenticate('facebook', {
-    scope: ['public_profile', 'email']
-  })
-);
+  RAuth.get('/handle_facebook_callback', CallbackFacebook);
 
-router.get(
-  '/auth/facebook/callback',
-  passport.authenticate('facebook', {
-    successRedirect: '/',
-    failureRedirect: '/error'
-  })
-);
+  RAuth.get('/handle_google_callback', CallbackGoogle);
 
-export default router;
+  return RAuth;
+}

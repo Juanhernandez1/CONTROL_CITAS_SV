@@ -1,37 +1,53 @@
 /* eslint-disable unicorn/filename-case */
 import { FacebookOutlined, InstagramOutlined, TwitterOutlined } from '@ant-design/icons';
 import { Button, Col, Image, Row, Typography } from 'antd';
-import React, { useContext } from 'react';
-import { Link as RouterLink, useHistory } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
+import { Link as RouterLink, useHistory, useParams } from 'react-router-dom';
 
 import { paths } from '../../config/paths';
 import { GlobalContext } from '../../context/GlobalState';
+import { getData } from '../../api/baseClient';
+import { business as getBusinessPath } from '../../config/urls';
 
 const { Link, Paragraph, Title } = Typography;
 
 const useGetBusinessDetail = (isModal = false) => {
   const { push } = useHistory();
-  const {
-    businessSelected: { idbusiness, businessname, description, imageurlbusiness }
-  } = useContext(GlobalContext);
+  const { businessSelected, setBusinessSelected } = useContext(GlobalContext);
+  const { id } = useParams();
 
-  !idbusiness && push('/');
+  useEffect(() => {
+    !businessSelected.hasOwnProperty('idbusiness') &&
+      (async () => {
+        const path = getBusinessPath.getBusinessPk(id);
+        try {
+          const { data, status } = await getData(path);
+          if (status === 200) setBusinessSelected(data.data);
+          else push('/');
+        } catch (error) {
+          push('/');
+          console.log(error);
+        }
+      })();
+  }, [businessSelected]);
 
   const ellipsisConfig = isModal ? { expandable: true, symbol: 'Leer más' } : null;
-  const imagePlaceholder = <Image preview={false} src="imageURL" width={400} />;
+  const imagePlaceholder = (
+    <Image preview={false} src={businessSelected.imageurlbusiness} width={400} />
+  );
   const colSpan = isModal ? 4 : 2;
   const iconStyle = { fontSize: '1.5rem' };
 
   const content = (
     <>
       <Row justify="center">
-        <Title>{businessname}</Title>
+        <Title>{businessSelected.businessname}</Title>
       </Row>
       <Row justify="center">
-        <Image width={400} src={imageurlbusiness} placeholder={imagePlaceholder} />
+        <Image width={400} src={businessSelected.imageurlbusiness} placeholder={imagePlaceholder} />
       </Row>
       <Row className="business-modal__detail">
-        <Paragraph ellipsis={ellipsisConfig}>{description}</Paragraph>
+        <Paragraph ellipsis={ellipsisConfig}>{businessSelected.description}</Paragraph>
       </Row>
       <Row justify="space-between">
         <div style={{ width: '40%' }}>
@@ -60,12 +76,14 @@ const useGetBusinessDetail = (isModal = false) => {
 
   const footer = isModal
     ? [
-        <Row justify="space-between" key={idbusiness}>
+        <Row justify="space-between" key={businessSelected.idbusiness}>
           <Link href="/" target="_blank" rel="noreferrer noopener">
             Dirección
           </Link>
           <Button type="primary">
-            <RouterLink to={`${paths.businessDetail(idbusiness)}`}>Ir a gestión</RouterLink>
+            <RouterLink to={`${paths.businessDetail(businessSelected.idbusiness)}`}>
+              Ir a gestión
+            </RouterLink>
           </Button>
         </Row>
       ]

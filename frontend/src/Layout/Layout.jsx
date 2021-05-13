@@ -1,17 +1,37 @@
-import { BookOutlined, CarryOutOutlined } from '@ant-design/icons';
+import { BookOutlined, CarryOutOutlined, ProfileOutlined } from '@ant-design/icons';
 import { Layout as LayoutAnt, Menu } from 'antd';
-import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
+import { Link, useHistory, useParams } from 'react-router-dom';
+import { business as getBusinessPath } from '../config/urls';
 
 import { paths } from '../config/paths';
 import Header from '../components/Header';
 
 import './Layout.css';
+import { GlobalContext } from '../context/GlobalState';
+import { getData } from '../api/baseClient';
 
 const { Content, Sider } = LayoutAnt;
 
 export const Layout = ({ children }) => {
   const { id } = useParams();
+  const { push } = useHistory();
+  const { businessSelected, setBusinessSelected } = useContext(GlobalContext);
+
+  useEffect(() => {
+    !businessSelected.hasOwnProperty('idbusiness') &&
+      (async () => {
+        const path = getBusinessPath.getBusinessPk(id);
+        try {
+          const { data, status } = await getData(path);
+          if (status === 200) setBusinessSelected(data.data);
+          else push('/');
+        } catch (error) {
+          push('/');
+          console.log(error);
+        }
+      })();
+  }, [businessSelected]);
 
   return (
     <LayoutAnt>
@@ -22,10 +42,17 @@ export const Layout = ({ children }) => {
           </div>
         </div>
         <Menu mode="vertical-left" theme="dark">
-          <Menu.Item key="1" icon={<CarryOutOutlined />}>
-            Servicios
+          <Menu.Item key="1" icon={<ProfileOutlined />}>
+            <Link to={paths.businessDetail(id)}>
+              {window.location.pathname === `/business-detail/${id}`
+                ? 'Informacion'
+                : businessSelected.businessname}
+            </Link>
           </Menu.Item>
-          <Menu.Item key="2" icon={<BookOutlined />}>
+          <Menu.Item key="2" icon={<CarryOutOutlined />}>
+            <Link to={paths.businessServices(id)}>Servicios</Link>
+          </Menu.Item>
+          <Menu.Item key="3" icon={<BookOutlined />}>
             <Link to={paths.appointmentBook(id)}>Libro de Citas</Link>
           </Menu.Item>
         </Menu>

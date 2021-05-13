@@ -27,34 +27,6 @@ export default class RequestUsers {
     }
   };
 
-  RequestUsersCreate = async (req, res) => {
-    try {
-      const { objUser, objAccess } = req.body;
-      console.log(objUser, objAccess);
-      const User = await this.UserCrud.Create(objUser);
-
-      const { data } = User;
-      console.log(User);
-      if (User.success) {
-        objAccess.iduser = data.iduser;
-        const Acces = await this.AccessCrud.Create(objAccess);
-
-        if (Acces.success) {
-          delete Acces.password;
-          res.status(201).send({ User, Acces });
-        } else {
-          res.status(409).send({ User, Acces });
-        }
-      } else {
-        res.status(409).send(User);
-      }
-    } catch (error) {
-      const { ERDB404 } = ErrorMessages;
-      console.log(ERDB404);
-      res.status(404).send(ERDB404);
-    }
-  };
-
   RequestUsersUpdate = async (req, res) => {
     try {
       const objUser = req.body;

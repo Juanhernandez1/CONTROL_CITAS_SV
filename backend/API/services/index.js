@@ -5,6 +5,7 @@ import ConfiguracionDb from './config/ConfiguracionDb';
 import MomentSv from './moment';
 import ConnectionDb from './sequalize';
 import initModels from './sequalize/model';
+import JWT from './JWT';
 
 const Connection = new ConnectionDb(Sequelize, ConfiguracionDb);
 const { conexion } = Connection;
@@ -40,7 +41,8 @@ const Model = {
 const services = {
   Model,
   Encrypt,
-  MomentSv
+  MomentSv,
+  JWT
 };
 
 export default services;

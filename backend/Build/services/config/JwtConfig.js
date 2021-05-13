@@ -11,10 +11,9 @@ var _dotenv = require('dotenv');
 (0, _dotenv.config)();
 var JwtConfig = {
   secret: process.env.SECRET,
-  port: process.env.PORT || 3000,
   header: {
-    alg: 'HS256',
-    typ: 'JWT'
+    algorithm: 'HS256',
+    expiresIn: 86400
   }
 };
 var _default = JwtConfig;

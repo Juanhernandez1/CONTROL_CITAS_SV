@@ -60,79 +60,88 @@ function _classApplyDescriptorGet(receiver, descriptor) {
   return descriptor.value;
 }
 
-var SignUp = function SignUp(
-  businessCrud,
-  contactbusinessCrud,
-  addressCrud,
-  freedayCrud,
-  settingCrud,
-  userCrud,
-  accessCrud
-) {
+var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
   var _this = this;
 
   (0, _classCallCheck2['default'])(this, SignUp);
   (0, _defineProperty2['default'])(
     this,
-    'SignUpBusinessCreateTraditional',
+    'SignUpUsersCreateTraditional',
     /*#__PURE__*/ (function () {
       var _ref = (0, _asyncToGenerator2['default'])(
         /*#__PURE__*/ _regenerator['default'].mark(function _callee(req, res) {
-          var _req$body,
-            objUsers,
-            obtAccess,
-            objBusiness,
-            obtSetting,
-            objAddres,
-            objContact,
-            UsersBusiness,
-            UsersBusinessAccess,
-            Business,
-            Addess,
-            Setting,
-            Contact,
-            ERDB404;
+          var _req$body, objUser, objAccess, User, data, Acces, ERDB404;
 
-          return _regenerator['default'].wrap(function _callee$(_context) {
-            while (1) {
-              switch ((_context.prev = _context.next)) {
-                case 0:
-                  try {
+          return _regenerator['default'].wrap(
+            function _callee$(_context) {
+              while (1) {
+                switch ((_context.prev = _context.next)) {
+                  case 0:
+                    _context.prev = 0;
                     (_req$body = req.body),
-                      (objUsers = _req$body.objUsers),
-                      (obtAccess = _req$body.obtAccess),
-                      (objBusiness = _req$body.objBusiness),
-                      (obtSetting = _req$body.obtSetting),
-                      (objAddres = _req$body.objAddres),
-                      (objContact = _req$body.objContact);
-                    UsersBusiness = _this.UserCrud.Create(objUsers);
-                    objBusiness.iduser = UsersBusiness.iduser;
-                    obtAccess.iduser = UsersBusiness.iduser;
-                    UsersBusinessAccess = _this.AccessCrud.Create(objUsers);
-                    Business = _this.Crud.Create(objBusiness);
-                    obtSetting.idbusiness = Business.idbusiness;
-                    objAddres.idbusiness = Business.idbusiness;
-                    objContact.idbusiness = Business.idbusiness;
-                    Addess = _this.AddressCrud.Create(objAddres);
-                    Setting = _this.SettingCrud.Create(obtSetting);
-                    Contact = _this.ContactbusinessCrud.Create(objContact);
-                    if (Contact.success)
+                      (objUser = _req$body.objUser),
+                      (objAccess = _req$body.objAccess);
+                    console.log(objUser, objAccess);
+                    _context.next = 5;
+                    return _this.UserCrud.Create(objUser);
+
+                  case 5:
+                    User = _context.sent;
+                    data = User.data;
+                    console.log(User);
+
+                    if (!User.success) {
+                      _context.next = 16;
+                      break;
+                    }
+
+                    objAccess.iduser = data.iduser;
+                    _context.next = 12;
+                    return _this.AccessCrud.Create(objAccess);
+
+                  case 12:
+                    Acces = _context.sent;
+
+                    if (Acces.success) {
+                      delete Acces.password;
                       res.status(201).send({
-                        UsersBusiness: UsersBusiness,
-                        Business: Business
+                        User: User,
+                        Acces: Acces
                       });
-                  } catch (error) {
+                    } else {
+                      res.status(409).send({
+                        User: User,
+                        Acces: Acces
+                      });
+                    }
+
+                    _context.next = 17;
+                    break;
+
+                  case 16:
+                    res.status(409).send(User);
+
+                  case 17:
+                    _context.next = 24;
+                    break;
+
+                  case 19:
+                    _context.prev = 19;
+                    _context.t0 = _context['catch'](0);
                     ERDB404 = _ErrorMessages['default'].ERDB404;
                     console.log(ERDB404);
                     res.status(404).send(ERDB404);
-                  }
 
-                case 1:
-                case 'end':
-                  return _context.stop();
+                  case 24:
+                  case 'end':
+                    return _context.stop();
+                }
               }
-            }
-          }, _callee);
+            },
+            _callee,
+            null,
+            [[0, 19]]
+          );
         })
       );
 
@@ -143,72 +152,112 @@ var SignUp = function SignUp(
   );
   (0, _defineProperty2['default'])(
     this,
-    'SignUpBusinessCreateGoogle',
+    'CallbackGoogle',
     /*#__PURE__*/ (function () {
       var _ref2 = (0, _asyncToGenerator2['default'])(
         /*#__PURE__*/ _regenerator['default'].mark(function _callee2(req, res) {
-          var _req$body2,
-            objBusiness,
-            obtSetting,
-            objAddres,
-            objContact,
-            GoogleProfiel,
-            objUsers,
-            UsersBusiness,
-            Business,
-            Addess,
-            Setting,
-            Contact,
-            ERDB404;
+          var GoogleProfiel, User, objUsers, Users, token, _token, ERDB404;
 
-          return _regenerator['default'].wrap(function _callee2$(_context2) {
-            while (1) {
-              switch ((_context2.prev = _context2.next)) {
-                case 0:
-                  try {
-                    (_req$body2 = req.body),
-                      (objBusiness = _req$body2.objBusiness),
-                      (obtSetting = _req$body2.obtSetting),
-                      (objAddres = _req$body2.objAddres),
-                      (objContact = _req$body2.objContact);
+          return _regenerator['default'].wrap(
+            function _callee2$(_context2) {
+              while (1) {
+                switch ((_context2.prev = _context2.next)) {
+                  case 0:
+                    _context2.prev = 0;
                     GoogleProfiel = req.session.grant.response.profile;
+                    _context2.next = 4;
+                    return _this.UserCrud.GetOpenIdAuth(GoogleProfiel.sub, 'uuidgoogle');
+
+                  case 4:
+                    User = _context2.sent;
+
+                    if (!(User.data.uuidgoogle === undefined)) {
+                      _context2.next = 13;
+                      break;
+                    }
+
                     objUsers = {
                       iduser: null,
                       uuiduser: GoogleProfiel.sub,
                       name: GoogleProfiel.given_name,
                       lastname: GoogleProfiel.family_name,
-                      phone: null,
+                      phone: '0000-0000',
                       email: GoogleProfiel.email,
                       uuidfacebook: null,
                       uuidgoogle: GoogleProfiel.sub,
                       state: 'Activo'
                     };
-                    UsersBusiness = _this.UserCrud.Create(objUsers);
-                    objBusiness.iduser = UsersBusiness.iduser;
-                    Business = _this.Crud.Create(objBusiness);
-                    obtSetting.idbusiness = Business.idbusiness;
-                    objAddres.idbusiness = Business.idbusiness;
-                    objContact.idbusiness = Business.idbusiness;
-                    Addess = _this.AddressCrud.Create(objAddres);
-                    Setting = _this.SettingCrud.Create(obtSetting);
-                    Contact = _this.ContactbusinessCrud.Create(objContact);
-                    if (Contact.success)
+                    _context2.next = 9;
+                    return _this.UserCrud.Create(objUsers);
+
+                  case 9:
+                    Users = _context2.sent;
+
+                    if (Users.success) {
+                      token = _this.TokenAuth.CreateToken(User.data);
+                      console.log(token);
+                      res.cookie(
+                        'cookiauth',
+                        JSON.stringify({
+                          auth: true,
+                          token: token,
+                          id: User.data.iduser
+                        }),
+                        {
+                          maxAge: 86400 * 1000,
+                          // 24 hours
+                          httpOnly: true // http only, prevents JavaScript cookie access
+                        }
+                      );
                       res.status(201).send({
-                        UsersBusiness: UsersBusiness,
-                        Business: Business
+                        Users: Users
                       });
-                  } catch (error) {
+                    }
+
+                    _context2.next = 16;
+                    break;
+
+                  case 13:
+                    _token = _this.TokenAuth.CreateToken(User.data);
+                    res.cookie(
+                      'cookiauth',
+                      JSON.stringify({
+                        auth: true,
+                        token: _token,
+                        id: User.data.iduser
+                      }),
+                      {
+                        maxAge: 86400 * 1000,
+                        // 24 hours
+                        httpOnly: true // http only, prevents JavaScript cookie access
+                      }
+                    );
+                    res.status(202).send({
+                      mesage: 'Se a iniciado Secion',
+                      success: true
+                    });
+
+                  case 16:
+                    _context2.next = 23;
+                    break;
+
+                  case 18:
+                    _context2.prev = 18;
+                    _context2.t0 = _context2['catch'](0);
                     ERDB404 = _ErrorMessages['default'].ERDB404;
                     console.log(ERDB404);
                     res.status(404).send(ERDB404);
-                  }
 
-                case 1:
-                case 'end':
-                  return _context2.stop();
+                  case 23:
+                  case 'end':
+                    return _context2.stop();
+                }
               }
-            }
-          }, _callee2);
+            },
+            _callee2,
+            null,
+            [[0, 18]]
+          );
         })
       );
 
@@ -219,39 +268,112 @@ var SignUp = function SignUp(
   );
   (0, _defineProperty2['default'])(
     this,
-    'SignUpUsersCreateTraditional',
+    'CallbackFacebook',
     /*#__PURE__*/ (function () {
       var _ref3 = (0, _asyncToGenerator2['default'])(
         /*#__PURE__*/ _regenerator['default'].mark(function _callee3(req, res) {
-          var _req$body3, objUsers, obtAccess, Users, UsersAccess, ERDB404;
+          var facebookProfiel, User, objUsers, Users, token, _token2, ERDB404;
 
-          return _regenerator['default'].wrap(function _callee3$(_context3) {
-            while (1) {
-              switch ((_context3.prev = _context3.next)) {
-                case 0:
-                  try {
-                    (_req$body3 = req.body),
-                      (objUsers = _req$body3.objUsers),
-                      (obtAccess = _req$body3.obtAccess);
-                    Users = _this.UserCrud.Create(objUsers);
-                    obtAccess.iduser = Users.iduser;
-                    UsersAccess = _this.AccessCrud.Create(objUsers);
-                    if (UsersAccess.success)
+          return _regenerator['default'].wrap(
+            function _callee3$(_context3) {
+              while (1) {
+                switch ((_context3.prev = _context3.next)) {
+                  case 0:
+                    _context3.prev = 0;
+                    facebookProfiel = req.session.grant.response.profile;
+                    _context3.next = 4;
+                    return _this.UserCrud.GetOpenIdAuth(facebookProfiel.id, 'uuidfacebook');
+
+                  case 4:
+                    User = _context3.sent;
+
+                    if (!(User.data.uuidfacebook === undefined)) {
+                      _context3.next = 13;
+                      break;
+                    }
+
+                    objUsers = {
+                      iduser: null,
+                      uuiduser: facebookProfiel.id,
+                      name: facebookProfiel.name,
+                      lastname: '',
+                      phone: '0000-0000',
+                      email: '',
+                      uuidfacebook: facebookProfiel.id,
+                      uuidgoogle: null,
+                      state: 'Activo'
+                    };
+                    _context3.next = 9;
+                    return _this.UserCrud.Create(objUsers);
+
+                  case 9:
+                    Users = _context3.sent;
+
+                    if (Users.success) {
+                      token = _this.TokenAuth.CreateToken(User.data);
+                      console.log(token);
+                      res.cookie(
+                        'cookiauthControlCitas',
+                        JSON.stringify({
+                          auth: true,
+                          token: token,
+                          id: User.data.iduser
+                        }),
+                        {
+                          maxAge: 86400 * 1000,
+                          // 24 hours
+                          httpOnly: true // http only, prevents JavaScript cookie access
+                        }
+                      );
                       res.status(201).send({
                         Users: Users
                       });
-                  } catch (error) {
+                    }
+
+                    _context3.next = 16;
+                    break;
+
+                  case 13:
+                    _token2 = _this.TokenAuth.CreateToken(User.data);
+                    res.cookie(
+                      'cookiauthControlCitas',
+                      JSON.stringify({
+                        auth: true,
+                        token: _token2,
+                        id: User.data.iduser
+                      }),
+                      {
+                        maxAge: 86400 * 1000,
+                        // 24 hours
+                        httpOnly: true // http only, prevents JavaScript cookie access
+                      }
+                    );
+                    res.status(202).send({
+                      mesage: 'Se a iniciado Secion',
+                      success: true
+                    });
+
+                  case 16:
+                    _context3.next = 23;
+                    break;
+
+                  case 18:
+                    _context3.prev = 18;
+                    _context3.t0 = _context3['catch'](0);
                     ERDB404 = _ErrorMessages['default'].ERDB404;
                     console.log(ERDB404);
                     res.status(404).send(ERDB404);
-                  }
 
-                case 1:
-                case 'end':
-                  return _context3.stop();
+                  case 23:
+                  case 'end':
+                    return _context3.stop();
+                }
               }
-            }
-          }, _callee3);
+            },
+            _callee3,
+            null,
+            [[0, 18]]
+          );
         })
       );
 
@@ -260,108 +382,70 @@ var SignUp = function SignUp(
       };
     })()
   );
-  (0, _defineProperty2['default'])(
-    this,
-    'SignUpUserCreateGoogle',
-    /*#__PURE__*/ (function () {
-      var _ref4 = (0, _asyncToGenerator2['default'])(
-        /*#__PURE__*/ _regenerator['default'].mark(function _callee4(req, res) {
-          var _req$body4, objUsers, obtAccess, Users, UsersAccess, ERDB404;
-
-          return _regenerator['default'].wrap(function _callee4$(_context4) {
-            while (1) {
-              switch ((_context4.prev = _context4.next)) {
-                case 0:
-                  try {
-                    (_req$body4 = req.body),
-                      (objUsers = _req$body4.objUsers),
-                      (obtAccess = _req$body4.obtAccess);
-                    Users = _this.UserCrud.Create(objUsers);
-                    obtAccess.iduser = Users.iduser;
-                    UsersAccess = _this.AccessCrud.Create(objUsers);
-                    if (UsersAccess.success)
-                      res.status(201).send({
-                        Users: Users
-                      });
-                  } catch (error) {
-                    ERDB404 = _ErrorMessages['default'].ERDB404;
-                    console.log(ERDB404);
-                    res.status(404).send(ERDB404);
-                  }
-
-                case 1:
-                case 'end':
-                  return _context4.stop();
-              }
-            }
-          }, _callee4);
-        })
-      );
-
-      return function (_x7, _x8) {
-        return _ref4.apply(this, arguments);
-      };
-    })()
-  );
-  (0, _defineProperty2['default'])(
-    this,
-    'SignUpUsersCreateFacebook',
-    /*#__PURE__*/ (function () {
-      var _ref5 = (0, _asyncToGenerator2['default'])(
-        /*#__PURE__*/ _regenerator['default'].mark(function _callee5(req, res) {
-          var _req$body5, objUsers, obtAccess, Users, UsersAccess, ERDB404;
-
-          return _regenerator['default'].wrap(function _callee5$(_context5) {
-            while (1) {
-              switch ((_context5.prev = _context5.next)) {
-                case 0:
-                  try {
-                    (_req$body5 = req.body),
-                      (objUsers = _req$body5.objUsers),
-                      (obtAccess = _req$body5.obtAccess);
-                    Users = _this.UserCrud.Create(objUsers);
-                    obtAccess.iduser = Users.iduser;
-                    UsersAccess = _this.AccessCrud.Create(objUsers);
-                    if (UsersAccess.success)
-                      res.status(201).send({
-                        Users: Users
-                      });
-                  } catch (error) {
-                    ERDB404 = _ErrorMessages['default'].ERDB404;
-                    console.log(ERDB404);
-                    res.status(404).send(ERDB404);
-                  }
-
-                case 1:
-                case 'end':
-                  return _context5.stop();
-              }
-            }
-          }, _callee5);
-        })
-      );
-
-      return function (_x9, _x10) {
-        return _ref5.apply(this, arguments);
-      };
-    })()
-  );
 
   if (_classStaticPrivateFieldSpecGet(SignUp, SignUp, _instance)) {
     return _classStaticPrivateFieldSpecGet(SignUp, SignUp, _instance);
   }
 
-  _classStaticPrivateFieldSpecSet(SignUp, SignUp, _instance, this);
-
-  this.BusinessCrud = businessCrud;
-  this.ContactbusinessCrud = contactbusinessCrud;
-  this.AddressCrud = addressCrud;
-  this.FreedayCrud = freedayCrud;
-  this.SettingCrud = settingCrud;
   this.UserCrud = userCrud;
   this.AccessCrud = accessCrud;
-};
+  this.TokenAuth = TokenAuth;
 
+  _classStaticPrivateFieldSpecSet(SignUp, SignUp, _instance, this);
+};
+/*  SignUpBusinessCreateTraditional = async (req, res) => {
+  try {
+    const { objUsers, obtAccess, objBusiness, obtSetting, objAddres, objContact } = req.body;
+     const UsersBusiness = this.UserCrud.Create(objUsers);
+     objBusiness.iduser = UsersBusiness.iduser;
+    obtAccess.iduser = UsersBusiness.iduser;
+     const UsersBusinessAccess = this.AccessCrud.Create(objUsers);
+     const Business = this.Crud.Create(objBusiness);
+     obtSetting.idbusiness = Business.idbusiness;
+    objAddres.idbusiness = Business.idbusiness;
+    objContact.idbusiness = Business.idbusiness;
+     const Addess = this.AddressCrud.Create(objAddres);
+    const Setting = this.SettingCrud.Create(obtSetting);
+    const Contact = this.ContactbusinessCrud.Create(objContact);
+     if (Contact.success) res.status(201).send({ UsersBusiness, Business });
+  } catch (error) {
+    const { ERDB404 } = ErrorMessages;
+    console.log(ERDB404);
+    res.status(404).send(ERDB404);
+  }
+};
+ SignUpBusinessCreateGoogle = async (req, res) => {
+  try {
+    const { objBusiness, obtSetting, objAddres, objContact } = req.body;
+    const GoogleProfiel = req.session.grant.response.profile;
+     const objUsers = {
+      iduser: null,
+      uuiduser: GoogleProfiel.sub,
+      name: GoogleProfiel.given_name,
+      lastname: GoogleProfiel.family_name,
+      phone: null,
+      email: GoogleProfiel.email,
+      uuidfacebook: null,
+      uuidgoogle: GoogleProfiel.sub,
+      state: 'Activo'
+    };
+     const UsersBusiness = this.UserCrud.Create(objUsers);
+     objBusiness.iduser = UsersBusiness.iduser;
+     const Business = this.Crud.Create(objBusiness);
+     obtSetting.idbusiness = Business.idbusiness;
+    objAddres.idbusiness = Business.idbusiness;
+    objContact.idbusiness = Business.idbusiness;
+     const Addess = this.AddressCrud.Create(objAddres);
+    const Setting = this.SettingCrud.Create(obtSetting);
+    const Contact = this.ContactbusinessCrud.Create(objContact);
+     if (Contact.success) res.status(201).send({ UsersBusiness, Business });
+  } catch (error) {
+    const { ERDB404 } = ErrorMessages;
+    console.log(ERDB404);
+    res.status(404).send(ERDB404);
+  }
+};
+*/
 exports['default'] = SignUp;
 var _instance = {
   writable: true,

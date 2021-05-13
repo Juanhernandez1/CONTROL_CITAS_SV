@@ -8,8 +8,8 @@ import logger from 'morgan';
 
 import session from 'express-session';
 import Grant from './services/Grant';
-import Routes from './routes';
-
+import API_RUTES from './routes';
+const { Routes, authRouter } = API_RUTES;
 // * Importando endpoint
 
 config();
@@ -41,7 +41,7 @@ app.use(Grant);
 /**
  * * Creando Endpoint
  */
-
+/*
 app.get('/handle_facebook_callback', (req, res) => {
   res.end(JSON.stringify(req.session.grant.response, null, 2));
 });
@@ -49,10 +49,8 @@ app.get('/handle_facebook_callback', (req, res) => {
 app.get('/handle_google_callback', (req, res) => {
   res.end(JSON.stringify(req.session.grant.response, null, 2));
 });
-
-app.use('/API/Auth', (req, res) => {
-  res.status(200).send({ message: 'probado endpoint' });
-});
+*/
+app.use('/API/Auth', authRouter);
 
 app.use('/API', Routes);
 

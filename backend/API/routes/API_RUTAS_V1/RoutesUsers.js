@@ -2,17 +2,11 @@ export default function RoutesUsers(router, RequestUsers) {
   // * rutas de instancia
   const UserRoutes = router();
 
-  const {
-    RequestUsersGetPk,
-    RequestUsersCreate,
-    RequestUsersUpdate,
-    RequestUsersDelete,
-    RequestUsersAccessUpdate
-  } = RequestUsers;
+  const { RequestUsersGetPk, RequestUsersUpdate, RequestUsersDelete, RequestUsersAccessUpdate } =
+    RequestUsers;
   // * get
   UserRoutes.get('/GetPk/:id', RequestUsersGetPk);
-  // * post
-  UserRoutes.post('/Create', RequestUsersCreate);
+
   // * put
   UserRoutes.put('/Update', RequestUsersUpdate);
   UserRoutes.put('/Access/Update', RequestUsersAccessUpdate);

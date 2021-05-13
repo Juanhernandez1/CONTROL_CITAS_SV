@@ -21,7 +21,7 @@ var GranConfig = {
     callback:
       process.env.GOOGLE_URL_CALLBACK !== undefined
         ? process.env.GOOGLE_URL_CALLBACK
-        : '/handle_google_callback',
+        : '/API/Auth/handle_google_callback',
     scope: ['openid', 'email', 'profile'],
     response: ['tokens', 'raw', 'profile']
   },
@@ -32,7 +32,7 @@ var GranConfig = {
     callback:
       process.env.FACEBOOK_URL_CALLBACK !== undefined
         ? process.env.FACEBOOK_URL_CALLBACK
-        : '/handle_facebook_callback',
+        : '/API/Auth/handle_facebook_callback',
     scope: ['openid', 'email'],
     response: ['tokens', 'raw', 'profile']
   }

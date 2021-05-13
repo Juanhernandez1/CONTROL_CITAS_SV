@@ -67,7 +67,9 @@ function _interopRequireWildcard(obj, nodeInterop) {
 }
 
 // import { join } from 'path';
-// * Importando endpoint
+var Routes = _routes['default'].Routes,
+  authRouter = _routes['default'].authRouter; // * Importando endpoint
+
 (0, _dotenv.config)();
 /**
  * * Se utiliza express-generator
@@ -108,18 +110,18 @@ app.use(_Grant['default']);
  * * Creando Endpoint
  */
 
-app.get('/handle_facebook_callback', function (req, res) {
+/*
+app.get('/handle_facebook_callback', (req, res) => {
   res.end(JSON.stringify(req.session.grant.response, null, 2));
 });
-app.get('/handle_google_callback', function (req, res) {
+
+app.get('/handle_google_callback', (req, res) => {
   res.end(JSON.stringify(req.session.grant.response, null, 2));
 });
-app.use('/API/Auth', function (req, res) {
-  res.status(200).send({
-    message: 'probado endpoint'
-  });
-});
-app.use('/API', _routes['default']);
+*/
+
+app.use('/API/Auth', authRouter);
+app.use('/API', Routes);
 /**
  * * Captura las solicitudes no encontradas en los Endpoint
  * * enviando un error 404 al controlador de errores

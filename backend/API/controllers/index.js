@@ -1,9 +1,10 @@
 import adapters from '../adapters';
+import SignUp from './RequestAuth/SignUp';
 import RequestUsers from './RequestDb/ RequestUsers';
 import RequestAppoiment from './RequestDb/RequestAppoiment';
 import RequestBusiness from './RequestDb/RequestBusiness';
 
-const { RootCrudAdapter, AppointmentGen } = adapters;
+const { RootCrudAdapter, AppointmentGen, TokenAuth } = adapters;
 
 const {
   accessCrud,
@@ -30,7 +31,8 @@ const controllers = {
     AppointmentGen
   ),
   RequestUsers: new RequestUsers(userCrud, accessCrud, appointmentCrud),
-  RequestAppoiment: new RequestAppoiment(appointmentCrud, AppointmentGen)
+  RequestAppoiment: new RequestAppoiment(appointmentCrud, AppointmentGen),
+  SignUp: new SignUp(TokenAuth, userCrud, accessCrud)
 };
 
 export default controllers;

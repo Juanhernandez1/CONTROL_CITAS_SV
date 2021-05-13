@@ -10,12 +10,12 @@ export default class UserCrud extends CrudInterface {
       return UserCrud.#instance;
     }
 
-    UserCrud.#instance = this;
     this.Model = Model;
     this.Config = {
       raw: true,
       nest: true
     };
+    UserCrud.#instance = this;
   }
 
   GetPk = async pk => {
@@ -24,6 +24,21 @@ export default class UserCrud extends CrudInterface {
         ...this.Config
       });
       return { data, success: true };
+    } catch (error) {
+      return { success: false };
+    }
+  };
+
+  GetOpenIdAuth = async (id, field) => {
+    try {
+      const data = await this.Model.findOne({
+        ...this.Config,
+        where: {
+          [field]: id
+        }
+      });
+
+      return { data: { ...data }, success: true };
     } catch (error) {
       return { success: false };
     }

@@ -19,6 +19,8 @@ var _sequalize = _interopRequireDefault(require('./sequalize'));
 
 var _model = _interopRequireDefault(require('./sequalize/model'));
 
+var _JWT = _interopRequireDefault(require('./JWT'));
+
 // * Archivo raiz de servicios
 var Connection = new _sequalize['default'](_sequelize.Sequelize, _ConfiguracionDb['default']);
 var conexion = Connection.conexion;
@@ -52,7 +54,8 @@ var Model = {
 var services = {
   Model: Model,
   Encrypt: _bcrypt['default'],
-  MomentSv: _moment['default']
+  MomentSv: _moment['default'],
+  JWT: _JWT['default']
 };
 var _default = services;
 exports['default'] = _default;

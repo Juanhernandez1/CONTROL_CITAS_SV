@@ -114,73 +114,41 @@ var RequestUsers = function RequestUsers(userCrud, accessCrud, appointmentCrud) 
   );
   (0, _defineProperty2['default'])(
     this,
-    'RequestUsersCreate',
+    'RequestUsersUpdate',
     /*#__PURE__*/ (function () {
       var _ref2 = (0, _asyncToGenerator2['default'])(
         /*#__PURE__*/ _regenerator['default'].mark(function _callee2(req, res) {
-          var _req$body, objUser, objAccess, User, data, Acces, ERDB404;
-
+          var objUser, User, ERDB404;
           return _regenerator['default'].wrap(
             function _callee2$(_context2) {
               while (1) {
                 switch ((_context2.prev = _context2.next)) {
                   case 0:
                     _context2.prev = 0;
-                    (_req$body = req.body),
-                      (objUser = _req$body.objUser),
-                      (objAccess = _req$body.objAccess);
-                    console.log(objUser, objAccess);
-                    _context2.next = 5;
-                    return _this.UserCrud.Create(objUser);
+                    objUser = req.body;
+                    _context2.next = 4;
+                    return _this.UserCrud.Update(objUser);
 
-                  case 5:
+                  case 4:
                     User = _context2.sent;
-                    data = User.data;
-                    console.log(User);
 
-                    if (!User.success) {
-                      _context2.next = 16;
-                      break;
-                    }
-
-                    objAccess.iduser = data.iduser;
-                    _context2.next = 12;
-                    return _this.AccessCrud.Create(objAccess);
-
-                  case 12:
-                    Acces = _context2.sent;
-
-                    if (Acces.success) {
-                      delete Acces.password;
-                      res.status(201).send({
-                        User: User,
-                        Acces: Acces
-                      });
+                    if (User.success) {
+                      res.status(202).send(User);
                     } else {
-                      res.status(409).send({
-                        User: User,
-                        Acces: Acces
-                      });
+                      res.status(409).send(User);
                     }
 
-                    _context2.next = 17;
+                    _context2.next = 13;
                     break;
 
-                  case 16:
-                    res.status(409).send(User);
-
-                  case 17:
-                    _context2.next = 24;
-                    break;
-
-                  case 19:
-                    _context2.prev = 19;
+                  case 8:
+                    _context2.prev = 8;
                     _context2.t0 = _context2['catch'](0);
                     ERDB404 = _ErrorMessages['default'].ERDB404;
                     console.log(ERDB404);
                     res.status(404).send(ERDB404);
 
-                  case 24:
+                  case 13:
                   case 'end':
                     return _context2.stop();
                 }
@@ -188,7 +156,7 @@ var RequestUsers = function RequestUsers(userCrud, accessCrud, appointmentCrud) 
             },
             _callee2,
             null,
-            [[0, 19]]
+            [[0, 8]]
           );
         })
       );
@@ -200,20 +168,20 @@ var RequestUsers = function RequestUsers(userCrud, accessCrud, appointmentCrud) 
   );
   (0, _defineProperty2['default'])(
     this,
-    'RequestUsersUpdate',
+    'RequestUsersDelete',
     /*#__PURE__*/ (function () {
       var _ref3 = (0, _asyncToGenerator2['default'])(
         /*#__PURE__*/ _regenerator['default'].mark(function _callee3(req, res) {
-          var objUser, User, ERDB404;
+          var id, User, ERDB404;
           return _regenerator['default'].wrap(
             function _callee3$(_context3) {
               while (1) {
                 switch ((_context3.prev = _context3.next)) {
                   case 0:
                     _context3.prev = 0;
-                    objUser = req.body;
+                    id = req.params.id;
                     _context3.next = 4;
-                    return _this.UserCrud.Update(objUser);
+                    return _this.UserCrud.Delete(id);
 
                   case 4:
                     User = _context3.sent;
@@ -254,28 +222,28 @@ var RequestUsers = function RequestUsers(userCrud, accessCrud, appointmentCrud) 
   );
   (0, _defineProperty2['default'])(
     this,
-    'RequestUsersDelete',
+    'RequestUsersAccessUpdate',
     /*#__PURE__*/ (function () {
       var _ref4 = (0, _asyncToGenerator2['default'])(
         /*#__PURE__*/ _regenerator['default'].mark(function _callee4(req, res) {
-          var id, User, ERDB404;
+          var objAcces, UsersAccess, ERDB404;
           return _regenerator['default'].wrap(
             function _callee4$(_context4) {
               while (1) {
                 switch ((_context4.prev = _context4.next)) {
                   case 0:
                     _context4.prev = 0;
-                    id = req.params.id;
+                    objAcces = req.body;
                     _context4.next = 4;
-                    return _this.UserCrud.Delete(id);
+                    return _this.AccessCrud.Update(objAcces);
 
                   case 4:
-                    User = _context4.sent;
+                    UsersAccess = _context4.sent;
 
-                    if (User.success) {
-                      res.status(202).send(User);
+                    if (UsersAccess.success) {
+                      res.status(202).send(UsersAccess);
                     } else {
-                      res.status(409).send(User);
+                      res.status(409).send(UsersAccess);
                     }
 
                     _context4.next = 13;
@@ -308,50 +276,31 @@ var RequestUsers = function RequestUsers(userCrud, accessCrud, appointmentCrud) 
   );
   (0, _defineProperty2['default'])(
     this,
-    'RequestUsersAccessUpdate',
+    'RequestUsersAppointmentGetAll',
     /*#__PURE__*/ (function () {
       var _ref5 = (0, _asyncToGenerator2['default'])(
         /*#__PURE__*/ _regenerator['default'].mark(function _callee5(req, res) {
-          var objAcces, UsersAccess, ERDB404;
-          return _regenerator['default'].wrap(
-            function _callee5$(_context5) {
-              while (1) {
-                switch ((_context5.prev = _context5.next)) {
-                  case 0:
-                    _context5.prev = 0;
-                    objAcces = req.body;
-                    _context5.next = 4;
-                    return _this.AccessCrud.Update(objAcces);
-
-                  case 4:
-                    UsersAccess = _context5.sent;
-
-                    if (UsersAccess.success) {
-                      res.status(202).send(UsersAccess);
-                    } else {
-                      res.status(409).send(UsersAccess);
-                    }
-
-                    _context5.next = 13;
-                    break;
-
-                  case 8:
-                    _context5.prev = 8;
-                    _context5.t0 = _context5['catch'](0);
+          var iduser, DataList, ERDB404;
+          return _regenerator['default'].wrap(function _callee5$(_context5) {
+            while (1) {
+              switch ((_context5.prev = _context5.next)) {
+                case 0:
+                  try {
+                    iduser = req.param.iduser;
+                    DataList = _this.AppointmentCrud.GetAllForUsers(iduser);
+                    if (DataList.success) res.status(200).send(DataList);
+                  } catch (error) {
                     ERDB404 = _ErrorMessages['default'].ERDB404;
                     console.log(ERDB404);
                     res.status(404).send(ERDB404);
+                  }
 
-                  case 13:
-                  case 'end':
-                    return _context5.stop();
-                }
+                case 1:
+                case 'end':
+                  return _context5.stop();
               }
-            },
-            _callee5,
-            null,
-            [[0, 8]]
-          );
+            }
+          }, _callee5);
         })
       );
 
@@ -362,18 +311,21 @@ var RequestUsers = function RequestUsers(userCrud, accessCrud, appointmentCrud) 
   );
   (0, _defineProperty2['default'])(
     this,
-    'RequestUsersAppointmentGetAll',
+    'RequestUsersAppointmentGetPk',
     /*#__PURE__*/ (function () {
       var _ref6 = (0, _asyncToGenerator2['default'])(
         /*#__PURE__*/ _regenerator['default'].mark(function _callee6(req, res) {
-          var iduser, DataList, ERDB404;
+          var _req$body, idappointmen, iduser, DataList, ERDB404;
+
           return _regenerator['default'].wrap(function _callee6$(_context6) {
             while (1) {
               switch ((_context6.prev = _context6.next)) {
                 case 0:
                   try {
-                    iduser = req.param.iduser;
-                    DataList = _this.AppointmentCrud.GetAllForUsers(iduser);
+                    (_req$body = req.body),
+                      (idappointmen = _req$body.idappointmen),
+                      (iduser = _req$body.iduser);
+                    DataList = _this.AppointmentCrud.GetPkForUsers(idappointmen, iduser);
                     if (DataList.success) res.status(200).send(DataList);
                   } catch (error) {
                     ERDB404 = _ErrorMessages['default'].ERDB404;
@@ -397,22 +349,19 @@ var RequestUsers = function RequestUsers(userCrud, accessCrud, appointmentCrud) 
   );
   (0, _defineProperty2['default'])(
     this,
-    'RequestUsersAppointmentGetPk',
+    'RequestUsersAppointmentDelete',
     /*#__PURE__*/ (function () {
       var _ref7 = (0, _asyncToGenerator2['default'])(
         /*#__PURE__*/ _regenerator['default'].mark(function _callee7(req, res) {
-          var _req$body2, idappointmen, iduser, DataList, ERDB404;
-
+          var pk, Data, ERDB404;
           return _regenerator['default'].wrap(function _callee7$(_context7) {
             while (1) {
               switch ((_context7.prev = _context7.next)) {
                 case 0:
                   try {
-                    (_req$body2 = req.body),
-                      (idappointmen = _req$body2.idappointmen),
-                      (iduser = _req$body2.iduser);
-                    DataList = _this.AppointmentCrud.GetPkForUsers(idappointmen, iduser);
-                    if (DataList.success) res.status(200).send(DataList);
+                    pk = req.param.Pk;
+                    Data = _this.AppointmentCrud.Delete(pk);
+                    if (Data.success) res.status(202).send(Data);
                   } catch (error) {
                     ERDB404 = _ErrorMessages['default'].ERDB404;
                     console.log(ERDB404);
@@ -430,41 +379,6 @@ var RequestUsers = function RequestUsers(userCrud, accessCrud, appointmentCrud) 
 
       return function (_x13, _x14) {
         return _ref7.apply(this, arguments);
-      };
-    })()
-  );
-  (0, _defineProperty2['default'])(
-    this,
-    'RequestUsersAppointmentDelete',
-    /*#__PURE__*/ (function () {
-      var _ref8 = (0, _asyncToGenerator2['default'])(
-        /*#__PURE__*/ _regenerator['default'].mark(function _callee8(req, res) {
-          var pk, Data, ERDB404;
-          return _regenerator['default'].wrap(function _callee8$(_context8) {
-            while (1) {
-              switch ((_context8.prev = _context8.next)) {
-                case 0:
-                  try {
-                    pk = req.param.Pk;
-                    Data = _this.AppointmentCrud.Delete(pk);
-                    if (Data.success) res.status(202).send(Data);
-                  } catch (error) {
-                    ERDB404 = _ErrorMessages['default'].ERDB404;
-                    console.log(ERDB404);
-                    res.status(404).send(ERDB404);
-                  }
-
-                case 1:
-                case 'end':
-                  return _context8.stop();
-              }
-            }
-          }, _callee8);
-        })
-      );
-
-      return function (_x15, _x16) {
-        return _ref8.apply(this, arguments);
       };
     })()
   );

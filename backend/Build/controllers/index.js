@@ -9,6 +9,8 @@ exports['default'] = void 0;
 
 var _adapters = _interopRequireDefault(require('../adapters'));
 
+var _SignUp = _interopRequireDefault(require('./RequestAuth/SignUp'));
+
 var _RequestUsers = _interopRequireDefault(require('./RequestDb/ RequestUsers'));
 
 var _RequestAppoiment = _interopRequireDefault(require('./RequestDb/RequestAppoiment'));
@@ -16,7 +18,8 @@ var _RequestAppoiment = _interopRequireDefault(require('./RequestDb/RequestAppoi
 var _RequestBusiness = _interopRequireDefault(require('./RequestDb/RequestBusiness'));
 
 var RootCrudAdapter = _adapters['default'].RootCrudAdapter,
-  AppointmentGen = _adapters['default'].AppointmentGen;
+  AppointmentGen = _adapters['default'].AppointmentGen,
+  TokenAuth = _adapters['default'].TokenAuth;
 var accessCrud = RootCrudAdapter.accessCrud,
   addressCrud = RootCrudAdapter.addressCrud,
   businessCrud = RootCrudAdapter.businessCrud,
@@ -39,7 +42,8 @@ var controllers = {
     AppointmentGen
   ),
   RequestUsers: new _RequestUsers['default'](userCrud, accessCrud, appointmentCrud),
-  RequestAppoiment: new _RequestAppoiment['default'](appointmentCrud, AppointmentGen)
+  RequestAppoiment: new _RequestAppoiment['default'](appointmentCrud, AppointmentGen),
+  SignUp: new _SignUp['default'](TokenAuth, userCrud, accessCrud)
 };
 var _default = controllers;
 exports['default'] = _default;

@@ -4,10 +4,9 @@ config();
 
 const JwtConfig = {
   secret: process.env.SECRET,
-  port: process.env.PORT || 3000,
   header: {
-    alg: 'HS256',
-    typ: 'JWT'
+    algorithm: 'HS256',
+    expiresIn: 86400
   }
 };
 

@@ -3,30 +3,19 @@ import ErrorMessages from '../../assets/ErrorMessages';
 
 export default class SignUp {
   static #instance;
-  constructor(
-    businessCrud,
-    contactbusinessCrud,
-    addressCrud,
-    freedayCrud,
-    settingCrud,
-    userCrud,
-    accessCrud
-  ) {
+  constructor(TokenAuth, userCrud, accessCrud) {
     if (SignUp.#instance) {
       return SignUp.#instance;
     }
 
-    SignUp.#instance = this;
-    this.BusinessCrud = businessCrud;
-    this.ContactbusinessCrud = contactbusinessCrud;
-    this.AddressCrud = addressCrud;
-    this.FreedayCrud = freedayCrud;
-    this.SettingCrud = settingCrud;
     this.UserCrud = userCrud;
     this.AccessCrud = accessCrud;
+    this.TokenAuth = TokenAuth;
+
+    SignUp.#instance = this;
   }
 
-  SignUpBusinessCreateTraditional = async (req, res) => {
+  /*  SignUpBusinessCreateTraditional = async (req, res) => {
     try {
       const { objUsers, obtAccess, objBusiness, obtSetting, objAddres, objContact } = req.body;
 
@@ -93,18 +82,29 @@ export default class SignUp {
       res.status(404).send(ERDB404);
     }
   };
+*/
 
   SignUpUsersCreateTraditional = async (req, res) => {
     try {
-      const { objUsers, obtAccess } = req.body;
+      const { objUser, objAccess } = req.body;
+      console.log(objUser, objAccess);
+      const User = await this.UserCrud.Create(objUser);
 
-      const Users = this.UserCrud.Create(objUsers);
+      const { data } = User;
+      console.log(User);
+      if (User.success) {
+        objAccess.iduser = data.iduser;
+        const Acces = await this.AccessCrud.Create(objAccess);
 
-      obtAccess.iduser = Users.iduser;
-
-      const UsersAccess = this.AccessCrud.Create(objUsers);
-
-      if (UsersAccess.success) res.status(201).send({ Users });
+        if (Acces.success) {
+          delete Acces.password;
+          res.status(201).send({ User, Acces });
+        } else {
+          res.status(409).send({ User, Acces });
+        }
+      } else {
+        res.status(409).send(User);
+      }
     } catch (error) {
       const { ERDB404 } = ErrorMessages;
       console.log(ERDB404);
@@ -112,17 +112,45 @@ export default class SignUp {
     }
   };
 
-  SignUpUserCreateGoogle = async (req, res) => {
+  CallbackGoogle = async (req, res) => {
     try {
-      const { objUsers, obtAccess } = req.body;
+      const GoogleProfiel = req.session.grant.response.profile;
 
-      const Users = this.UserCrud.Create(objUsers);
+      const User = await this.UserCrud.GetOpenIdAuth(GoogleProfiel.sub, 'uuidgoogle');
 
-      obtAccess.iduser = Users.iduser;
+      if (User.data.uuidgoogle === undefined) {
+        const objUsers = {
+          iduser: null,
+          uuiduser: GoogleProfiel.sub,
+          name: GoogleProfiel.given_name,
+          lastname: GoogleProfiel.family_name,
+          phone: '0000-0000',
+          email: GoogleProfiel.email,
+          uuidfacebook: null,
+          uuidgoogle: GoogleProfiel.sub,
+          state: 'Activo'
+        };
 
-      const UsersAccess = this.AccessCrud.Create(objUsers);
+        const Users = await this.UserCrud.Create(objUsers);
 
-      if (UsersAccess.success) res.status(201).send({ Users });
+        if (Users.success) {
+          const token = this.TokenAuth.CreateToken(User.data);
+          console.log(token);
+          res.cookie('cookiauth', JSON.stringify({ auth: true, token, id: User.data.iduser }), {
+            maxAge: 86400 * 1000, // 24 hours
+            httpOnly: true // http only, prevents JavaScript cookie access
+          });
+          res.status(201).send({ Users });
+        }
+      } else {
+        const token = this.TokenAuth.CreateToken(User.data);
+
+        res.cookie('cookiauth', JSON.stringify({ auth: true, token, id: User.data.iduser }), {
+          maxAge: 86400 * 1000, // 24 hours
+          httpOnly: true // http only, prevents JavaScript cookie access
+        });
+        res.status(202).send({ mesage: 'Se a iniciado Secion', success: true });
+      }
     } catch (error) {
       const { ERDB404 } = ErrorMessages;
       console.log(ERDB404);
@@ -130,17 +158,53 @@ export default class SignUp {
     }
   };
 
-  SignUpUsersCreateFacebook = async (req, res) => {
+  CallbackFacebook = async (req, res) => {
     try {
-      const { objUsers, obtAccess } = req.body;
+      const facebookProfiel = req.session.grant.response.profile;
 
-      const Users = this.UserCrud.Create(objUsers);
+      const User = await this.UserCrud.GetOpenIdAuth(facebookProfiel.id, 'uuidfacebook');
 
-      obtAccess.iduser = Users.iduser;
+      if (User.data.uuidfacebook === undefined) {
+        const objUsers = {
+          iduser: null,
+          uuiduser: facebookProfiel.id,
+          name: facebookProfiel.name,
+          lastname: '',
+          phone: '0000-0000',
+          email: '',
+          uuidfacebook: facebookProfiel.id,
+          uuidgoogle: null,
+          state: 'Activo'
+        };
 
-      const UsersAccess = this.AccessCrud.Create(objUsers);
+        const Users = await this.UserCrud.Create(objUsers);
 
-      if (UsersAccess.success) res.status(201).send({ Users });
+        if (Users.success) {
+          const token = this.TokenAuth.CreateToken(User.data);
+          console.log(token);
+          res.cookie(
+            'cookiauthControlCitas',
+            JSON.stringify({ auth: true, token, id: User.data.iduser }),
+            {
+              maxAge: 86400 * 1000, // 24 hours
+              httpOnly: true // http only, prevents JavaScript cookie access
+            }
+          );
+          res.status(201).send({ Users });
+        }
+      } else {
+        const token = this.TokenAuth.CreateToken(User.data);
+
+        res.cookie(
+          'cookiauthControlCitas',
+          JSON.stringify({ auth: true, token, id: User.data.iduser }),
+          {
+            maxAge: 86400 * 1000, // 24 hours
+            httpOnly: true // http only, prevents JavaScript cookie access
+          }
+        );
+        res.status(202).send({ mesage: 'Se a iniciado Secion', success: true });
+      }
     } catch (error) {
       const { ERDB404 } = ErrorMessages;
       console.log(ERDB404);
