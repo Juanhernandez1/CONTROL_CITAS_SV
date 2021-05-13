@@ -162,7 +162,7 @@ export default class SignUp {
     try {
       const facebookProfiel = req.session.grant.response.profile;
 
-      console.log(facebookProfiel);
+      console.log('perfilde facebook:', facebookProfiel, req.session.grant.response);
       const User = await this.UserCrud.GetOpenIdAuth(facebookProfiel.id, 'uuidfacebook');
 
       if (User.data.uuidfacebook === undefined) {

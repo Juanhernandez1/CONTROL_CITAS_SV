@@ -281,7 +281,7 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                   case 0:
                     _context3.prev = 0;
                     facebookProfiel = req.session.grant.response.profile;
-                    console.log(facebookProfiel);
+                    console.log('perfilde facebook:', facebookProfiel, req.session.grant.response);
                     _context3.next = 5;
                     return _this.UserCrud.GetOpenIdAuth(facebookProfiel.id, 'uuidfacebook');
 
