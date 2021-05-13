@@ -4,7 +4,9 @@ config();
 
 const GranConfig = {
   defaults: {
-    origin: `http://localhost:3100`,
+    origin: !process.env.HEROKU_CALLBACK_GOOGLE
+      ? `http://localhost:3100`
+      : process.env.HEROKU_CALLBACK_GOOGLE,
     transport: 'session'
   },
   google: {
