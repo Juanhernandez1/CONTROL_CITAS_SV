@@ -281,14 +281,15 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                   case 0:
                     _context3.prev = 0;
                     facebookProfiel = req.session.grant.response.profile;
-                    _context3.next = 4;
+                    console.log(facebookProfiel);
+                    _context3.next = 5;
                     return _this.UserCrud.GetOpenIdAuth(facebookProfiel.id, 'uuidfacebook');
 
-                  case 4:
+                  case 5:
                     User = _context3.sent;
 
                     if (!(User.data.uuidfacebook === undefined)) {
-                      _context3.next = 13;
+                      _context3.next = 14;
                       break;
                     }
 
@@ -303,10 +304,10 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                       uuidgoogle: null,
                       state: 'Activo'
                     };
-                    _context3.next = 9;
+                    _context3.next = 10;
                     return _this.UserCrud.Create(objUsers);
 
-                  case 9:
+                  case 10:
                     Users = _context3.sent;
 
                     if (Users.success) {
@@ -330,10 +331,10 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                       });
                     }
 
-                    _context3.next = 16;
+                    _context3.next = 17;
                     break;
 
-                  case 13:
+                  case 14:
                     _token2 = _this.TokenAuth.CreateToken(User.data);
                     res.cookie(
                       'cookiauthControlCitas',
@@ -353,18 +354,18 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                       success: true
                     });
 
-                  case 16:
-                    _context3.next = 23;
+                  case 17:
+                    _context3.next = 24;
                     break;
 
-                  case 18:
-                    _context3.prev = 18;
+                  case 19:
+                    _context3.prev = 19;
                     _context3.t0 = _context3['catch'](0);
                     ERDB404 = _ErrorMessages['default'].ERDB404;
                     console.log(ERDB404);
                     res.status(404).send(ERDB404);
 
-                  case 23:
+                  case 24:
                   case 'end':
                     return _context3.stop();
                 }
@@ -372,7 +373,7 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
             },
             _callee3,
             null,
-            [[0, 18]]
+            [[0, 19]]
           );
         })
       );
