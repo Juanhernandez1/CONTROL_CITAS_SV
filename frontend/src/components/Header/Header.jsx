@@ -38,7 +38,7 @@ const Header = ({ hasLogo = false }) => {
         </Item>
         {!isLoggedIn && (
           <Item key="3" icon={<LoginOutlined />}>
-            Login
+            <Link to={paths.login}>Login</Link>
           </Item>
         )}
         {isLoggedIn && (

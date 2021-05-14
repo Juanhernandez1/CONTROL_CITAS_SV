@@ -1,7 +1,8 @@
 import {
   SET_BUSINESS_SELECTED,
   SET_SEARCH_BUSINESS_NAME,
-  SET_BUSINESS_SERVICES_SELECTED
+  SET_BUSINESS_SERVICES_SELECTED,
+  SET_APPOINTMENT_TIME
 } from './types';
 
 const appReducer = (state, action) => {
@@ -20,6 +21,11 @@ const appReducer = (state, action) => {
       return {
         ...state,
         businessServiceSelected: action.payload
+      };
+    case SET_APPOINTMENT_TIME:
+      return {
+        ...state,
+        appintmentTime: action.payload
       };
     default:
       return state;

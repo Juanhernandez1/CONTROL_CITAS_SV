@@ -149,7 +149,7 @@ export default class SignUp {
           maxAge: 86400 * 1000, // 24 hours
           httpOnly: true // http only, prevents JavaScript cookie access
         });
-        res.status(202).send({ mesage: 'Se a iniciado Secion', success: true });
+        res.status(202).send({ mesage: 'Se a iniciado Secion', success: true, data: User });
       }
     } catch (error) {
       const { ERDB404 } = ErrorMessages;
@@ -162,7 +162,6 @@ export default class SignUp {
     try {
       const facebookProfiel = req.session.grant.response.profile;
 
-      console.log('perfilde facebook:', facebookProfiel, req.session.grant.response);
       const User = await this.UserCrud.GetOpenIdAuth(facebookProfiel.id, 'uuidfacebook');
 
       if (User.data.uuidfacebook === undefined) {
@@ -204,7 +203,7 @@ export default class SignUp {
             httpOnly: true // http only, prevents JavaScript cookie access
           }
         );
-        res.status(202).send({ mesage: 'Se a iniciado Secion', success: true });
+        res.status(202).send({ mesage: 'Se a iniciado Secion', success: true, data: User });
       }
     } catch (error) {
       const { ERDB404 } = ErrorMessages;

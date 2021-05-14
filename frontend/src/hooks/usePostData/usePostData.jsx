@@ -1,9 +1,9 @@
 /* eslint-disable unicorn/filename-case */
 import { useEffect, useState } from 'react';
 
-import { getData } from '../../api/baseClient';
+import { postData } from '../../api/baseClient';
 
-const useGetData = (path, callback) => {
+const usePostData = (path, callback) => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
   const [isError, setIsError] = useState(false);
@@ -11,7 +11,7 @@ const useGetData = (path, callback) => {
     (async () => {
       setIsLoading(true);
       try {
-        const { data } = await getData(path);
+        const { data } = await postData(path);
         setData(data);
         setIsLoading(false);
         setIsError(false);
@@ -26,4 +26,4 @@ const useGetData = (path, callback) => {
   return [isLoading, data, isError];
 };
 
-export default useGetData;
+export default usePostData;

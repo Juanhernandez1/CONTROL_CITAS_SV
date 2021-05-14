@@ -3,22 +3,22 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 
 import { business } from '../../config/urls';
-import useGetData from '../../hooks/useGetData';
+import useGetBusinessResolveSetting from '../../hooks/useGetBusinessResolveSetting';
 
 const AvailabilityTable = ({ handleTimeSelection, dateSelected }) => {
   const { id } = useParams();
-  const [isAvailabilityLoading, availability] = useGetData(
+  const [isAvailabilityLoading, availability] = useGetBusinessResolveSetting(
     business.availability(id, dateSelected),
     errorMessage => {
       message.error(errorMessage);
     }
   );
 
-  const dataTable = availability.map(({ hour, minute, time, state }) => {
-    const timing = `${hour}:${minute} ${time}`;
+  const dataTable = availability.map(element => {
+    const timing = `${element.hour}:${element.minute} ${element.time}`;
     const key = timing;
 
-    return { time: timing, key, state };
+    return { time: timing, key, state: element.state, obtHora: element };
   });
 
   const columns = [

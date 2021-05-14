@@ -15,3 +15,15 @@ const controlCitasApi = axios.create({
 export const getData = (path, params) => {
   return params ? controlCitasApi.get(path, { ...params }) : controlCitasApi.get(path);
 };
+
+export const postData = (path, params) => {
+  return controlCitasApi.post(path, { ...params });
+};
+
+export const putData = (path, params) => {
+  return controlCitasApi.put(path, { ...params });
+};
+
+export const deleteData = (path, params) => {
+  return params ? controlCitasApi.delete(path, { ...params }) : controlCitasApi.delete(path);
+};

@@ -1,0 +1,34 @@
+.divider {
+  margin: 10px !important;
+  width: 100% !important;
+}
+
+.Root-AppointmentDetail {
+  width: 90%;
+}
+
+.Col-Title-Root-AppointmentDetail {
+  width: 80% !important;
+}
+
+.Col-UserFullName-Root-AppointmentDetail {
+  width: 85% !important;
+}
+
+.Col-DateTime-Root-AppointmentDetail
+{
+    width: 42.5% !important;
+}
+
+.Col-DateTime-Item-AppointmentDetail
+{
+    width: 21.5% !important;
+}
+
+.Col-Table-Root-AppointmentDetail {
+  width: 80% !important;
+}
+
+.Col-Table-Item-AppointmentDetail {
+  width: 80% !important;
+}

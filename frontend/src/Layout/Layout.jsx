@@ -72,7 +72,12 @@ export const LayoutHeader = ({ children }) => {
     <LayoutAnt>
       <Header hasLogo />
       <Content className="content">
-        <div className="site-layout-content">{children}</div>
+        <div
+          className="site-layout-content"
+          style={{ width: window.location.pathname === '/login' ? '45%' : '80%' }}
+        >
+          {children}
+        </div>
       </Content>
     </LayoutAnt>
   );

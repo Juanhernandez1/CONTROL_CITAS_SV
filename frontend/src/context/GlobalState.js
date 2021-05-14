@@ -5,7 +5,8 @@ import { initialState } from './initialState';
 import {
   SET_BUSINESS_SELECTED,
   SET_SEARCH_BUSINESS_NAME,
-  SET_BUSINESS_SERVICES_SELECTED
+  SET_BUSINESS_SERVICES_SELECTED,
+  SET_APPOINTMENT_TIME
 } from './types';
 
 export const GlobalContext = createContext(initialState);
@@ -25,15 +26,21 @@ export const GlobalProvider = ({ children }) => {
     dispatch({ type: SET_SEARCH_BUSINESS_NAME, payload: businessName });
   };
 
+  const setAppointmentTime = AppointmentTime => {
+    dispatch({ type: SET_APPOINTMENT_TIME, payload: AppointmentTime });
+  };
+
   return (
     <GlobalContext.Provider
       value={{
         businessSelected: state.businessSelected,
         businessSearchName: state.businessName,
         businessServiceSelected: state.businessServiceSelected,
+        appintmentTime: state.appintmentTime,
         setBusinessName,
         setBusinessSelected,
-        setBusinessServicesSelected
+        setBusinessServicesSelected,
+        setAppointmentTime
       }}
     >
       {children}

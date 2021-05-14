@@ -1,11 +1,14 @@
 import { Button, message, Row, Col, Spin, Typography } from 'antd';
 import { isEmpty } from 'lodash';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { business } from '../../config/urls';
-import useGetData from '../../hooks/useGetData';
+import useGetBusinessResolveSetting from '../../hooks/useGetBusinessResolveSetting';
 import Table from '../../components/AvailabilityTable';
 import './AppointmentBook.css';
+import { useHistory, useParams } from 'react-router';
+import { paths } from '../../config/paths';
+import { GlobalContext } from '../../context/GlobalState';
 
 const { Title, Text } = Typography;
 
@@ -13,21 +16,35 @@ const AppointmentBook = () => {
   const [dateSelected, setDateSelected] = useState('');
   const [timeSelected, setTimeSelected] = useState('');
   const [dateDisplayed, setDateDisplayed] = useState('');
-  const [isLastFiveDaysLoading, lastFiveDays] = useGetData(business.lastFiveDays, errorMessage => {
-    message.error(errorMessage);
-  });
+  const { appintmentTime, setAppointmentTime } = useContext(GlobalContext);
+  const [isLastFiveDaysLoading, lastFiveDays] = useGetBusinessResolveSetting(
+    business.lastFiveDays,
+    errorMessage => {
+      message.error(errorMessage);
+    }
+  );
+
+  const { push } = useHistory();
+  const { id } = useParams();
 
   const handleDateSelection = (date = '') => {
-    setDateSelected(date.split('/').join('-'));
-    setDateDisplayed(date);
+    setAppointmentTime(date);
+    setDateSelected(date.fulldate.split('/').join('-'));
+    setDateDisplayed(date.fulldate);
     setTimeSelected('');
   };
 
-  const handleTimeSelection = ({ time }) => {
-    setTimeSelected(time);
+  const handleTimeSelection = objtime => {
+    console.log(objtime);
+    const ObjAppointmentTime = { ...appintmentTime, ...objtime.obtHora };
+    setAppointmentTime(ObjAppointmentTime);
+    setTimeSelected(objtime.time);
   };
 
-  const handleBookingButton = () => {};
+  const handleBookingButton = () => {
+    console.log(appintmentTime);
+    push(paths.appointmentDetail(id));
+  };
 
   return (
     <>
@@ -40,11 +57,11 @@ const AppointmentBook = () => {
       <Row justify="space-around">
         {isLastFiveDaysLoading && <Spin />}
         {lastFiveDays &&
-          lastFiveDays.map(({ dayName, fulldate }) => (
-            <Col style={{ textAlign: 'center' }} key={fulldate}>
-              <h3>{dayName}</h3>
-              <Button key={fulldate} onClick={() => handleDateSelection(fulldate)}>
-                {fulldate}
+          lastFiveDays.map(element => (
+            <Col style={{ textAlign: 'center' }} key={element.fulldate}>
+              <h3>{element.dayName}</h3>
+              <Button key={element.fulldate} onClick={() => handleDateSelection(element)}>
+                {element.fulldate}
               </Button>
             </Col>
           ))}

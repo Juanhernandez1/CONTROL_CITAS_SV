@@ -9,6 +9,9 @@ import BusinessDetail from './pages/BusinessDetail';
 import Landing from './pages/Landing';
 import AppointmentBook from './pages/AppointmentBook';
 import NotFound from './pages/NotFound';
+import LoginCitas from './pages/Login/Login';
+import AppointmentDetail from './pages/AppointmentDetail';
+import BusinessServicess from './pages/BusinessServicess/BusinessServicess';
 
 const App = () => {
   return (
@@ -16,6 +19,7 @@ const App = () => {
       <Router>
         <Switch>
           <Route exact path={paths.home} component={Landing} layout={LayoutHeader} />
+          <Route exact path={paths.login} component={LoginCitas} layout={LayoutHeader} />
           <Route exact path={paths.businessResult} component={Business} layout={LayoutHeader} />
           <Route
             exact
@@ -25,8 +29,20 @@ const App = () => {
           />
           <Route
             exact
+            path={paths.businessServices(':id')}
+            component={BusinessServicess}
+            layout={Layout}
+          />
+          <Route
+            exact
             path={paths.appointmentBook(':id')}
             component={AppointmentBook}
+            layout={Layout}
+          />
+          <Route
+            exact
+            path={paths.appointmentDetail(':id')}
+            component={AppointmentDetail}
             layout={Layout}
           />
           <Route path={paths.notFound} component={NotFound} layout={LayoutHeader} />
