@@ -1,5 +1,6 @@
 import CrudInterface from '../../../interface/CrudInterface';
 import pagination from '../../../assets/pagination';
+import { v4 as uuidv4 } from 'uuid';
 
 export default class BusinessCrud extends CrudInterface {
   static #instance;
@@ -146,6 +147,7 @@ export default class BusinessCrud extends CrudInterface {
   Create = async obj => {
     try {
       console.log(obj);
+      obj.uuidbusiness = uuidv4();
       const data = await this.Model.create(obj);
 
       return { data, success: true };

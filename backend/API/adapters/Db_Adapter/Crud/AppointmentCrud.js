@@ -1,4 +1,5 @@
 import CrudInterface from '../../../interface/CrudInterface';
+import { v4 as uuidv4 } from 'uuid';
 
 export default class AppointmentCrud extends CrudInterface {
   static #instance;
@@ -143,6 +144,7 @@ export default class AppointmentCrud extends CrudInterface {
 
   Create = async obj => {
     try {
+      obj.uuidappointment = uuidv4();
       await this.Model.create(obj);
 
       return { success: true };
