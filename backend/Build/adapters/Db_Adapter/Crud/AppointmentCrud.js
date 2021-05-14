@@ -29,6 +29,8 @@ var _defineProperty2 = _interopRequireDefault(require('@babel/runtime/helpers/de
 
 var _CrudInterface2 = _interopRequireDefault(require('../../../interface/CrudInterface'));
 
+var _uuid = require('uuid');
+
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
   if (Object.getOwnPropertySymbols) {
@@ -528,23 +530,24 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
                   switch ((_context6.prev = _context6.next)) {
                     case 0:
                       _context6.prev = 0;
-                      _context6.next = 3;
+                      obj.uuidappointment = (0, _uuid.v4)();
+                      _context6.next = 4;
                       return _this.Model.create(obj);
 
-                    case 3:
+                    case 4:
                       return _context6.abrupt('return', {
                         success: true
                       });
 
-                    case 6:
-                      _context6.prev = 6;
+                    case 7:
+                      _context6.prev = 7;
                       _context6.t0 = _context6['catch'](0);
                       console.log(_context6.t0);
                       return _context6.abrupt('return', {
                         success: false
                       });
 
-                    case 10:
+                    case 11:
                     case 'end':
                       return _context6.stop();
                   }
@@ -552,7 +555,7 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
               },
               _callee6,
               null,
-              [[0, 6]]
+              [[0, 7]]
             );
           })
         );

@@ -31,6 +31,8 @@ var _CrudInterface2 = _interopRequireDefault(require('../../../interface/CrudInt
 
 var _pagination = _interopRequireDefault(require('../../../assets/pagination'));
 
+var _uuid = require('uuid');
+
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
   if (Object.getOwnPropertySymbols) {
@@ -562,18 +564,19 @@ var BusinessCrud = /*#__PURE__*/ (function (_CrudInterface) {
                     case 0:
                       _context6.prev = 0;
                       console.log(obj);
-                      _context6.next = 4;
+                      obj.uuidbusiness = (0, _uuid.v4)();
+                      _context6.next = 5;
                       return _this.Model.create(obj);
 
-                    case 4:
+                    case 5:
                       data = _context6.sent;
                       return _context6.abrupt('return', {
                         data: data,
                         success: true
                       });
 
-                    case 8:
-                      _context6.prev = 8;
+                    case 9:
+                      _context6.prev = 9;
                       _context6.t0 = _context6['catch'](0);
                       (_error$errors$ = _context6.t0.errors[0]),
                         (message = _error$errors$.message),
@@ -588,7 +591,7 @@ var BusinessCrud = /*#__PURE__*/ (function (_CrudInterface) {
                         origin: origin
                       });
 
-                    case 12:
+                    case 13:
                     case 'end':
                       return _context6.stop();
                   }
@@ -596,7 +599,7 @@ var BusinessCrud = /*#__PURE__*/ (function (_CrudInterface) {
               },
               _callee6,
               null,
-              [[0, 8]]
+              [[0, 9]]
             );
           })
         );
