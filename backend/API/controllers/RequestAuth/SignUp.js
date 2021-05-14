@@ -1,5 +1,6 @@
 // TODO crear adapter para grant y botner datos de google para repara completar registro con google
 import ErrorMessages from '../../assets/ErrorMessages';
+import popupTools from 'popup-tools';
 
 export default class SignUp {
   static #instance;
@@ -136,19 +137,27 @@ export default class SignUp {
         if (Users.success) {
           const token = this.TokenAuth.CreateToken(User.data);
           console.log(token);
-          res.cookie('cookiauth', JSON.stringify({ auth: true, token, id: User.data.iduser }), {
-            maxAge: 86400 * 1000, // 24 hours
-            httpOnly: true // http only, prevents JavaScript cookie access
-          });
+          res.cookie(
+            'cookiauthControlCitas',
+            JSON.stringify({ auth: true, token, id: User.data.iduser }),
+            {
+              maxAge: 86400 * 1000, // 24 hours
+              httpOnly: true // http only, prevents JavaScript cookie access
+            }
+          );
           res.status(201).send({ Users });
         }
       } else {
         const token = this.TokenAuth.CreateToken(User.data);
 
-        res.cookie('cookiauth', JSON.stringify({ auth: true, token, id: User.data.iduser }), {
-          maxAge: 86400 * 1000, // 24 hours
-          httpOnly: true // http only, prevents JavaScript cookie access
-        });
+        res.cookie(
+          'cookiauthControlCitas',
+          JSON.stringify({ auth: true, token, id: User.data.iduser }),
+          {
+            maxAge: 86400 * 1000, // 24 hours
+            httpOnly: true // http only, prevents JavaScript cookie access
+          }
+        );
         res.status(202).send({ mesage: 'Se a iniciado Secion', success: true, data: User });
       }
     } catch (error) {
@@ -203,7 +212,11 @@ export default class SignUp {
             httpOnly: true // http only, prevents JavaScript cookie access
           }
         );
-        res.status(202).send({ mesage: 'Se a iniciado Secion', success: true, data: User });
+
+        //  res.status(202).send({ mesage: 'Se a iniciado Secion', success: true, data: User });
+        res.send(
+          popupTools.popupResponse({ mesage: 'Se a iniciado Secion', success: true, data: User })
+        );
       }
     } catch (error) {
       const { ERDB404 } = ErrorMessages;

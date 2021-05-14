@@ -8857,6 +8857,11 @@ point-at-length@~1.0.2:
     isarray "~0.0.1"
     parse-svg-path "~0.1.1"
 
+popup-tools@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/popup-tools/-/popup-tools-1.0.2.tgz#0a9c16537f098132c64292cc8afbc448c4d5efb5"
+  integrity sha1-CpwWU38JgTLGQpLMivvESMTV77U=
+
 portfinder@^1.0.26:
   version "1.0.28"
   resolved "https://registry.yarnpkg.com/portfinder/-/portfinder-1.0.28.tgz#67c4622852bd5374dd1dd900f779f53462fac778"
@@ -10225,6 +10230,11 @@ react-is@^17.0.1:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
+
+react-oauth-popup@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-oauth-popup/-/react-oauth-popup-1.0.3.tgz#d84b6692ffd6965a2a18c6030616d16ffdc858b8"
+  integrity sha512-tIHJnV+HMwMJMsbV4GpgPWIiP0jo3N1CRBBwiGy46A52eHn9mCA6PYTkiPzv412ooEzN2HJhpUwp7RkgQKDFnQ==
 
 react-refresh@^0.8.3:
   version "0.8.3"

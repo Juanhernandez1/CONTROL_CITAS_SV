@@ -6,7 +6,8 @@ import {
   SET_BUSINESS_SELECTED,
   SET_SEARCH_BUSINESS_NAME,
   SET_BUSINESS_SERVICES_SELECTED,
-  SET_APPOINTMENT_TIME
+  SET_APPOINTMENT_TIME,
+  SET_USER_AUTHENTICATED
 } from './types';
 
 export const GlobalContext = createContext(initialState);
@@ -29,6 +30,9 @@ export const GlobalProvider = ({ children }) => {
   const setAppointmentTime = AppointmentTime => {
     dispatch({ type: SET_APPOINTMENT_TIME, payload: AppointmentTime });
   };
+  const setuserauthenticates = user => {
+    dispatch({ type: SET_USER_AUTHENTICATED, payload: user });
+  };
 
   return (
     <GlobalContext.Provider
@@ -37,10 +41,12 @@ export const GlobalProvider = ({ children }) => {
         businessSearchName: state.businessName,
         businessServiceSelected: state.businessServiceSelected,
         appintmentTime: state.appintmentTime,
+        user: state.user,
         setBusinessName,
         setBusinessSelected,
         setBusinessServicesSelected,
-        setAppointmentTime
+        setAppointmentTime,
+        setuserauthenticates
       }}
     >
       {children}

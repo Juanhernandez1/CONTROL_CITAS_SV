@@ -17,6 +17,8 @@ var _defineProperty2 = _interopRequireDefault(require('@babel/runtime/helpers/de
 
 var _ErrorMessages = _interopRequireDefault(require('../../assets/ErrorMessages'));
 
+var _popupTools = _interopRequireDefault(require('popup-tools'));
+
 function _classStaticPrivateFieldSpecSet(receiver, classConstructor, descriptor, value) {
   _classCheckPrivateStaticAccess(receiver, classConstructor);
   _classCheckPrivateStaticFieldDescriptor(descriptor, 'set');
@@ -197,7 +199,7 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                       token = _this.TokenAuth.CreateToken(User.data);
                       console.log(token);
                       res.cookie(
-                        'cookiauth',
+                        'cookiauthControlCitas',
                         JSON.stringify({
                           auth: true,
                           token: token,
@@ -220,7 +222,7 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                   case 13:
                     _token = _this.TokenAuth.CreateToken(User.data);
                     res.cookie(
-                      'cookiauth',
+                      'cookiauthControlCitas',
                       JSON.stringify({
                         auth: true,
                         token: _token,
@@ -234,7 +236,8 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                     );
                     res.status(202).send({
                       mesage: 'Se a iniciado Secion',
-                      success: true
+                      success: true,
+                      data: User
                     });
 
                   case 16:
@@ -281,15 +284,14 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                   case 0:
                     _context3.prev = 0;
                     facebookProfiel = req.session.grant.response.profile;
-                    console.log('perfilde facebook:', facebookProfiel, req.session.grant.response);
-                    _context3.next = 5;
+                    _context3.next = 4;
                     return _this.UserCrud.GetOpenIdAuth(facebookProfiel.id, 'uuidfacebook');
 
-                  case 5:
+                  case 4:
                     User = _context3.sent;
 
                     if (!(User.data.uuidfacebook === undefined)) {
-                      _context3.next = 14;
+                      _context3.next = 13;
                       break;
                     }
 
@@ -304,10 +306,10 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                       uuidgoogle: null,
                       state: 'Activo'
                     };
-                    _context3.next = 10;
+                    _context3.next = 9;
                     return _this.UserCrud.Create(objUsers);
 
-                  case 10:
+                  case 9:
                     Users = _context3.sent;
 
                     if (Users.success) {
@@ -331,10 +333,10 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                       });
                     }
 
-                    _context3.next = 17;
+                    _context3.next = 16;
                     break;
 
-                  case 14:
+                  case 13:
                     _token2 = _this.TokenAuth.CreateToken(User.data);
                     res.cookie(
                       'cookiauthControlCitas',
@@ -348,24 +350,28 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                         // 24 hours
                         httpOnly: true // http only, prevents JavaScript cookie access
                       }
-                    );
-                    res.status(202).send({
-                      mesage: 'Se a iniciado Secion',
-                      success: true
-                    });
+                    ); //  res.status(202).send({ mesage: 'Se a iniciado Secion', success: true, data: User });
 
-                  case 17:
-                    _context3.next = 24;
+                    res.send(
+                      _popupTools['default'].popupResponse({
+                        mesage: 'Se a iniciado Secion',
+                        success: true,
+                        data: User
+                      })
+                    );
+
+                  case 16:
+                    _context3.next = 23;
                     break;
 
-                  case 19:
-                    _context3.prev = 19;
+                  case 18:
+                    _context3.prev = 18;
                     _context3.t0 = _context3['catch'](0);
                     ERDB404 = _ErrorMessages['default'].ERDB404;
                     console.log(ERDB404);
                     res.status(404).send(ERDB404);
 
-                  case 24:
+                  case 23:
                   case 'end':
                     return _context3.stop();
                 }
@@ -373,7 +379,7 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
             },
             _callee3,
             null,
-            [[0, 19]]
+            [[0, 18]]
           );
         })
       );
