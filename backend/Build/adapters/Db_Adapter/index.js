@@ -45,7 +45,7 @@ var Access = Model.Access,
   User = Model.User,
   Operations = Model.Operations;
 var RootCrudAdapter = {
-  accessCrud: new _AccessCrud['default'](new _Encrypt_Adapter['default'](Encrypt), Access),
+  accessCrud: new _AccessCrud['default'](new _Encrypt_Adapter['default'](), Access),
   addressCrud: new _AddressCrud['default'](Address),
   businessCrud: new _BusinessCrud['default'](Business, Operations),
   contactbusinessCrud: new _ContactbusinessCrud['default'](Contactbusiness),

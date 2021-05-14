@@ -28,7 +28,7 @@ const {
 } = Model;
 
 const RootCrudAdapter = {
-  accessCrud: new AccessCrud(new EncryptPassword(Encrypt), Access),
+  accessCrud: new AccessCrud(new EncryptPassword(), Access),
   addressCrud: new AddressCrud(Address),
   businessCrud: new BusinessCrud(Business, Operations),
   contactbusinessCrud: new ContactbusinessCrud(Contactbusiness),

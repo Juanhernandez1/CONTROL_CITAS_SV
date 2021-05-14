@@ -1,6 +1,7 @@
 // TODO crear adapter para grant y botner datos de google para repara completar registro con google
 import ErrorMessages from '../../assets/ErrorMessages';
 import popupTools from 'popup-tools';
+import MomentSv from '../../services/moment';
 
 export default class SignUp {
   static #instance;
@@ -88,18 +89,35 @@ export default class SignUp {
   SignUpUsersCreateTraditional = async (req, res) => {
     try {
       const { objUser, objAccess } = req.body;
-      console.log(objUser, objAccess);
+
       const User = await this.UserCrud.Create(objUser);
 
-      const { data } = User;
-      console.log(User);
       if (User.success) {
-        objAccess.iduser = data.iduser;
+        objAccess.iduser = User.data.iduser;
         const Acces = await this.AccessCrud.Create(objAccess);
 
         if (Acces.success) {
-          delete Acces.password;
-          res.status(201).send({ User, Acces });
+          const token = this.TokenAuth.CreateToken(User.data);
+
+          res.cookie(
+            'cookiauthControlCitas',
+            JSON.stringify({ auth: true, token, id: User.data.iduser }),
+            {
+              maxAge: 86400 * 1000, // 24 hours
+              httpOnly: true // http only, prevents JavaScript cookie access
+            }
+          );
+          res.status(202).send({
+            data: {
+              iduser: User.data.iduser,
+              lastname: User.data.lastname,
+              name: User.data.name,
+              state: User.data.state,
+              type: Acces.data.type
+            },
+            token,
+            success: true
+          });
         } else {
           res.status(409).send({ User, Acces });
         }
@@ -107,6 +125,7 @@ export default class SignUp {
         res.status(409).send(User);
       }
     } catch (error) {
+      console.log(error);
       const { ERDB404 } = ErrorMessages;
       console.log(ERDB404);
       res.status(404).send(ERDB404);
@@ -145,7 +164,22 @@ export default class SignUp {
               httpOnly: true // http only, prevents JavaScript cookie access
             }
           );
-          res.status(201).send({ Users });
+          //  res.status(201).send({ Users });
+          res.send(
+            popupTools.popupResponse({
+              mesage: 'Se a iniciado Secion',
+              success: true,
+              data: {
+                iduser: User.data.iduser,
+                lastname: User.data.lastname,
+                name: User.data.name,
+                state: User.data.state
+              },
+              auth: true,
+              dateExpired: MomentSv().format('l'),
+              token
+            })
+          );
         }
       } else {
         const token = this.TokenAuth.CreateToken(User.data);
@@ -158,7 +192,22 @@ export default class SignUp {
             httpOnly: true // http only, prevents JavaScript cookie access
           }
         );
-        res.status(202).send({ mesage: 'Se a iniciado Secion', success: true, data: User });
+        //    res.status(202).send({ mesage: 'Se a iniciado Secion', success: true, data: User });
+        res.send(
+          popupTools.popupResponse({
+            mesage: 'Se a iniciado Secion',
+            success: true,
+            data: {
+              iduser: User.data.iduser,
+              lastname: User.data.lastname,
+              name: User.data.name,
+              state: User.data.state
+            },
+            auth: true,
+            dateExpired: MomentSv().format('l'),
+            token
+          })
+        );
       }
     } catch (error) {
       const { ERDB404 } = ErrorMessages;
@@ -193,13 +242,28 @@ export default class SignUp {
           console.log(token);
           res.cookie(
             'cookiauthControlCitas',
-            JSON.stringify({ auth: true, token, id: User.data.iduser }),
+            JSON.stringify({ auth: true, token, id: User.data }),
             {
               maxAge: 86400 * 1000, // 24 hours
               httpOnly: true // http only, prevents JavaScript cookie access
             }
           );
-          res.status(201).send({ Users });
+          // res.status(201).send({ Users });
+          res.send(
+            popupTools.popupResponse({
+              mesage: 'Se a iniciado Secion',
+              success: true,
+              data: {
+                iduser: User.data.iduser,
+                lastname: User.data.lastname,
+                name: User.data.name,
+                state: User.data.state
+              },
+              auth: true,
+              dateExpired: MomentSv().format('l'),
+              token
+            })
+          );
         }
       } else {
         const token = this.TokenAuth.CreateToken(User.data);
@@ -214,9 +278,64 @@ export default class SignUp {
         );
 
         //  res.status(202).send({ mesage: 'Se a iniciado Secion', success: true, data: User });
-        res.send(
-          popupTools.popupResponse({ mesage: 'Se a iniciado Secion', success: true, data: User })
+        res.status(202).send(
+          popupTools.popupResponse({
+            mesage: 'Se a iniciado Secion',
+            success: true,
+            data: {
+              iduser: User.data.iduser,
+              lastname: User.data.lastname,
+              name: User.data.name,
+              state: User.data.state
+            },
+            auth: true,
+            dateExpired: MomentSv().format('l'),
+            token
+          })
         );
+      }
+    } catch (error) {
+      const { ERDB404 } = ErrorMessages;
+      console.log(ERDB404);
+      res.status(404).send(ERDB404);
+    }
+  };
+
+  LoginTraditional = async (req, res) => {
+    try {
+      const { username, password } = req.body;
+
+      const Acces = await this.AccessCrud.FindCompare(username, password);
+
+      if (Acces.success) {
+        const User = await this.UserCrud.GetPk(Acces.data.iduser);
+        if (User.success) {
+          const token = this.TokenAuth.CreateToken(User.data);
+
+          res.cookie(
+            'cookiauthControlCitas',
+            JSON.stringify({ auth: true, token, id: User.data.iduser }),
+            {
+              maxAge: 86400 * 1000, // 24 hours
+              httpOnly: true // http only, prevents JavaScript cookie access
+            }
+          );
+          res.status(202).send({
+            data: {
+              iduser: User.data.iduser,
+              lastname: User.data.lastname,
+              name: User.data.name,
+              state: User.data.state,
+              type: Acces.data.type
+            },
+            token,
+            success: Acces.success
+          });
+        } else {
+          res.status(409).send({ User, Acces });
+        }
+      } else {
+        res.status(409).send(Acces);
       }
     } catch (error) {
       const { ERDB404 } = ErrorMessages;

@@ -2,6 +2,6 @@
 import { config } from 'dotenv';
 config();
 
-const saltRounds = parseInt(process.env.SALT, 10);
+const saltRounds = 12;
 
 export default saltRounds;

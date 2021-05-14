@@ -21,16 +21,16 @@ export default class AccessCrud extends CrudInterface {
 
   FindCompare = async (username, password) => {
     try {
-      const PasswordHash = this.encrypter.EncryptPassword(password);
+      const PasswordHash = this.encrypter.EncryptUserPassword(password);
 
-      const data = await this.Model.findOne(
-        { where: { username, password: PasswordHash }, attributes: ['iduser'] },
-        this.Config
-      );
+      const data = await this.Model.findOne({
+        ...this.Config,
+        where: { username, password: PasswordHash }
+      });
 
-      const valid = this.encrypter.ComparePassword(data.password, password);
+      const valid = this.encrypter.ComparePassword(data.password, PasswordHash);
 
-      return { data, success: true, valid };
+      return { data, success: valid };
     } catch (error) {
       return { success: false };
     }

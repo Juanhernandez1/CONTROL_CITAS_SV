@@ -1,4 +1,5 @@
 import CrudInterface from '../../../interface/CrudInterface';
+import { v4 as uuidv4 } from 'uuid';
 
 export default class UserCrud extends CrudInterface {
   static #instance;
@@ -46,9 +47,10 @@ export default class UserCrud extends CrudInterface {
 
   Create = async obj => {
     try {
+      obj.uuiduser = uuidv4();
       const data = await this.Model.create(obj);
 
-      return { data, success: true };
+      return { data: JSON.parse(JSON.stringify(data)), success: true };
     } catch (error) {
       const { message, type, path, origin } = error.errors[0];
 

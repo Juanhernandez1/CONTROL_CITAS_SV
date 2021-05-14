@@ -2,16 +2,15 @@ import { HomeOutlined, LoginOutlined, LogoutOutlined, StockOutlined } from '@ant
 import { Layout, Menu } from 'antd';
 import React, { useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-
+import { isEmpty } from 'lodash';
 import { paths } from '../../config/paths';
 import { GlobalContext } from '../../context/GlobalState';
 import './Header.css';
 
 const { Item } = Menu;
-const isLoggedIn = false;
 
 const Header = ({ hasLogo = false }) => {
-  const { setBusinessName } = useContext(GlobalContext);
+  const { setBusinessName, user } = useContext(GlobalContext);
   const className = hasLogo ? 'header header-space-between' : 'header header-flex-end';
   const { push } = useHistory();
 
@@ -36,14 +35,14 @@ const Header = ({ hasLogo = false }) => {
         <Item key="2" icon={<StockOutlined />}>
           Negocios
         </Item>
-        {!isLoggedIn && (
+        {isEmpty(user) && (
           <Item key="3" icon={<LoginOutlined />}>
             <Link to={paths.login}>Login</Link>
           </Item>
         )}
-        {isLoggedIn && (
+        {!isEmpty(user) && (
           <Item key="4" icon={<LogoutOutlined />}>
-            Log out
+            {`${user.name} ${user.lastname}`}
           </Item>
         )}
       </Menu>

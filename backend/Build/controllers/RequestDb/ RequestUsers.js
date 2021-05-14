@@ -390,7 +390,6 @@ var RequestUsers = function RequestUsers(userCrud, accessCrud, appointmentCrud) 
   _classStaticPrivateFieldSpecSet(RequestUsers, RequestUsers, _instance, this);
 
   this.UserCrud = userCrud;
-  this.AccessCrud = accessCrud;
   this.AppointmentCrud = appointmentCrud;
 };
 

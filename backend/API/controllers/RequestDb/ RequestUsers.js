@@ -9,7 +9,7 @@ export default class RequestUsers {
 
     RequestUsers.#instance = this;
     this.UserCrud = userCrud;
-    this.AccessCrud = accessCrud;
+
     this.AppointmentCrud = appointmentCrud;
   }
 

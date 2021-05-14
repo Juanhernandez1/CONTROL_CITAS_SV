@@ -25,6 +25,8 @@ var _defineProperty2 = _interopRequireDefault(require('@babel/runtime/helpers/de
 
 var _EncryptInterface2 = _interopRequireDefault(require('../../interface/EncryptInterface'));
 
+var _crypto = _interopRequireDefault(require('crypto'));
+
 function _createSuper(Derived) {
   var hasNativeReflectConstruct = _isNativeReflectConstruct();
   return function _createSuperInternal() {
@@ -100,27 +102,26 @@ var EncryptPassword = /*#__PURE__*/ (function (_EncryptInterface) {
 
   var _super = _createSuper(EncryptPassword);
 
-  function EncryptPassword(Encrypt) {
+  function EncryptPassword() {
     var _this;
 
     (0, _classCallCheck2['default'])(this, EncryptPassword);
     _this = _super.call(this);
     (0, _defineProperty2['default'])(
       (0, _assertThisInitialized2['default'])(_this),
-      'ComparePassword',
-      function (hashPassword, password) {
-        var valid = _this.encrypter.compareSync(password, hashPassword);
+      'EncryptUserPassword',
+      function (password) {
+        var hash = _crypto['default'].createHash('md5').update(password).digest('hex');
 
-        return valid;
+        return hash;
       }
     );
     (0, _defineProperty2['default'])(
       (0, _assertThisInitialized2['default'])(_this),
-      'EncryptUserPassword',
-      function (password) {
-        var hash = _this.encrypter.hashSync(password, _this.salt);
-
-        return hash;
+      'ComparePassword',
+      function (password, hash) {
+        if (password === hash) return true;
+        else return false;
       }
     );
 
@@ -138,8 +139,7 @@ var EncryptPassword = /*#__PURE__*/ (function (_EncryptInterface) {
       (0, _assertThisInitialized2['default'])(_this)
     );
 
-    _this.encrypter = Encrypt.bcrypt;
-    _this.salt = Encrypt.salt;
+    _this.encrypter = _crypto['default'];
     return _this;
   }
 

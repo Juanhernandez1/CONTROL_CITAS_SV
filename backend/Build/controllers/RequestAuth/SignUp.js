@@ -19,6 +19,8 @@ var _ErrorMessages = _interopRequireDefault(require('../../assets/ErrorMessages'
 
 var _popupTools = _interopRequireDefault(require('popup-tools'));
 
+var _moment = _interopRequireDefault(require('../../services/moment'));
+
 function _classStaticPrivateFieldSpecSet(receiver, classConstructor, descriptor, value) {
   _classCheckPrivateStaticAccess(receiver, classConstructor);
   _classCheckPrivateStaticFieldDescriptor(descriptor, 'set');
@@ -72,7 +74,7 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
     /*#__PURE__*/ (function () {
       var _ref = (0, _asyncToGenerator2['default'])(
         /*#__PURE__*/ _regenerator['default'].mark(function _callee(req, res) {
-          var _req$body, objUser, objAccess, User, data, Acces, ERDB404;
+          var _req$body, objUser, objAccess, User, Acces, token, ERDB404;
 
           return _regenerator['default'].wrap(
             function _callee$(_context) {
@@ -83,32 +85,49 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                     (_req$body = req.body),
                       (objUser = _req$body.objUser),
                       (objAccess = _req$body.objAccess);
-                    console.log(objUser, objAccess);
-                    _context.next = 5;
+                    _context.next = 4;
                     return _this.UserCrud.Create(objUser);
 
-                  case 5:
+                  case 4:
                     User = _context.sent;
-                    data = User.data;
-                    console.log(User);
 
                     if (!User.success) {
-                      _context.next = 16;
+                      _context.next = 13;
                       break;
                     }
 
-                    objAccess.iduser = data.iduser;
-                    _context.next = 12;
+                    objAccess.iduser = User.data.iduser;
+                    _context.next = 9;
                     return _this.AccessCrud.Create(objAccess);
 
-                  case 12:
+                  case 9:
                     Acces = _context.sent;
 
                     if (Acces.success) {
-                      delete Acces.password;
-                      res.status(201).send({
-                        User: User,
-                        Acces: Acces
+                      token = _this.TokenAuth.CreateToken(User.data);
+                      res.cookie(
+                        'cookiauthControlCitas',
+                        JSON.stringify({
+                          auth: true,
+                          token: token,
+                          id: User.data.iduser
+                        }),
+                        {
+                          maxAge: 86400 * 1000,
+                          // 24 hours
+                          httpOnly: true // http only, prevents JavaScript cookie access
+                        }
+                      );
+                      res.status(202).send({
+                        data: {
+                          iduser: User.data.iduser,
+                          lastname: User.data.lastname,
+                          name: User.data.name,
+                          state: User.data.state,
+                          type: Acces.data.type
+                        },
+                        token: token,
+                        success: true
                       });
                     } else {
                       res.status(409).send({
@@ -117,24 +136,25 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                       });
                     }
 
-                    _context.next = 17;
+                    _context.next = 14;
+                    break;
+
+                  case 13:
+                    res.status(409).send(User);
+
+                  case 14:
+                    _context.next = 22;
                     break;
 
                   case 16:
-                    res.status(409).send(User);
-
-                  case 17:
-                    _context.next = 24;
-                    break;
-
-                  case 19:
-                    _context.prev = 19;
+                    _context.prev = 16;
                     _context.t0 = _context['catch'](0);
+                    console.log(_context.t0);
                     ERDB404 = _ErrorMessages['default'].ERDB404;
                     console.log(ERDB404);
                     res.status(404).send(ERDB404);
 
-                  case 24:
+                  case 22:
                   case 'end':
                     return _context.stop();
                 }
@@ -142,7 +162,7 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
             },
             _callee,
             null,
-            [[0, 19]]
+            [[0, 16]]
           );
         })
       );
@@ -210,10 +230,23 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                           // 24 hours
                           httpOnly: true // http only, prevents JavaScript cookie access
                         }
+                      ); //  res.status(201).send({ Users });
+
+                      res.send(
+                        _popupTools['default'].popupResponse({
+                          mesage: 'Se a iniciado Secion',
+                          success: true,
+                          data: {
+                            iduser: User.data.iduser,
+                            lastname: User.data.lastname,
+                            name: User.data.name,
+                            state: User.data.state
+                          },
+                          auth: true,
+                          dateExpired: (0, _moment['default'])().format('l'),
+                          token: token
+                        })
                       );
-                      res.status(201).send({
-                        Users: Users
-                      });
                     }
 
                     _context2.next = 16;
@@ -233,12 +266,23 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                         // 24 hours
                         httpOnly: true // http only, prevents JavaScript cookie access
                       }
+                    ); //    res.status(202).send({ mesage: 'Se a iniciado Secion', success: true, data: User });
+
+                    res.send(
+                      _popupTools['default'].popupResponse({
+                        mesage: 'Se a iniciado Secion',
+                        success: true,
+                        data: {
+                          iduser: User.data.iduser,
+                          lastname: User.data.lastname,
+                          name: User.data.name,
+                          state: User.data.state
+                        },
+                        auth: true,
+                        dateExpired: (0, _moment['default'])().format('l'),
+                        token: _token
+                      })
                     );
-                    res.status(202).send({
-                      mesage: 'Se a iniciado Secion',
-                      success: true,
-                      data: User
-                    });
 
                   case 16:
                     _context2.next = 23;
@@ -320,17 +364,30 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                         JSON.stringify({
                           auth: true,
                           token: token,
-                          id: User.data.iduser
+                          id: User.data
                         }),
                         {
                           maxAge: 86400 * 1000,
                           // 24 hours
                           httpOnly: true // http only, prevents JavaScript cookie access
                         }
+                      ); // res.status(201).send({ Users });
+
+                      res.send(
+                        _popupTools['default'].popupResponse({
+                          mesage: 'Se a iniciado Secion',
+                          success: true,
+                          data: {
+                            iduser: User.data.iduser,
+                            lastname: User.data.lastname,
+                            name: User.data.name,
+                            state: User.data.state
+                          },
+                          auth: true,
+                          dateExpired: (0, _moment['default'])().format('l'),
+                          token: token
+                        })
                       );
-                      res.status(201).send({
-                        Users: Users
-                      });
                     }
 
                     _context3.next = 16;
@@ -352,11 +409,19 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                       }
                     ); //  res.status(202).send({ mesage: 'Se a iniciado Secion', success: true, data: User });
 
-                    res.send(
+                    res.status(202).send(
                       _popupTools['default'].popupResponse({
                         mesage: 'Se a iniciado Secion',
                         success: true,
-                        data: User
+                        data: {
+                          iduser: User.data.iduser,
+                          lastname: User.data.lastname,
+                          name: User.data.name,
+                          state: User.data.state
+                        },
+                        auth: true,
+                        dateExpired: (0, _moment['default'])().format('l'),
+                        token: _token2
                       })
                     );
 
@@ -386,6 +451,108 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
 
       return function (_x5, _x6) {
         return _ref3.apply(this, arguments);
+      };
+    })()
+  );
+  (0, _defineProperty2['default'])(
+    this,
+    'LoginTraditional',
+    /*#__PURE__*/ (function () {
+      var _ref4 = (0, _asyncToGenerator2['default'])(
+        /*#__PURE__*/ _regenerator['default'].mark(function _callee4(req, res) {
+          var _req$body2, username, password, Acces, User, token, ERDB404;
+
+          return _regenerator['default'].wrap(
+            function _callee4$(_context4) {
+              while (1) {
+                switch ((_context4.prev = _context4.next)) {
+                  case 0:
+                    _context4.prev = 0;
+                    (_req$body2 = req.body),
+                      (username = _req$body2.username),
+                      (password = _req$body2.password);
+                    _context4.next = 4;
+                    return _this.AccessCrud.FindCompare(username, password);
+
+                  case 4:
+                    Acces = _context4.sent;
+
+                    if (!Acces.success) {
+                      _context4.next = 12;
+                      break;
+                    }
+
+                    _context4.next = 8;
+                    return _this.UserCrud.GetPk(Acces.data.iduser);
+
+                  case 8:
+                    User = _context4.sent;
+
+                    if (User.success) {
+                      token = _this.TokenAuth.CreateToken(User.data);
+                      res.cookie(
+                        'cookiauthControlCitas',
+                        JSON.stringify({
+                          auth: true,
+                          token: token,
+                          id: User.data.iduser
+                        }),
+                        {
+                          maxAge: 86400 * 1000,
+                          // 24 hours
+                          httpOnly: true // http only, prevents JavaScript cookie access
+                        }
+                      );
+                      res.status(202).send({
+                        data: {
+                          iduser: User.data.iduser,
+                          lastname: User.data.lastname,
+                          name: User.data.name,
+                          state: User.data.state,
+                          type: Acces.data.type
+                        },
+                        token: token,
+                        success: Acces.success
+                      });
+                    } else {
+                      res.status(409).send({
+                        User: User,
+                        Acces: Acces
+                      });
+                    }
+
+                    _context4.next = 13;
+                    break;
+
+                  case 12:
+                    res.status(409).send(Acces);
+
+                  case 13:
+                    _context4.next = 20;
+                    break;
+
+                  case 15:
+                    _context4.prev = 15;
+                    _context4.t0 = _context4['catch'](0);
+                    ERDB404 = _ErrorMessages['default'].ERDB404;
+                    console.log(ERDB404);
+                    res.status(404).send(ERDB404);
+
+                  case 20:
+                  case 'end':
+                    return _context4.stop();
+                }
+              }
+            },
+            _callee4,
+            null,
+            [[0, 15]]
+          );
+        })
+      );
+
+      return function (_x7, _x8) {
+        return _ref4.apply(this, arguments);
       };
     })()
   );

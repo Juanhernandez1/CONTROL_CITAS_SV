@@ -29,6 +29,8 @@ var _defineProperty2 = _interopRequireDefault(require('@babel/runtime/helpers/de
 
 var _CrudInterface2 = _interopRequireDefault(require('../../../interface/CrudInterface'));
 
+var _uuid = require('uuid');
+
 function ownKeys(object, enumerableOnly) {
   var keys = Object.keys(object);
   if (Object.getOwnPropertySymbols) {
@@ -259,18 +261,19 @@ var UserCrud = /*#__PURE__*/ (function (_CrudInterface) {
                   switch ((_context3.prev = _context3.next)) {
                     case 0:
                       _context3.prev = 0;
-                      _context3.next = 3;
+                      obj.uuiduser = (0, _uuid.v4)();
+                      _context3.next = 4;
                       return _this.Model.create(obj);
 
-                    case 3:
+                    case 4:
                       data = _context3.sent;
                       return _context3.abrupt('return', {
-                        data: data,
+                        data: JSON.parse(JSON.stringify(data)),
                         success: true
                       });
 
-                    case 7:
-                      _context3.prev = 7;
+                    case 8:
+                      _context3.prev = 8;
                       _context3.t0 = _context3['catch'](0);
                       (_error$errors$ = _context3.t0.errors[0]),
                         (message = _error$errors$.message),
@@ -285,7 +288,7 @@ var UserCrud = /*#__PURE__*/ (function (_CrudInterface) {
                         origin: origin
                       });
 
-                    case 11:
+                    case 12:
                     case 'end':
                       return _context3.stop();
                   }
@@ -293,7 +296,7 @@ var UserCrud = /*#__PURE__*/ (function (_CrudInterface) {
               },
               _callee3,
               null,
-              [[0, 7]]
+              [[0, 8]]
             );
           })
         );

@@ -29,6 +29,38 @@ var _defineProperty2 = _interopRequireDefault(require('@babel/runtime/helpers/de
 
 var _CrudInterface2 = _interopRequireDefault(require('../../../interface/CrudInterface'));
 
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) {
+      symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+    }
+    keys.push.apply(keys, symbols);
+  }
+  return keys;
+}
+
+function _objectSpread(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        (0, _defineProperty2['default'])(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+  return target;
+}
+
 function _createSuper(Derived) {
   var hasNativeReflectConstruct = _isNativeReflectConstruct();
   return function _createSuperInternal() {
@@ -122,26 +154,27 @@ var AccessCrud = /*#__PURE__*/ (function (_CrudInterface) {
                   switch ((_context.prev = _context.next)) {
                     case 0:
                       _context.prev = 0;
-                      PasswordHash = _this.encrypter.EncryptPassword(password);
+                      PasswordHash = _this.encrypter.EncryptUserPassword(password);
                       _context.next = 4;
                       return _this.Model.findOne(
-                        {
-                          where: {
-                            username: username,
-                            password: PasswordHash
-                          },
-                          attributes: ['iduser']
-                        },
-                        _this.Config
+                        _objectSpread(
+                          _objectSpread({}, _this.Config),
+                          {},
+                          {
+                            where: {
+                              username: username,
+                              password: PasswordHash
+                            }
+                          }
+                        )
                       );
 
                     case 4:
                       data = _context.sent;
-                      valid = _this.encrypter.ComparePassword(data.password, password);
+                      valid = _this.encrypter.ComparePassword(data.password, PasswordHash);
                       return _context.abrupt('return', {
                         data: data,
-                        success: true,
-                        valid: valid
+                        success: valid
                       });
 
                     case 9:

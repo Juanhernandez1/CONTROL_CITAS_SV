@@ -1,25 +1,25 @@
 import EncryptInterface from '../../interface/EncryptInterface';
+import crypto from 'crypto';
 
 export default class EncryptPassword extends EncryptInterface {
   static #instance;
 
-  constructor(Encrypt) {
+  constructor() {
     super();
     if (EncryptPassword.#instance) {
       return EncryptPassword.#instance;
     }
     EncryptPassword.#instance = this;
-    this.encrypter = Encrypt.bcrypt;
-    this.salt = Encrypt.salt;
+    this.encrypter = crypto;
   }
 
-  ComparePassword = (hashPassword, password) => {
-    const valid = this.encrypter.compareSync(password, hashPassword);
-    return valid;
+  EncryptUserPassword = password => {
+    const hash = crypto.createHash('md5').update(password).digest('hex');
+    return hash;
   };
 
-  EncryptUserPassword = password => {
-    const hash = this.encrypter.hashSync(password, this.salt);
-    return hash;
+  ComparePassword = (password, hash) => {
+    if (password === hash) return true;
+    else return false;
   };
 }
