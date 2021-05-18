@@ -38,25 +38,23 @@ const Login = () => {
     console.log('Success:', values);
     (async () => {
       console.log('ejecutando');
-      try {
-        const { data, status } = await postData(auth.Login, values);
-        if (status === 202) {
-          console.log(data);
-          setuserauthenticates(data.data);
-          setCookie('authControlCitas', JSON.stringify(data), 1);
-          sessionStorage.setItem('sesionControlCitas', JSON.stringify(data));
 
-          push(
-            appintmentTime.hasOwnProperty('idbusiness')
-              ? paths.appointmentDetail(appintmentTime.idbusiness)
-              : '/'
-          );
-        } else if (status === 401) {
-          openNotificationWithIcon('error');
-        }
-      } catch (error) {
+      const { data, status } = await postData(auth.Login, values);
+      if (status === 202) {
+        console.log(data);
+        setuserauthenticates(data.data);
+        setCookie('authControlCitas', JSON.stringify(data), 1);
+        sessionStorage.setItem('sesionControlCitas', JSON.stringify(data));
+
+        push(
+          appintmentTime.hasOwnProperty('idbusiness')
+            ? paths.appointmentDetail(appintmentTime.idbusiness)
+            : '/'
+        );
+      } else if (status === 401) {
+        openNotificationWithIcon('error');
+      } else {
         push('/');
-        console.log(error);
       }
     })();
   };
