@@ -232,7 +232,7 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                         }
                       ); //  res.status(201).send({ Users });
 
-                      res.send(
+                      res.status(202).send(
                         _popupTools['default'].popupResponse({
                           mesage: 'Se a iniciado Secion',
                           success: true,
@@ -268,7 +268,7 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                       }
                     ); //    res.status(202).send({ mesage: 'Se a iniciado Secion', success: true, data: User });
 
-                    res.send(
+                    res.status(202).send(
                       _popupTools['default'].popupResponse({
                         mesage: 'Se a iniciado Secion',
                         success: true,
@@ -373,7 +373,7 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                         }
                       ); // res.status(201).send({ Users });
 
-                      res.send(
+                      res.status(202).send(
                         _popupTools['default'].popupResponse({
                           mesage: 'Se a iniciado Secion',
                           success: true,
@@ -504,6 +504,7 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                         }
                       );
                       res.status(202).send({
+                        mesage: 'Se a iniciado Secion',
                         data: {
                           iduser: User.data.iduser,
                           lastname: User.data.lastname,
@@ -511,6 +512,8 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                           state: User.data.state,
                           type: Acces.data.type
                         },
+                        auth: true,
+                        dateExpired: (0, _moment['default'])().format('l'),
                         token: token,
                         success: Acces.success
                       });

@@ -165,7 +165,7 @@ export default class SignUp {
             }
           );
           //  res.status(201).send({ Users });
-          res.send(
+          res.status(202).send(
             popupTools.popupResponse({
               mesage: 'Se a iniciado Secion',
               success: true,
@@ -193,7 +193,7 @@ export default class SignUp {
           }
         );
         //    res.status(202).send({ mesage: 'Se a iniciado Secion', success: true, data: User });
-        res.send(
+        res.status(202).send(
           popupTools.popupResponse({
             mesage: 'Se a iniciado Secion',
             success: true,
@@ -249,7 +249,7 @@ export default class SignUp {
             }
           );
           // res.status(201).send({ Users });
-          res.send(
+          res.status(202).send(
             popupTools.popupResponse({
               mesage: 'Se a iniciado Secion',
               success: true,
@@ -321,6 +321,7 @@ export default class SignUp {
             }
           );
           res.status(202).send({
+            mesage: 'Se a iniciado Secion',
             data: {
               iduser: User.data.iduser,
               lastname: User.data.lastname,
@@ -328,6 +329,8 @@ export default class SignUp {
               state: User.data.state,
               type: Acces.data.type
             },
+            auth: true,
+            dateExpired: MomentSv().format('l'),
             token,
             success: Acces.success
           });

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 import { getData } from '../../api/baseClient';
 
-const useGetData = (path, callback) => {
+const useGetData = (path, param, callback) => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
   const [isError, setIsError] = useState(false);
@@ -12,7 +12,7 @@ const useGetData = (path, callback) => {
       (async () => {
         setIsLoading(true);
         try {
-          const { data } = await getData(path);
+          const { data } = await getData(path, param);
           setData(data);
           setIsLoading(false);
           setIsError(false);
@@ -22,7 +22,7 @@ const useGetData = (path, callback) => {
           callback(error.message);
         }
       })();
-  }, [path]);
+  }, [path, param]);
 
   return [isLoading, data, isError];
 };

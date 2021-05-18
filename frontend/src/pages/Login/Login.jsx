@@ -1,4 +1,4 @@
-import { Form, message, Input, Button, Row, Divider } from 'antd';
+import { Form, message, Col, Input, Button, Row, Divider } from 'antd';
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebookSquare } from 'react-icons/fa';
 
@@ -101,72 +101,82 @@ const Login = () => {
         </Row>
 
         <Divider style={{ margin: '12px' }} />
-        {!negociosLogin && (
-          <Row justify="start">
-            <h3>Otras Formas:</h3>
-            <div className="icons-list">
-              <Button
-                type="link"
-                icon={<FcGoogle style={{ fontSize: '25px', marginLeft: '10px' }} />}
-                onClick={() => {
-                  popupTools.popup(
-                    'http://localhost:3100/connect/google',
-                    'Facebook Connect',
-                    {},
-                    function (err, user) {
-                      if (err) {
-                        console.log(err.message);
-                      } else {
-                        console.log(user);
-                        setuserauthenticates(user.data.data);
-                        setCookie('authControlCitas', JSON.stringify(user), 1);
-                        sessionStorage.setItem('sesionControlCitas', JSON.stringify(user));
 
-                        push(
-                          appintmentTime.hasOwnProperty('idbusiness')
-                            ? paths.appointmentDetail(appintmentTime.idbusiness)
-                            : '/'
-                        );
+        <Row justify="space-between">
+          {!negociosLogin && (
+            <Col>
+              <h3>Otras Formas:</h3>
+              <div className="icons-list">
+                <Button
+                  type="link"
+                  icon={<FcGoogle style={{ fontSize: '25px', marginLeft: '10px' }} />}
+                  onClick={() => {
+                    popupTools.popup(
+                      'https://citasparatunegocio.herokuapp.com/connect/google',
+                      'Google Connect',
+                      {},
+                      function (err, user) {
+                        if (err) {
+                          console.log(err.message);
+                        } else {
+                          console.log(user);
+                          setuserauthenticates(user.data);
+                          setCookie('authControlCitas', JSON.stringify(user), 1);
+                          sessionStorage.setItem('sesionControlCitas', JSON.stringify(user));
+
+                          push(
+                            appintmentTime.hasOwnProperty('idbusiness')
+                              ? paths.appointmentDetail(appintmentTime.idbusiness)
+                              : '/'
+                          );
+                        }
                       }
-                    }
-                  );
-                }}
-              />
+                    );
+                  }}
+                />
 
-              <Button
-                type="link"
-                icon={
-                  <FaFacebookSquare
-                    style={{ fontSize: '25px', marginLeft: '10px', color: '#4267B2' }}
-                  />
-                }
-                onClick={() => {
-                  popupTools.popup(
-                    'http://localhost:3100/connect/facebook',
-                    'Facebook Connect',
-                    {},
-                    function (err, user) {
-                      if (err) {
-                        console.log(err.message);
-                      } else {
-                        console.log(user);
-                        setuserauthenticates(user.data);
-                        setCookie('authControlCitas', JSON.stringify(user), 1);
-                        sessionStorage.setItem('sesionControlCitas', JSON.stringify(user));
+                <Button
+                  type="link"
+                  icon={
+                    <FaFacebookSquare
+                      style={{ fontSize: '25px', marginLeft: '10px', color: '#4267B2' }}
+                    />
+                  }
+                  onClick={() => {
+                    popupTools.popup(
+                      'https://citasparatunegocio.herokuapp.com/connect/facebook',
+                      'Facebook Connect',
+                      {},
+                      function (err, user) {
+                        if (err) {
+                          console.log(err.message);
+                        } else {
+                          console.log(user);
+                          setuserauthenticates(user.data);
+                          setCookie('authControlCitas', JSON.stringify(user), 1);
+                          sessionStorage.setItem('sesionControlCitas', JSON.stringify(user));
 
-                        push(
-                          appintmentTime.hasOwnProperty('idbusiness')
-                            ? paths.appointmentDetail(appintmentTime.idbusiness)
-                            : '/'
-                        );
+                          push(
+                            appintmentTime.hasOwnProperty('idbusiness')
+                              ? paths.appointmentDetail(appintmentTime.idbusiness)
+                              : '/'
+                          );
+                        }
                       }
-                    }
-                  );
-                }}
-              />
-            </div>
-          </Row>
-        )}
+                    );
+                  }}
+                />
+              </div>
+            </Col>
+          )}
+          <Col style={{ width: negociosLogin ? '100%' : 'auto' }}>
+            <Row justify="end" align="bottom">
+              <Button type="link" block>
+                Registrarse
+              </Button>
+            </Row>
+          </Col>
+        </Row>
       </Form>
     </Row>
   );
