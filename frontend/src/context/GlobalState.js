@@ -1,4 +1,5 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useEffect, useReducer } from 'react';
+import { checkExpired, getCookie } from '../utils/Cookies';
 
 import appReducer from './AppReducer';
 import { initialState } from './initialState';
@@ -33,6 +34,14 @@ export const GlobalProvider = ({ children }) => {
   const setuserauthenticates = user => {
     dispatch({ type: SET_USER_AUTHENTICATED, payload: user });
   };
+
+  useEffect(() => {
+    const valid = checkExpired('authControlCitas');
+    if (!valid) {
+      const data = getCookie('authControlCitas');
+      setuserauthenticates(data.data);
+    }
+  }, []);
 
   return (
     <GlobalContext.Provider

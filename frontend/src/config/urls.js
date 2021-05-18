@@ -1,4 +1,7 @@
 /* eslint-disable unicorn/filename-case */
+import { config } from 'dotenv';
+config();
+
 export const business = {
   getBusinessByName: name => `/API/v1/Business/SearchByNameNoPage/${name}`,
   getAllBusiness: '/API/v1/Business/GetAllNoPage/Active',
@@ -9,6 +12,7 @@ export const business = {
 };
 
 export const auth = {
-  AuthGoogle: '/connect/google',
-  AuthFacebook: '/connect/facebook'
+  AuthFacebook: 'https://citasparatunegocio.herokuapp.com/connect/facebook',
+  AuthGoogle: 'https://citasparatunegocio.herokuapp.com/connect/google',
+  Login: '/API/Auth/Login'
 };

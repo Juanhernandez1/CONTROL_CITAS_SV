@@ -1,4 +1,4 @@
-import { Form, message, Col, Input, Button, Row, Divider } from 'antd';
+import { Form, notification, message, Col, Input, Button, Row, Divider } from 'antd';
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebookSquare } from 'react-icons/fa';
 
@@ -7,11 +7,11 @@ import { useContext, useState } from 'react';
 import { GlobalContext } from '../../context/GlobalState';
 import { auth } from '../../config/urls';
 import { paths } from '../../config/paths';
-import useGetData from '../../hooks/useGetData/useGetData';
 
 import popupTools from 'popup-tools';
 import { setCookie } from '../../utils/Cookies';
 import { useHistory } from 'react-router';
+import { postData } from '../../api/baseClient';
 
 const layout = {
   labelCol: {
@@ -27,8 +27,38 @@ const Login = () => {
   const { setuserauthenticates, appintmentTime } = useContext(GlobalContext);
   const { push } = useHistory();
 
+  const openNotificationWithIcon = type => {
+    notification[type]({
+      message: 'No Se puede Acceder',
+      description: 'Credenciales no validas, verifique su usario y contraseña'
+    });
+  };
+
   const onFinish = values => {
     console.log('Success:', values);
+    (async () => {
+      console.log('ejecutando');
+      try {
+        const { data, status } = await postData(auth.Login, values);
+        if (status === 202) {
+          console.log(data);
+          setuserauthenticates(data.data);
+          setCookie('authControlCitas', JSON.stringify(data), 1);
+          sessionStorage.setItem('sesionControlCitas', JSON.stringify(data));
+
+          push(
+            appintmentTime.hasOwnProperty('idbusiness')
+              ? paths.appointmentDetail(appintmentTime.idbusiness)
+              : '/'
+          );
+        } else if (status === 401) {
+          openNotificationWithIcon('error');
+        }
+      } catch (error) {
+        push('/');
+        console.log(error);
+      }
+    })();
   };
 
   const onFinishFailed = errorInfo => {
@@ -36,7 +66,7 @@ const Login = () => {
   };
 
   return (
-    <Row justify="center">
+    <Row justify="center" style={{ width: '-webkit-fill-available' }}>
       <Form
         {...layout}
         name="basic"
@@ -45,7 +75,7 @@ const Login = () => {
         }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
-        style={{ width: '80%' }}
+        style={{ width: '-webkit-fill-available' }}
       >
         <Row className="row-altura" align="bottom">
           <Form.Item>
@@ -111,27 +141,22 @@ const Login = () => {
                   type="link"
                   icon={<FcGoogle style={{ fontSize: '25px', marginLeft: '10px' }} />}
                   onClick={() => {
-                    popupTools.popup(
-                      'https://citasparatunegocio.herokuapp.com/connect/google',
-                      'Google Connect',
-                      {},
-                      function (err, user) {
-                        if (err) {
-                          console.log(err.message);
-                        } else {
-                          console.log(user);
-                          setuserauthenticates(user.data);
-                          setCookie('authControlCitas', JSON.stringify(user), 1);
-                          sessionStorage.setItem('sesionControlCitas', JSON.stringify(user));
+                    popupTools.popup(auth.AuthGoogle, 'Google Connect', {}, function (err, user) {
+                      if (err) {
+                        console.log(err.message);
+                      } else {
+                        console.log(user);
+                        setuserauthenticates(user.data);
+                        setCookie('authControlCitas', JSON.stringify(user), 1);
+                        sessionStorage.setItem('sesionControlCitas', JSON.stringify(user));
 
-                          push(
-                            appintmentTime.hasOwnProperty('idbusiness')
-                              ? paths.appointmentDetail(appintmentTime.idbusiness)
-                              : '/'
-                          );
-                        }
+                        push(
+                          appintmentTime.hasOwnProperty('idbusiness')
+                            ? paths.appointmentDetail(appintmentTime.idbusiness)
+                            : '/'
+                        );
                       }
-                    );
+                    });
                   }}
                 />
 
@@ -144,7 +169,7 @@ const Login = () => {
                   }
                   onClick={() => {
                     popupTools.popup(
-                      'https://citasparatunegocio.herokuapp.com/connect/facebook',
+                      auth.AuthFacebook,
                       'Facebook Connect',
                       {},
                       function (err, user) {

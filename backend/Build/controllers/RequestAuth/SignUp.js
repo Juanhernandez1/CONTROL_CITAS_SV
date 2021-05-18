@@ -528,7 +528,7 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                     break;
 
                   case 12:
-                    res.status(409).send(Acces);
+                    res.status(401).send(Acces);
 
                   case 13:
                     _context4.next = 20;

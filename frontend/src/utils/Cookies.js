@@ -32,21 +32,28 @@ export const getCookie = name => {
 };
 
 export const checkExpired = name => {
-  const cookie = getCookie(name);
-  if (cookie !== null) {
-    const dateNow = new Date()
-      .getDate()
-      .toLocaleString('es-ES', { timeZone: 'America/El_Salvador' });
-    const datexpired = new Date(
-      `${cookie.dateExpired.split('/')[2]}-${cookie.dateExpired.split('/')[1]}-${
-        cookie.dateExpired.split('/')[0]
-      }`
-    )
-      .getDate()
-      .toLocaleString('es-ES', { timeZone: 'America/El_Salvador' });
-    console.log(datexpired, dateNow);
+  try {
+    const cookie = getCookie(name);
+    console.log(cookie);
+    if (cookie !== null) {
+      const dateNow = new Date()
+        .getDate()
+        .toLocaleString('es-ES', { timeZone: 'America/El_Salvador' });
+      const datexpired = new Date(
+        `${cookie.dateExpired.split('/')[2]}-${cookie.dateExpired.split('/')[1]}-${
+          cookie.dateExpired.split('/')[0]
+        }`
+      )
+        .getDate()
+        .toLocaleString('es-ES', { timeZone: 'America/El_Salvador' });
+      console.log(datexpired, dateNow);
 
-    if (datexpired < dateNow) return 'expired';
+      if (datexpired < dateNow) return true;
+      else return false;
+    }
+    return true;
+  } catch (error) {
+    console.log('se ejecuta');
+    return true;
   }
-  return null;
 };

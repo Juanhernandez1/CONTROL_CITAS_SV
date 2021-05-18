@@ -338,7 +338,7 @@ export default class SignUp {
           res.status(409).send({ User, Acces });
         }
       } else {
-        res.status(409).send(Acces);
+        res.status(401).send(Acces);
       }
     } catch (error) {
       const { ERDB404 } = ErrorMessages;
