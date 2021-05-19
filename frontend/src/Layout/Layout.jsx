@@ -75,7 +75,7 @@ export const LayoutHeader = ({ children }) => {
         <div
           className="site-layout-content"
           style={{
-            width: window.location.pathname === '/login' ? '45%' : '80%'
+            width: window.location.pathname === '/login' ? '48%' : '80%'
           }}
         >
           {children}

@@ -346,4 +346,15 @@ export default class SignUp {
       res.status(404).send(ERDB404);
     }
   };
+
+  Logout = async (req, res) => {
+    res.cookie(
+      'cookiauthControlCitas',
+      JSON.stringify({ auth: false, token, id: User.data.iduser }),
+      {
+        maxAge: 86400 * 1000, // 24 hours
+        httpOnly: true // http only, prevents JavaScript cookie access
+      }
+    );
+  };
 }
