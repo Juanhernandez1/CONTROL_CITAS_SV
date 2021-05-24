@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useReducer } from 'react';
 import { checkExpired, getCookie } from '../utils/Cookies';
+import { business as getBusinessPath } from '../config/urls';
 
 import appReducer from './AppReducer';
 import { initialState } from './initialState';
@@ -10,6 +11,7 @@ import {
   SET_APPOINTMENT_TIME,
   SET_USER_AUTHENTICATED
 } from './types';
+import { getData } from '../api/baseClient';
 
 export const GlobalContext = createContext(initialState);
 
@@ -39,7 +41,16 @@ export const GlobalProvider = ({ children }) => {
     const valid = checkExpired('authControlCitas');
     if (!valid) {
       const data = getCookie('authControlCitas');
-      setuserauthenticates(data.data);
+      console.log(data);
+      (async () => {
+        const path = getBusinessPath.getUserPk(data.data.id);
+        try {
+          const { data, status } = await getData(path);
+          if (status === 200) setuserauthenticates(data.data);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
     }
   }, []);
 

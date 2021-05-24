@@ -16,7 +16,7 @@ const AppointmentBook = () => {
   const [dateSelected, setDateSelected] = useState('');
   const [timeSelected, setTimeSelected] = useState('');
   const [dateDisplayed, setDateDisplayed] = useState('');
-  const { appintmentTime, setAppointmentTime } = useContext(GlobalContext);
+  const { appintmentTime, setAppointmentTime, user } = useContext(GlobalContext);
   const [isLastFiveDaysLoading, lastFiveDays] = useGetBusinessResolveSetting(
     business.lastFiveDays,
     errorMessage => {
@@ -36,14 +36,18 @@ const AppointmentBook = () => {
 
   const handleTimeSelection = objtime => {
     console.log(objtime);
-    const ObjAppointmentTime = { ...appintmentTime, ...objtime.obtHora };
+    const ObjAppointmentTime = { ...appintmentTime, ...objtime.obtHora, idbusiness: id };
     setAppointmentTime(ObjAppointmentTime);
     setTimeSelected(objtime.time);
   };
 
   const handleBookingButton = () => {
-    console.log(appintmentTime);
-    push(paths.appointmentDetail(id));
+    console.log(appintmentTime, user);
+    if (user.hasOwnProperty('iduser')) {
+      push(paths.appointmentDetail(id));
+    } else {
+      push(paths.login);
+    }
   };
 
   return (

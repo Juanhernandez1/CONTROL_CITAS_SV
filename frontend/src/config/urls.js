@@ -8,7 +8,8 @@ export const business = {
   lastFiveDays: '/API/v1/Appointment/LastFiveDay',
   availability: (id, date) => `/API/v1/Business/Appointment/ResolveSetting/${id}/${date}`,
   getAllBusinessServicess: id => `/API/v1/Business/Services/GetAll/${id}/Client`,
-  getBusinessPk: id => `/API/v1/Business/GetPk/${id}`
+  getBusinessPk: id => `/API/v1/Business/GetPk/${id}`,
+  getUserPk: id => `/API/v1/Users/GetPk/${id}`
 };
 
 export const auth = {

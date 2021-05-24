@@ -6,7 +6,7 @@ import {
   StockOutlined
 } from '@ant-design/icons';
 
-import { Layout, Menu } from 'antd';
+import { Layout, Button, Menu } from 'antd';
 import React, { useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { isEmpty } from 'lodash';
@@ -33,7 +33,7 @@ const Header = ({ hasLogo = false }) => {
     <Layout.Header className={className}>
       {hasLogo && (
         <div className="header__logo-container">
-          <img src="https://donejs.com/static/img/react-logo.png" alt="Logo" />
+          <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="Logo" />
         </div>
       )}
       <Menu theme="dark" mode="horizontal" onClick={handleMenuItem}>
@@ -51,16 +51,35 @@ const Header = ({ hasLogo = false }) => {
         {!isEmpty(user) && (
           <SubMenu key="SubMenu" icon={<UserOutlined />} title={`${user.name} ${user.lastname}`}>
             <Menu.ItemGroup>
-              <Menu.Item key="setting:1">Mi Perfil</Menu.Item>
-              <Menu.Item
-                key="setting:2"
-                icon={<LogoutOutlined />}
-                onClick={() => {
-                  setCookie('authControlCitas', JSON.stringify({}), 1);
-                  push('/');
-                }}
-              >
-                Salir
+              <Menu.Item key="setting:1">
+                <Button
+                  icon={<UserOutlined />}
+                  onClick={() => {
+                    setCookie('authControlCitas', JSON.stringify({}), 1);
+                    window.location.reload();
+                  }}
+                  type="link"
+                  style={{ color: 'white' }}
+                >
+                  Perfil
+                </Button>
+              </Menu.Item>
+              <Menu.Item key="setting:2">
+                <Button
+                  icon={<LogoutOutlined />}
+                  onClick={() => {
+                    setCookie('authControlCitas', JSON.stringify({}), 1);
+                    console.log(window.location.pathname);
+                    if (window.location.pathname !== '/login') {
+                      push('/');
+                    }
+                    window.location.reload();
+                  }}
+                  type="link"
+                  style={{ color: 'white' }}
+                >
+                  Salir
+                </Button>
               </Menu.Item>
             </Menu.ItemGroup>
           </SubMenu>

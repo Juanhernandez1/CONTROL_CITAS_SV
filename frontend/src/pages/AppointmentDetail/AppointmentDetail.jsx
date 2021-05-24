@@ -8,7 +8,7 @@ import './AppointmentDetail.css';
 import ServicesTable from '../../components/ServicesTable';
 
 const AppointmentDetail = () => {
-  const { businessSelected, setBusinessSelected } = useContext(GlobalContext);
+  const { businessSelected, user } = useContext(GlobalContext);
 
   const handleAppointmentButton = () => {};
   return (
@@ -22,7 +22,7 @@ const AppointmentDetail = () => {
           </Col>
           <Col className="Col-UserFullName-Root-AppointmentDetail">
             <Row justify="start">
-              <Title level={4}>Nombre de Usuario</Title>
+              <Title level={4}>{`${user.name} ${user.lastname}`}</Title>
             </Row>
           </Col>
         </Row>

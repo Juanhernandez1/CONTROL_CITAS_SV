@@ -43,8 +43,14 @@ const Login = () => {
         if (status === 202) {
           console.log(data);
           setuserauthenticates(data.data);
-          setCookie('authControlCitas', JSON.stringify(data), 1);
-          sessionStorage.setItem('sesionControlCitas', JSON.stringify(data));
+          setCookie(
+            'authControlCitas',
+            JSON.stringify({
+              ...data,
+              data: { id: data.data.iduser }
+            }),
+            1
+          );
 
           push(
             appintmentTime.hasOwnProperty('idbusiness')
@@ -147,8 +153,14 @@ const Login = () => {
                       } else {
                         console.log(user);
                         setuserauthenticates(user.data);
-                        setCookie('authControlCitas', JSON.stringify(user), 1);
-                        sessionStorage.setItem('sesionControlCitas', JSON.stringify(user));
+                        setCookie(
+                          'authControlCitas',
+                          JSON.stringify({
+                            ...user,
+                            data: { id: user.data.iduser }
+                          }),
+                          1
+                        );
 
                         push(
                           appintmentTime.hasOwnProperty('idbusiness')
@@ -178,8 +190,14 @@ const Login = () => {
                         } else {
                           console.log(user);
                           setuserauthenticates(user.data);
-                          setCookie('authControlCitas', JSON.stringify(user), 1);
-                          sessionStorage.setItem('sesionControlCitas', JSON.stringify(user));
+                          setCookie(
+                            'authControlCitas',
+                            JSON.stringify({
+                              ...user,
+                              data: { id: user.data.iduser }
+                            }),
+                            1
+                          );
 
                           push(
                             appintmentTime.hasOwnProperty('idbusiness')
