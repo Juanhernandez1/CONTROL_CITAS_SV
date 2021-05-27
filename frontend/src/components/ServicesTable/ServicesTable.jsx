@@ -50,6 +50,7 @@ const ServicesTable = props => {
     defaultPageSize: 4
   };
   const onSelectChange = selectedRowKeys => {
+    const arraydetalle = [];
     if (selectedRowKeys.length > 0 && selectedRowKeys.length <= appintmentTime.limitService) {
       console.log('selectedRowKeys changed: ', selectedRowKeys);
       let perci = 0;
@@ -60,13 +61,12 @@ const ServicesTable = props => {
         perci += parseFloat(Service[0].price);
         const objdetail = {
           idservices: Service[0].idservices,
-          price: Service[0].idservices
+          price: Service[0].price
         };
-        if (detail.length > 0) setDetailServices([...detail, objdetail]);
-        else setDetailServices([objdetail]);
+        arraydetalle.push(objdetail);
       });
       props.SetPrice(perci);
-
+      setDetailServices(arraydetalle);
       setstate({ ...state, selectedRowKeys });
     }
   };

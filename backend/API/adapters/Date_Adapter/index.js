@@ -17,12 +17,6 @@ export default class AppointmentGen extends SettingResolve {
     const minute = parseInt(params.split(':')[1].split(' ')[0]);
     const time = params.split(':')[1].split(' ')[1];
 
-    console.log({
-      hour,
-      minute,
-      time
-    });
-
     return {
       hour,
       minute,
@@ -54,14 +48,6 @@ export default class AppointmentGen extends SettingResolve {
       }
       const time = hour >= 12 ? 'PM' : 'AM';
 
-      let valid = '0';
-      let state;
-
-      if (index <= dateList.length) {
-        valid = dateList[index - 1].uuidappointment.split('-')[0];
-        state = dateList[index - 1].state;
-      }
-
       if (hour <= EndTime.hour + 12) {
         ListHours.push({
           hour: hour > 12 ? hour - 12 : hour,
@@ -79,7 +65,6 @@ export default class AppointmentGen extends SettingResolve {
       }
     });
 
-    console.log(ListHours);
     return ListHours;
   };
 }

@@ -40,15 +40,11 @@ export default class AppointmentCrud extends CrudInterface {
     }
   };
 
-  GetAppointmen = async (id, iduser, date) => {
+  GetAppointmen = async uuidappointment => {
     try {
       const data = await this.Model.findOne({
         where: {
-          idbusiness: id,
-          iduser,
-          dateappointment: {
-            fulldate: date
-          }
+          uuidappointment
         },
         ...this.Config
       });

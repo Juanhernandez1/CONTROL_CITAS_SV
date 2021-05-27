@@ -137,9 +137,7 @@ var AppointmentGen = /*#__PURE__*/ (function (_SettingResolve) {
               hour,
               minute,
               index,
-              time,
-              valid,
-              state;
+              time;
             return _regenerator['default'].wrap(function _callee$(_context) {
               while (1) {
                 switch ((_context.prev = _context.next)) {
@@ -169,13 +167,6 @@ var AppointmentGen = /*#__PURE__*/ (function (_SettingResolve) {
                       }
 
                       time = hour >= 12 ? 'PM' : 'AM';
-                      valid = '0';
-                      state = void 0;
-
-                      if (index <= dateList.length) {
-                        valid = dateList[index - 1].uuidappointment.split('-')[0];
-                        state = dateList[index - 1].state;
-                      }
 
                       if (hour <= EndTime.hour + 12) {
                         ListHours.push({
@@ -194,10 +185,9 @@ var AppointmentGen = /*#__PURE__*/ (function (_SettingResolve) {
                           element.state;
                       }
                     });
-                    console.log(ListHours);
                     return _context.abrupt('return', ListHours);
 
-                  case 11:
+                  case 10:
                   case 'end':
                     return _context.stop();
                 }
@@ -237,11 +227,6 @@ var AppointmentGen = /*#__PURE__*/ (function (_SettingResolve) {
         var hour = parseInt(params.split(':')[0]);
         var minute = parseInt(params.split(':')[1].split(' ')[0]);
         var time = params.split(':')[1].split(' ')[1];
-        console.log({
-          hour: hour,
-          minute: minute,
-          time: time
-        });
         return {
           hour: hour,
           minute: minute,

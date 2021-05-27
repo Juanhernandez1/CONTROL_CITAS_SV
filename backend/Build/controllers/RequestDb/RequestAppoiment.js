@@ -81,82 +81,44 @@ var RequestAppoiment = function RequestAppoiment(appointmentCrud, appointmentGen
     'RequestAppoimentCreate',
     /*#__PURE__*/ (function () {
       var _ref = (0, _asyncToGenerator2['default'])(
-        /*#__PURE__*/ _regenerator['default'].mark(function _callee2(req, res) {
-          var _req$body,
-            Objappointment,
-            ArrayDetail,
-            ContactFindEmail,
-            Appoiment,
-            data,
-            Detail,
-            ERDB404;
+        /*#__PURE__*/ _regenerator['default'].mark(function _callee(req, res) {
+          var _req$body, Objappointment, ArrayDetail, ContactFindEmail, Appoiment, Detail, ERDB404;
 
           return _regenerator['default'].wrap(
-            function _callee2$(_context2) {
+            function _callee$(_context) {
               while (1) {
-                switch ((_context2.prev = _context2.next)) {
+                switch ((_context.prev = _context.next)) {
                   case 0:
-                    _context2.prev = 0;
+                    _context.prev = 0;
                     (_req$body = req.body),
                       (Objappointment = _req$body.Objappointment),
                       (ArrayDetail = _req$body.ArrayDetail);
-                    _context2.next = 4;
-                    return _this.AppointmentCrud.GetAppointmen(
-                      Objappointment.idbusiness,
-                      Objappointment.iduser,
-                      Objappointment.dateappointment.fulldate
-                    );
+                    _context.next = 4;
+                    return _this.AppointmentCrud.GetAppointmen(Objappointment.uuidappointment);
 
                   case 4:
-                    ContactFindEmail = _context2.sent;
+                    ContactFindEmail = _context.sent;
 
                     if (!(ContactFindEmail.data === null)) {
-                      _context2.next = 13;
+                      _context.next = 12;
                       break;
                     }
 
-                    _context2.next = 8;
+                    _context.next = 8;
                     return _this.AppointmentCrud.Create(Objappointment);
 
                   case 8:
-                    Appoiment = _context2.sent;
-                    data = Appoiment.data;
+                    Appoiment = _context.sent;
 
                     if (Appoiment.success) {
                       Detail = [];
-                      ArrayDetail.forEach(
-                        /*#__PURE__*/ (function () {
-                          var _ref2 = (0, _asyncToGenerator2['default'])(
-                            /*#__PURE__*/ _regenerator['default'].mark(function _callee(element) {
-                              var detail;
-                              return _regenerator['default'].wrap(function _callee$(_context) {
-                                while (1) {
-                                  switch ((_context.prev = _context.next)) {
-                                    case 0:
-                                      element.idappointment = data.idappointment;
-                                      _context.next = 3;
-                                      return _this.DetailCrud.Create(element);
+                      ArrayDetail.forEach(function (element) {
+                        element.idappointment = Appoiment.data.idappointment;
 
-                                    case 3:
-                                      detail = _context.sent;
-                                      Detail.push(detail);
+                        _this.DetailCrud.Create(element);
+                      });
 
-                                    case 5:
-                                    case 'end':
-                                      return _context.stop();
-                                  }
-                                }
-                              }, _callee);
-                            })
-                          );
-
-                          return function (_x3) {
-                            return _ref2.apply(this, arguments);
-                          };
-                        })()
-                      );
-
-                      if (Detail[0].success) {
+                      if (Appoiment.success) {
                         res.status(201).send({
                           data: {
                             Appoiment: Appoiment,
@@ -182,35 +144,35 @@ var RequestAppoiment = function RequestAppoiment(appointmentCrud, appointmentGen
                       });
                     }
 
-                    _context2.next = 14;
+                    _context.next = 13;
                     break;
 
-                  case 13:
+                  case 12:
                     res.status(409).send({
                       data: 'Cita Existe'
                     });
 
-                  case 14:
-                    _context2.next = 22;
+                  case 13:
+                    _context.next = 21;
                     break;
 
-                  case 16:
-                    _context2.prev = 16;
-                    _context2.t0 = _context2['catch'](0);
-                    console.log(_context2.t0);
+                  case 15:
+                    _context.prev = 15;
+                    _context.t0 = _context['catch'](0);
+                    console.log(_context.t0);
                     ERDB404 = _ErrorMessages['default'].ERDB404;
                     console.log(ERDB404);
                     res.status(404).send(ERDB404);
 
-                  case 22:
+                  case 21:
                   case 'end':
-                    return _context2.stop();
+                    return _context.stop();
                 }
               }
             },
-            _callee2,
+            _callee,
             null,
-            [[0, 16]]
+            [[0, 15]]
           );
         })
       );

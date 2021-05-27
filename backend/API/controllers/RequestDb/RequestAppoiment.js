@@ -32,24 +32,21 @@ export default class RequestAppoiment {
       const { Objappointment, ArrayDetail } = req.body;
 
       const ContactFindEmail = await this.AppointmentCrud.GetAppointmen(
-        Objappointment.idbusiness,
-        Objappointment.iduser,
-        Objappointment.dateappointment.fulldate
+        Objappointment.uuidappointment
       );
 
       if (ContactFindEmail.data === null) {
         const Appoiment = await this.AppointmentCrud.Create(Objappointment);
-        const { data } = Appoiment;
 
         if (Appoiment.success) {
           const Detail = [];
-          ArrayDetail.forEach(async element => {
-            element.idappointment = data.idappointment;
-            const detail = await this.DetailCrud.Create(element);
-            Detail.push(detail);
+
+          ArrayDetail.forEach(element => {
+            element.idappointment = Appoiment.data.idappointment;
+            this.DetailCrud.Create(element);
           });
 
-          if (Detail[0].success) {
+          if (Appoiment.success) {
             res.status(201).send({
               data: {
                 Appoiment: Appoiment,

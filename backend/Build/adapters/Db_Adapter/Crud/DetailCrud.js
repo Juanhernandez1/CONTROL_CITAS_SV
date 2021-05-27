@@ -224,7 +224,7 @@ var DetailCrud = /*#__PURE__*/ (function (_CrudInterface) {
                     case 3:
                       data = _context2.sent;
                       return _context2.abrupt('return', {
-                        data: data,
+                        data: JSON.parse(JSON.stringify(data)),
                         success: true
                       });
 

@@ -209,7 +209,7 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
       'GetAppointmen',
       /*#__PURE__*/ (function () {
         var _ref2 = (0, _asyncToGenerator2['default'])(
-          /*#__PURE__*/ _regenerator['default'].mark(function _callee2(id, iduser, date) {
+          /*#__PURE__*/ _regenerator['default'].mark(function _callee2(uuidappointment) {
             var data;
             return _regenerator['default'].wrap(
               function _callee2$(_context2) {
@@ -222,11 +222,7 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
                         _objectSpread(
                           {
                             where: {
-                              idbusiness: id,
-                              iduser: iduser,
-                              dateappointment: {
-                                fulldate: date
-                              }
+                              uuidappointment: uuidappointment
                             }
                           },
                           _this.Config
@@ -261,7 +257,7 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
           })
         );
 
-        return function (_x3, _x4, _x5) {
+        return function (_x3) {
           return _ref2.apply(this, arguments);
         };
       })()
@@ -340,7 +336,7 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
           })
         );
 
-        return function (_x6, _x7) {
+        return function (_x4, _x5) {
           return _ref3.apply(this, arguments);
         };
       })()
@@ -419,7 +415,7 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
           })
         );
 
-        return function (_x8, _x9) {
+        return function (_x6, _x7) {
           return _ref4.apply(this, arguments);
         };
       })()
@@ -497,7 +493,7 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
           })
         );
 
-        return function (_x10) {
+        return function (_x8) {
           return _ref5.apply(this, arguments);
         };
       })()
@@ -575,7 +571,7 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
           })
         );
 
-        return function (_x11) {
+        return function (_x9) {
           return _ref6.apply(this, arguments);
         };
       })()
@@ -633,7 +629,7 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
           })
         );
 
-        return function (_x12) {
+        return function (_x10) {
           return _ref7.apply(this, arguments);
         };
       })()
@@ -685,7 +681,7 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
           })
         );
 
-        return function (_x13) {
+        return function (_x11) {
           return _ref8.apply(this, arguments);
         };
       })()
@@ -740,7 +736,7 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
           })
         );
 
-        return function (_x14) {
+        return function (_x12) {
           return _ref9.apply(this, arguments);
         };
       })()

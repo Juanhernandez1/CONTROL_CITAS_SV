@@ -40,7 +40,7 @@ export default class DetailCrud extends CrudInterface {
     try {
       const data = await this.Model.create(obj);
 
-      return { data, success: true };
+      return { data: JSON.parse(JSON.stringify(data)), success: true };
     } catch (error) {
       console.log(error);
 
