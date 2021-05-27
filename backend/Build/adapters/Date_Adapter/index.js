@@ -186,10 +186,6 @@ var AppointmentGen = /*#__PURE__*/ (function (_SettingResolve) {
                           state: 'O'
                         });
                       }
-
-                      if (!ListHours[parseInt(valid) - 1]) {
-                        ListHours[parseInt(valid) - 1].state = state;
-                      }
                     }
 
                     console.log(ListHours);
