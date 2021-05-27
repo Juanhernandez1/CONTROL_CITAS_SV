@@ -17,7 +17,7 @@ const AppointmentDetail = () => {
   const { businessSelected, user, appintmentTime, detail } = useContext(GlobalContext);
   const { push } = useHistory();
   const { id } = useParams();
-  console.log(appintmentTime);
+
   const handleAppointmentButton = () => {
     const Objappointment = {
       idappointment: null,
@@ -52,7 +52,16 @@ const AppointmentDetail = () => {
     });
 
     console.log(ArrayDetail, 'cita', Objappointment);
-    postData(business.postAppointment, { Objappointment, ArrayDetail });
+
+    (async () => {
+      const { data, status } = await postData(business.postAppointment, {
+        Objappointment,
+        ArrayDetail
+      });
+      if (status) {
+        push(paths.appointmentBook(id));
+      }
+    })();
   };
 
   if (!appintmentTime.hasOwnProperty('fulldate')) {

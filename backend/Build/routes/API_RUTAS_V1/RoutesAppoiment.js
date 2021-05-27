@@ -8,8 +8,11 @@ exports['default'] = RoutesAppoiment;
 function RoutesAppoiment(router, RequestAppoiment) {
   // * rutas de instancia
   var AppoimentRoutes = router();
-  var RequestAppoimentLastFiveDay = RequestAppoiment.RequestAppoimentLastFiveDay; // * get
+  var RequestAppoimentLastFiveDay = RequestAppoiment.RequestAppoimentLastFiveDay,
+    RequestAppoimentCreate = RequestAppoiment.RequestAppoimentCreate; // * get
 
-  AppoimentRoutes.get('/LastFiveDay', RequestAppoimentLastFiveDay);
+  AppoimentRoutes.get('/LastFiveDay', RequestAppoimentLastFiveDay); // * post
+
+  AppoimentRoutes.post('/Create', RequestAppoimentCreate);
   return AppoimentRoutes;
 }
