@@ -13,12 +13,12 @@ const AvailabilityTable = ({ handleTimeSelection, dateSelected }) => {
       message.error(errorMessage);
     }
   );
-
+  let cotnadorId = 0;
   const dataTable = availability.map(element => {
     const timing = `${element.hour}:${element.minute} ${element.time}`;
     const key = timing;
-
-    return { time: timing, key, state: element.state, obtHora: element };
+    cotnadorId++;
+    return { time: timing, key, state: element.state, obtHora: element, id: cotnadorId };
   });
 
   const columns = [

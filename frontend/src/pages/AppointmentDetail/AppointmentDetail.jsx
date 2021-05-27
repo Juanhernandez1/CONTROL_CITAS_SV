@@ -18,10 +18,11 @@ const AppointmentDetail = () => {
   const { push } = useHistory();
   const { id } = useParams();
 
+  console.log(appintmentTime);
   const handleAppointmentButton = () => {
     const Objappointment = {
       idappointment: null,
-      uuidappointment: `${appintmentTime.idbusiness}-${user.iduser}-appintmentTime.fulldate`,
+      uuidappointment: `${appintmentTime.complemtouuid}-${appintmentTime.fulldate}`,
       iduser: user.iduser,
       idbusiness: appintmentTime.idbusiness,
       dateappointment: {

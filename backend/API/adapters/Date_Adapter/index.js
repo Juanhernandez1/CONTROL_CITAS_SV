@@ -54,23 +54,17 @@ export default class AppointmentGen extends SettingResolve {
       }
       const time = hour >= 12 ? 'PM' : 'AM';
 
-      let valid = '0';
-      let state;
-
-      if (index <= dateList.length) {
-        valid = dateList[index - 1].uuidappointment.split('-')[0];
-        state = dateList[index - 1].state;
-      }
-
-      if (hour <= EndTime.hour + 12) {
-        ListHours.push({
-          hour: hour > 12 ? hour - 12 : hour,
-          minute: minute,
-          time,
-          limitService: nsa,
-          state: parseInt(valid) === index ? state : 'O'
-        });
-      }
+      dateList.forEach(element => {
+        if (hour <= EndTime.hour + 12) {
+          ListHours.push({
+            hour: hour > 12 ? hour - 12 : hour,
+            minute: minute,
+            time,
+            limitService: nsa,
+            state: parseInt(element.uuidappointment.split('-')[0]) === index ? element.state : 'O'
+          });
+        }
+      });
     }
 
     console.log(ListHours);

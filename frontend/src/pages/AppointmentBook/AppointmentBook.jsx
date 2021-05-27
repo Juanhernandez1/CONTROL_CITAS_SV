@@ -36,7 +36,12 @@ const AppointmentBook = () => {
 
   const handleTimeSelection = objtime => {
     console.log(objtime);
-    const ObjAppointmentTime = { ...appintmentTime, ...objtime.obtHora, idbusiness: id };
+    const ObjAppointmentTime = {
+      ...appintmentTime,
+      ...objtime.obtHora,
+      complemtouuid: objtime.id,
+      idbusiness: id
+    };
     setAppointmentTime(ObjAppointmentTime);
     setTimeSelected(objtime.time);
   };

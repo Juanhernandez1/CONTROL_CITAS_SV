@@ -211,6 +211,7 @@ var DetailCrud = /*#__PURE__*/ (function (_CrudInterface) {
       /*#__PURE__*/ (function () {
         var _ref2 = (0, _asyncToGenerator2['default'])(
           /*#__PURE__*/ _regenerator['default'].mark(function _callee2(obj) {
+            var data;
             return _regenerator['default'].wrap(
               function _callee2$(_context2) {
                 while (1) {
@@ -221,19 +222,21 @@ var DetailCrud = /*#__PURE__*/ (function (_CrudInterface) {
                       return _this.Model.create(obj);
 
                     case 3:
+                      data = _context2.sent;
                       return _context2.abrupt('return', {
+                        data: data,
                         success: true
                       });
 
-                    case 6:
-                      _context2.prev = 6;
+                    case 7:
+                      _context2.prev = 7;
                       _context2.t0 = _context2['catch'](0);
                       console.log(_context2.t0);
                       return _context2.abrupt('return', {
                         success: false
                       });
 
-                    case 10:
+                    case 11:
                     case 'end':
                       return _context2.stop();
                   }
@@ -241,7 +244,7 @@ var DetailCrud = /*#__PURE__*/ (function (_CrudInterface) {
               },
               _callee2,
               null,
-              [[0, 6]]
+              [[0, 7]]
             );
           })
         );

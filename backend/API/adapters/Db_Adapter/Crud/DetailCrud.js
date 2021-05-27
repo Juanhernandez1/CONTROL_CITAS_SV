@@ -38,9 +38,9 @@ export default class DetailCrud extends CrudInterface {
 
   Create = async obj => {
     try {
-      await this.Model.create(obj);
+      const data = await this.Model.create(obj);
 
-      return { success: true };
+      return { data, success: true };
     } catch (error) {
       console.log(error);
 
