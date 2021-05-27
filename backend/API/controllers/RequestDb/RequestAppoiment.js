@@ -2,13 +2,14 @@ import ErrorMessages from '../../assets/ErrorMessages';
 
 export default class RequestAppoiment {
   static #instance;
-  constructor(appointmentCrud, AppointmentGen, DetailCrud) {
+  constructor(appointmentCrud, appointmentGen, detailCrud) {
     if (RequestAppoiment.#instance) {
       return RequestAppoiment.#instance;
     }
 
     this.AppointmentCrud = appointmentCrud;
-    this.AppointmentGen = AppointmentGen;
+    this.AppointmentGen = appointmentGen;
+    this.DetailCrud = detailCrud;
 
     RequestAppoiment.#instance = this;
   }
@@ -30,21 +31,21 @@ export default class RequestAppoiment {
     try {
       const { Objappointment, ArrayDetail } = req.body;
 
-      const ContactFindEmail = await this.appointmentCrud.GetAppointmen(
+      const ContactFindEmail = await this.AppointmentCrud.GetAppointmen(
         Objappointment.idbusiness,
         Objappointment.iduser,
         Objappointment.dateappointment.fulldate
       );
 
       if (ContactFindEmail.data === null) {
-        const Appoiment = await this.appointmentCrud.Create(Objappointment);
+        const Appoiment = await this.AppointmentCrud.Create(Objappointment);
         const { data } = Appoiment;
 
         if (Appoiment.success) {
           const Detail = [];
           ArrayDetail.forEach(async element => {
             element.idappointment = data.idappointment;
-            const detail = await this.AddressCrud.Create(element);
+            const detail = await this.DetailCrud.Create(element);
             Detail.push(detail);
           });
 

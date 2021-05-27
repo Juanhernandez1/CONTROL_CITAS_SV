@@ -60,7 +60,7 @@ function _classApplyDescriptorGet(receiver, descriptor) {
   return descriptor.value;
 }
 
-var RequestAppoiment = function RequestAppoiment(appointmentCrud, AppointmentGen, DetailCrud) {
+var RequestAppoiment = function RequestAppoiment(appointmentCrud, appointmentGen, detailCrud) {
   var _this = this;
 
   (0, _classCallCheck2['default'])(this, RequestAppoiment);
@@ -101,7 +101,7 @@ var RequestAppoiment = function RequestAppoiment(appointmentCrud, AppointmentGen
                       (Objappointment = _req$body.Objappointment),
                       (ArrayDetail = _req$body.ArrayDetail);
                     _context2.next = 4;
-                    return _this.appointmentCrud.GetAppointmen(
+                    return _this.AppointmentCrud.GetAppointmen(
                       Objappointment.idbusiness,
                       Objappointment.iduser,
                       Objappointment.dateappointment.fulldate
@@ -116,7 +116,7 @@ var RequestAppoiment = function RequestAppoiment(appointmentCrud, AppointmentGen
                     }
 
                     _context2.next = 8;
-                    return _this.appointmentCrud.Create(Objappointment);
+                    return _this.AppointmentCrud.Create(Objappointment);
 
                   case 8:
                     Appoiment = _context2.sent;
@@ -135,7 +135,7 @@ var RequestAppoiment = function RequestAppoiment(appointmentCrud, AppointmentGen
                                     case 0:
                                       element.idappointment = data.idappointment;
                                       _context.next = 3;
-                                      return _this.AddressCrud.Create(element);
+                                      return _this.DetailCrud.Create(element);
 
                                     case 3:
                                       detail = _context.sent;
@@ -226,7 +226,8 @@ var RequestAppoiment = function RequestAppoiment(appointmentCrud, AppointmentGen
   }
 
   this.AppointmentCrud = appointmentCrud;
-  this.AppointmentGen = AppointmentGen;
+  this.AppointmentGen = appointmentGen;
+  this.DetailCrud = detailCrud;
 
   _classStaticPrivateFieldSpecSet(RequestAppoiment, RequestAppoiment, _instance, this);
 };
