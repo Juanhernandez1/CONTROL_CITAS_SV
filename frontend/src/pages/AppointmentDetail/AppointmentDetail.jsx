@@ -8,6 +8,8 @@ import './AppointmentDetail.css';
 import ServicesTable from '../../components/ServicesTable';
 import { useHistory, useParams } from 'react-router';
 import { paths } from '../../config/paths';
+import { postData } from '../../api/baseClient';
+import { business } from '../../config/urls';
 
 const AppointmentDetail = () => {
   const [price, setPrice] = useState(0);
@@ -50,6 +52,7 @@ const AppointmentDetail = () => {
     });
 
     console.log(ArrayDetail, 'cita', Objappointment);
+    postData(business.postAppointment, { Objappointment, ArrayDetail });
   };
 
   if (!appintmentTime.hasOwnProperty('fulldate')) {
