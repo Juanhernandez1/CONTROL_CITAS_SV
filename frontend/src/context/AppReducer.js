@@ -3,7 +3,8 @@ import {
   SET_SEARCH_BUSINESS_NAME,
   SET_BUSINESS_SERVICES_SELECTED,
   SET_APPOINTMENT_TIME,
-  SET_USER_AUTHENTICATED
+  SET_USER_AUTHENTICATED,
+  SET_DETAIL_SERVICES
 } from './types';
 
 const appReducer = (state, action) => {
@@ -33,6 +34,13 @@ const appReducer = (state, action) => {
         ...state,
         user: action.payload
       };
+
+    case SET_DETAIL_SERVICES:
+      return {
+        ...state,
+        detail: action.payload
+      };
+
     default:
       return state;
   }

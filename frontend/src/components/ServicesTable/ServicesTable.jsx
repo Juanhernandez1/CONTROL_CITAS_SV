@@ -1,27 +1,41 @@
-import { Table, Input, Button, Row } from 'antd';
+import { Table, message, Spin, Input, Button, Row } from 'antd';
+import e from 'cors';
 
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { useParams } from 'react-router';
+import { business } from '../../config/urls';
+import { GlobalContext } from '../../context/GlobalState';
+import useGetData from '../../hooks/useGetData/useGetData';
+
 import FilterDropdow from './FilterDropdow';
 
-const ServicesTable = () => {
+const ServicesTable = props => {
+  const { appintmentTime, setDetailServices, detail } = useContext(GlobalContext);
   const [state, setstate] = useState({
     selectedRowKeys: [], // Check here to configure the default column
     loading: false
   });
 
+  const { id } = useParams();
+
+  const [isLoading, dataAPI] = useGetData(
+    business.getAllBusinessServicess(id),
+    null,
+    errorMessage => {
+      message.error(errorMessage);
+    }
+  );
+
   const data = [];
-  for (let i = 0; i < 46; i++) {
-    data.push({
-      key: i,
-      name: `Edward King ${i}`,
-      age: 32,
-      address: `London, Park Lane no. ${i}`
+  dataAPI.success &&
+    dataAPI.data.forEach(element => {
+      data.push({ ...element, key: element.idservices });
     });
-  }
 
   const start = () => {
     setstate({ ...state, loading: true });
     // ajax request after empty completing
+    props.SetPrice(0.0);
     setTimeout(() => {
       setstate({
         selectedRowKeys: [],
@@ -36,8 +50,25 @@ const ServicesTable = () => {
     defaultPageSize: 4
   };
   const onSelectChange = selectedRowKeys => {
-    console.log('selectedRowKeys changed: ', selectedRowKeys);
-    setstate({ ...state, selectedRowKeys });
+    if (selectedRowKeys.length > 0 && selectedRowKeys.length <= appintmentTime.limitService) {
+      console.log('selectedRowKeys changed: ', selectedRowKeys);
+      let perci = 0;
+      selectedRowKeys.forEach(element => {
+        console.log(element);
+        let Service = dataAPI.data.filter(service => service.idservices === element);
+        console.log(Service);
+        perci += parseFloat(Service[0].price);
+        const objdetail = {
+          idservices: Service[0].idservices,
+          price: Service[0].idservices
+        };
+        if (detail.length > 0) setDetailServices([...detail, objdetail]);
+        else setDetailServices([objdetail]);
+      });
+      props.SetPrice(perci);
+
+      setstate({ ...state, selectedRowKeys });
+    }
   };
 
   const { loading, selectedRowKeys } = state;
@@ -46,25 +77,26 @@ const ServicesTable = () => {
     onChange: onSelectChange
   };
 
-  const hasSelected = selectedRowKeys.length > 0;
-
+  const hasSelected = () => {
+    return selectedRowKeys.length > 0 && selectedRowKeys.length <= appintmentTime.limitService;
+  };
   // * seacrhc
 
   const columns = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: 'Servicio',
+      dataIndex: 'servicename',
+      key: 'idservices',
       width: '30%',
-      ...FilterDropdow({ dataIndex: 'address' })
+      ...FilterDropdow({ dataIndex: 'servicename' })
     },
     {
-      title: 'Age',
-      dataIndex: 'age'
+      title: 'Descripcion',
+      dataIndex: 'description'
     },
     {
-      title: 'Address',
-      dataIndex: 'address'
+      title: 'Precio',
+      dataIndex: 'price'
     }
   ];
   return (
@@ -77,13 +109,16 @@ const ServicesTable = () => {
           {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
         </span>
       </div>
-      <Table
-        style={{ width: '-webkit-fill-available', height: '-webkit-fill-available' }}
-        rowSelection={rowSelection}
-        pagination={paginationConfig}
-        columns={columns}
-        dataSource={data}
-      />
+      {isLoading && <Spin />}
+      {dataAPI.success && (
+        <Table
+          style={{ width: '-webkit-fill-available', height: '-webkit-fill-available' }}
+          rowSelection={rowSelection}
+          pagination={paginationConfig}
+          columns={columns}
+          dataSource={data}
+        />
+      )}
     </Row>
   );
 };

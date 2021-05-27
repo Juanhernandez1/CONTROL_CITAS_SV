@@ -9,7 +9,8 @@ import {
   SET_SEARCH_BUSINESS_NAME,
   SET_BUSINESS_SERVICES_SELECTED,
   SET_APPOINTMENT_TIME,
-  SET_USER_AUTHENTICATED
+  SET_USER_AUTHENTICATED,
+  SET_DETAIL_SERVICES
 } from './types';
 import { getData } from '../api/baseClient';
 
@@ -37,11 +38,14 @@ export const GlobalProvider = ({ children }) => {
     dispatch({ type: SET_USER_AUTHENTICATED, payload: user });
   };
 
+  const setDetailServices = detail => {
+    dispatch({ type: SET_DETAIL_SERVICES, payload: detail });
+  };
+
   useEffect(() => {
     const valid = checkExpired('authControlCitas');
     if (!valid) {
       const data = getCookie('authControlCitas');
-      console.log(data);
       (async () => {
         const path = getBusinessPath.getUserPk(data.data.id);
         try {
@@ -62,11 +66,13 @@ export const GlobalProvider = ({ children }) => {
         businessServiceSelected: state.businessServiceSelected,
         appintmentTime: state.appintmentTime,
         user: state.user,
+        detail: state.detail,
         setBusinessName,
         setBusinessSelected,
         setBusinessServicesSelected,
         setAppointmentTime,
-        setuserauthenticates
+        setuserauthenticates,
+        setDetailServices
       }}
     >
       {children}

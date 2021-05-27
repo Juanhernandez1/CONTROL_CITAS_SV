@@ -33,7 +33,7 @@ const Header = ({ hasLogo = false }) => {
     <Layout.Header className={className}>
       {hasLogo && (
         <div className="header__logo-container">
-          <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="Logo" />
+          <img src="https://donejs.com/static/img/react-logo.png" alt="Logo" />
         </div>
       )}
       <Menu theme="dark" mode="horizontal" onClick={handleMenuItem}>

@@ -42,7 +42,7 @@ var controllers = {
     AppointmentGen
   ),
   RequestUsers: new _RequestUsers['default'](userCrud, accessCrud, appointmentCrud),
-  RequestAppoiment: new _RequestAppoiment['default'](appointmentCrud, AppointmentGen),
+  RequestAppoiment: new _RequestAppoiment['default'](appointmentCrud, AppointmentGen, detailCrud),
   SignUp: new _SignUp['default'](TokenAuth, userCrud, accessCrud)
 };
 var _default = controllers;

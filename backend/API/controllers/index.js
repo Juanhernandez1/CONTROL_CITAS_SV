@@ -31,7 +31,7 @@ const controllers = {
     AppointmentGen
   ),
   RequestUsers: new RequestUsers(userCrud, accessCrud, appointmentCrud),
-  RequestAppoiment: new RequestAppoiment(appointmentCrud, AppointmentGen),
+  RequestAppoiment: new RequestAppoiment(appointmentCrud, AppointmentGen, detailCrud),
   SignUp: new SignUp(TokenAuth, userCrud, accessCrud)
 };
 

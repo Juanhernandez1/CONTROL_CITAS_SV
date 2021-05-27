@@ -42,7 +42,6 @@ const AppointmentBook = () => {
   };
 
   const handleBookingButton = () => {
-    console.log(appintmentTime, user);
     if (user.hasOwnProperty('iduser')) {
       push(paths.appointmentDetail(id));
     } else {

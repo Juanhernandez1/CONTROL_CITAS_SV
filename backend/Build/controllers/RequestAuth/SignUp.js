@@ -559,6 +559,42 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
       };
     })()
   );
+  (0, _defineProperty2['default'])(
+    this,
+    'Logout',
+    /*#__PURE__*/ (function () {
+      var _ref5 = (0, _asyncToGenerator2['default'])(
+        /*#__PURE__*/ _regenerator['default'].mark(function _callee5(req, res) {
+          return _regenerator['default'].wrap(function _callee5$(_context5) {
+            while (1) {
+              switch ((_context5.prev = _context5.next)) {
+                case 0:
+                  res.cookie(
+                    'cookiauthControlCitas',
+                    JSON.stringify({
+                      auth: false
+                    }),
+                    {
+                      maxAge: 86400 * 1000,
+                      // 24 hours
+                      httpOnly: true // http only, prevents JavaScript cookie access
+                    }
+                  );
+
+                case 1:
+                case 'end':
+                  return _context5.stop();
+              }
+            }
+          }, _callee5);
+        })
+      );
+
+      return function (_x9, _x10) {
+        return _ref5.apply(this, arguments);
+      };
+    })()
+  );
 
   if (_classStaticPrivateFieldSpecGet(SignUp, SignUp, _instance)) {
     return _classStaticPrivateFieldSpecGet(SignUp, SignUp, _instance);

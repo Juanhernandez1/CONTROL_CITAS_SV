@@ -34,7 +34,7 @@ export const getCookie = name => {
 export const checkExpired = name => {
   try {
     const cookie = getCookie(name);
-    console.log(cookie);
+
     if (cookie !== null) {
       const dateNow = new Date()
         .getDate()
@@ -46,14 +46,12 @@ export const checkExpired = name => {
       )
         .getDate()
         .toLocaleString('es-ES', { timeZone: 'America/El_Salvador' });
-      console.log(datexpired, dateNow);
 
       if (datexpired < dateNow) return true;
       else return false;
     }
     return true;
   } catch (error) {
-    console.log('se ejecuta');
     return true;
   }
 };

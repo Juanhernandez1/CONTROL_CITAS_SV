@@ -348,13 +348,9 @@ export default class SignUp {
   };
 
   Logout = async (req, res) => {
-    res.cookie(
-      'cookiauthControlCitas',
-      JSON.stringify({ auth: false, token, id: User.data.iduser }),
-      {
-        maxAge: 86400 * 1000, // 24 hours
-        httpOnly: true // http only, prevents JavaScript cookie access
-      }
-    );
+    res.cookie('cookiauthControlCitas', JSON.stringify({ auth: false }), {
+      maxAge: 86400 * 1000, // 24 hours
+      httpOnly: true // http only, prevents JavaScript cookie access
+    });
   };
 }

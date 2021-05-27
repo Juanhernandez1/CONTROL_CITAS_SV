@@ -40,6 +40,27 @@ export default class AppointmentCrud extends CrudInterface {
     }
   };
 
+  GetAppointmen = async (id, iduser, date) => {
+    try {
+      const data = await this.Model.findOne({
+        where: {
+          idbusiness: id,
+          iduser,
+          dateappointment: {
+            fulldate: date
+          }
+        },
+        ...this.Config
+      });
+
+      return { data, success: true };
+    } catch (error) {
+      console.log(error);
+
+      return { success: false };
+    }
+  };
+
   GetPkForUsers = async (pk, iduser) => {
     try {
       const data = await this.Model.findByPk(pk, {
@@ -144,14 +165,19 @@ export default class AppointmentCrud extends CrudInterface {
 
   Create = async obj => {
     try {
-      obj.uuidappointment = uuidv4();
-      await this.Model.create(obj);
+      const data = await this.Model.create(obj);
 
-      return { success: true };
+      return { data, success: true };
     } catch (error) {
-      console.log(error);
+      const { message, type, path, origin } = error.errors[0];
 
-      return { success: false };
+      return {
+        success: false,
+        message,
+        type,
+        path,
+        origin
+      };
     }
   };
 
