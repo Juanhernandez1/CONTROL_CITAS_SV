@@ -73,6 +73,12 @@ export default class AppointmentGen extends SettingResolve {
       }
     }
 
+    dateList.forEach(element => {
+      if (ListHours[parseInt(element.uuidappointment.split('-')[0]) - 1]) {
+        ListHours[parseInt(element.uuidappointment.split('-')[0]) - 1].state = element.state;
+      }
+    });
+
     console.log(ListHours);
     return ListHours;
   };

@@ -188,10 +188,16 @@ var AppointmentGen = /*#__PURE__*/ (function (_SettingResolve) {
                       }
                     }
 
+                    dateList.forEach(function (element) {
+                      if (ListHours[parseInt(element.uuidappointment.split('-')[0]) - 1]) {
+                        ListHours[parseInt(element.uuidappointment.split('-')[0]) - 1].state =
+                          element.state;
+                      }
+                    });
                     console.log(ListHours);
                     return _context.abrupt('return', ListHours);
 
-                  case 10:
+                  case 11:
                   case 'end':
                     return _context.stop();
                 }
