@@ -32,11 +32,11 @@ const Header = ({ hasLogo = false }) => {
   return (
     <Layout.Header className={className}>
       {hasLogo && (
-        <div className="header__logo-container">
-          <img src="https://donejs.com/static/img/react-logo.png" alt="Logo" />
+        <div>
+          <img className="imgLogo" src="https://donejs.com/static/img/react-logo.png" alt="Logo" />
         </div>
       )}
-      <Menu theme="dark" mode="horizontal" onClick={handleMenuItem}>
+      <Menu className="evitarErrorHerde" theme="dark" mode="horizontal" onClick={handleMenuItem}>
         <Item key="1" icon={<HomeOutlined />}>
           <Link to={paths.home}>Inicio</Link>
         </Item>

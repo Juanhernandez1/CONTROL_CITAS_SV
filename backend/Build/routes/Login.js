@@ -11,10 +11,12 @@ function AuthRouter(router, controllers) {
   var CallbackGoogle = controllers.CallbackGoogle,
     CallbackFacebook = controllers.CallbackFacebook,
     LoginTraditional = controllers.LoginTraditional,
-    SignUpUsersCreateTraditional = controllers.SignUpUsersCreateTraditional;
+    SignUpUsersCreateTraditional = controllers.SignUpUsersCreateTraditional,
+    LoginTraditionalBusiness = controllers.LoginTraditionalBusiness;
   RAuth.get('/handle_facebook_callback', CallbackFacebook);
   RAuth.get('/handle_google_callback', CallbackGoogle);
   RAuth.post('/Login', LoginTraditional);
+  RAuth.post('/Login/Business/:type', LoginTraditionalBusiness);
   RAuth.post('/Registre/User', SignUpUsersCreateTraditional);
   return RAuth;
 }

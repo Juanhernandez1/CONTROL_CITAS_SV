@@ -350,6 +350,53 @@ export default class SignUp {
     }
   };
 
+  LoginTraditionalBusiness = async (req, res) => {
+    try {
+      const { username, password } = req.body;
+      const { type } = req.params;
+
+      const Acces = await this.AccessCrud.FindCompareB(username, password, type);
+
+      if (Acces.success) {
+        const User = await this.UserCrud.GetPk(Acces.data.iduser);
+        if (User.success) {
+          const token = this.TokenAuth.CreateToken(User.data);
+
+          res.cookie(
+            'cookiauthControlCitas',
+            JSON.stringify({ auth: true, token, id: User.data.iduser }),
+            {
+              maxAge: 86400 * 1000, // 24 hours
+              httpOnly: true // http only, prevents JavaScript cookie access
+            }
+          );
+          res.status(202).send({
+            mesage: 'Se a iniciado Secion',
+            data: {
+              iduser: User.data.iduser,
+              lastname: User.data.lastname,
+              name: User.data.name,
+              state: User.data.state,
+              type: Acces.data.type
+            },
+            auth: true,
+            dateExpired: MomentSv().format('l'),
+            token,
+            success: Acces.success
+          });
+        } else {
+          res.status(409).send({ User, Acces });
+        }
+      } else {
+        res.status(409).send(Acces);
+      }
+    } catch (error) {
+      const { ERDB404 } = ErrorMessages;
+      console.log(ERDB404);
+      res.status(404).send(ERDB404);
+    }
+  };
+
   Logout = async (req, res) => {
     res.cookie('cookiauthControlCitas', JSON.stringify({ auth: false }), {
       maxAge: 86400 * 1000, // 24 hours

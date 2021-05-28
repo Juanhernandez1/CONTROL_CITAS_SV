@@ -204,43 +204,46 @@ var AccessCrud = /*#__PURE__*/ (function (_CrudInterface) {
     );
     (0, _defineProperty2['default'])(
       (0, _assertThisInitialized2['default'])(_this),
-      'Create',
+      'FindCompareB',
       /*#__PURE__*/ (function () {
         var _ref2 = (0, _asyncToGenerator2['default'])(
-          /*#__PURE__*/ _regenerator['default'].mark(function _callee2(obj) {
-            var data, _error$errors$, message, type, path, origin;
-
+          /*#__PURE__*/ _regenerator['default'].mark(function _callee2(username, password, type) {
+            var PasswordHash, data, valid;
             return _regenerator['default'].wrap(
               function _callee2$(_context2) {
                 while (1) {
                   switch ((_context2.prev = _context2.next)) {
                     case 0:
                       _context2.prev = 0;
-                      obj.password = _this.encrypter.EncryptUserPassword(obj.password);
+                      PasswordHash = _this.encrypter.EncryptUserPassword(password);
                       _context2.next = 4;
-                      return _this.Model.create(obj);
+                      return _this.Model.findOne(
+                        _objectSpread(
+                          _objectSpread({}, _this.Config),
+                          {},
+                          {
+                            where: {
+                              username: username,
+                              password: PasswordHash,
+                              type: type
+                            }
+                          }
+                        )
+                      );
 
                     case 4:
                       data = _context2.sent;
+                      valid = _this.encrypter.ComparePassword(data.password, PasswordHash);
                       return _context2.abrupt('return', {
                         data: data,
-                        success: true
+                        success: valid
                       });
 
-                    case 8:
-                      _context2.prev = 8;
+                    case 9:
+                      _context2.prev = 9;
                       _context2.t0 = _context2['catch'](0);
-                      (_error$errors$ = _context2.t0.errors[0]),
-                        (message = _error$errors$.message),
-                        (type = _error$errors$.type),
-                        (path = _error$errors$.path),
-                        (origin = _error$errors$.origin);
                       return _context2.abrupt('return', {
-                        success: false,
-                        message: message,
-                        type: type,
-                        path: path,
-                        origin: origin
+                        success: false
                       });
 
                     case 12:
@@ -251,23 +254,23 @@ var AccessCrud = /*#__PURE__*/ (function (_CrudInterface) {
               },
               _callee2,
               null,
-              [[0, 8]]
+              [[0, 9]]
             );
           })
         );
 
-        return function (_x3) {
+        return function (_x3, _x4, _x5) {
           return _ref2.apply(this, arguments);
         };
       })()
     );
     (0, _defineProperty2['default'])(
       (0, _assertThisInitialized2['default'])(_this),
-      'Update',
+      'Create',
       /*#__PURE__*/ (function () {
         var _ref3 = (0, _asyncToGenerator2['default'])(
           /*#__PURE__*/ _regenerator['default'].mark(function _callee3(obj) {
-            var FieldPk, pk, useracces, valid, data, _error$errors$2, message, type, path, origin;
+            var data, _error$errors$, message, type, path, origin;
 
             return _regenerator['default'].wrap(
               function _callee3$(_context3) {
@@ -275,16 +278,75 @@ var AccessCrud = /*#__PURE__*/ (function (_CrudInterface) {
                   switch ((_context3.prev = _context3.next)) {
                     case 0:
                       _context3.prev = 0;
+                      obj.password = _this.encrypter.EncryptUserPassword(obj.password);
+                      _context3.next = 4;
+                      return _this.Model.create(obj);
+
+                    case 4:
+                      data = _context3.sent;
+                      return _context3.abrupt('return', {
+                        data: data,
+                        success: true
+                      });
+
+                    case 8:
+                      _context3.prev = 8;
+                      _context3.t0 = _context3['catch'](0);
+                      (_error$errors$ = _context3.t0.errors[0]),
+                        (message = _error$errors$.message),
+                        (type = _error$errors$.type),
+                        (path = _error$errors$.path),
+                        (origin = _error$errors$.origin);
+                      return _context3.abrupt('return', {
+                        success: false,
+                        message: message,
+                        type: type,
+                        path: path,
+                        origin: origin
+                      });
+
+                    case 12:
+                    case 'end':
+                      return _context3.stop();
+                  }
+                }
+              },
+              _callee3,
+              null,
+              [[0, 8]]
+            );
+          })
+        );
+
+        return function (_x6) {
+          return _ref3.apply(this, arguments);
+        };
+      })()
+    );
+    (0, _defineProperty2['default'])(
+      (0, _assertThisInitialized2['default'])(_this),
+      'Update',
+      /*#__PURE__*/ (function () {
+        var _ref4 = (0, _asyncToGenerator2['default'])(
+          /*#__PURE__*/ _regenerator['default'].mark(function _callee4(obj) {
+            var FieldPk, pk, useracces, valid, data, _error$errors$2, message, type, path, origin;
+
+            return _regenerator['default'].wrap(
+              function _callee4$(_context4) {
+                while (1) {
+                  switch ((_context4.prev = _context4.next)) {
+                    case 0:
+                      _context4.prev = 0;
                       // obtener el campo el cual es la primary key y eliminar lo del objeto que ingresa por parametro
                       FieldPk = _this.Model.primaryKeyAttribute;
                       pk = obj[FieldPk];
                       delete obj[FieldPk]; // buscar el regitro de acceso correco
 
-                      _context3.next = 6;
+                      _context4.next = 6;
                       return _this.Model.findByPk(pk, _this.Config);
 
                     case 6:
-                      useracces = _context3.sent;
+                      useracces = _context4.sent;
                       // comparar las contrasemas ingresada para determinar si se actualiza la contraseña o no
                       valid = _this.encrypter.ComparePassword(useracces.password, obj.password);
 
@@ -295,26 +357,26 @@ var AccessCrud = /*#__PURE__*/ (function (_CrudInterface) {
                         obj.password = _this.encrypter.EncryptUserPassword(obj.password);
                       }
 
-                      _context3.next = 11;
+                      _context4.next = 11;
                       return _this.Model.update(obj, {
                         where: (0, _defineProperty2['default'])({}, FieldPk, pk)
                       });
 
                     case 11:
-                      data = _context3.sent;
-                      return _context3.abrupt('return', {
+                      data = _context4.sent;
+                      return _context4.abrupt('return', {
                         success: true
                       });
 
                     case 15:
-                      _context3.prev = 15;
-                      _context3.t0 = _context3['catch'](0);
-                      (_error$errors$2 = _context3.t0.errors[0]),
+                      _context4.prev = 15;
+                      _context4.t0 = _context4['catch'](0);
+                      (_error$errors$2 = _context4.t0.errors[0]),
                         (message = _error$errors$2.message),
                         (type = _error$errors$2.type),
                         (path = _error$errors$2.path),
                         (origin = _error$errors$2.origin);
-                      return _context3.abrupt('return', {
+                      return _context4.abrupt('return', {
                         success: false,
                         message: message,
                         type: type,
@@ -324,19 +386,19 @@ var AccessCrud = /*#__PURE__*/ (function (_CrudInterface) {
 
                     case 19:
                     case 'end':
-                      return _context3.stop();
+                      return _context4.stop();
                   }
                 }
               },
-              _callee3,
+              _callee4,
               null,
               [[0, 15]]
             );
           })
         );
 
-        return function (_x4) {
-          return _ref3.apply(this, arguments);
+        return function (_x7) {
+          return _ref4.apply(this, arguments);
         };
       })()
     );

@@ -4,12 +4,6 @@ import { Form, Input, Button } from 'antd';
 
 import './UserFrom.css';
 
-const layout = {
-  labelCol: {
-    span: 10
-  }
-};
-
 const UserFrom = props => {
   const onFinish = values => {
     const objAccess = {
@@ -42,9 +36,20 @@ const UserFrom = props => {
     });
   };
 
+  const formItemLayout = {
+    labelCol: {
+      xs: { span: 24 },
+      sm: { span: 8 }
+    },
+    wrapperCol: {
+      xs: { span: 24 },
+      sm: { span: 10 }
+    }
+  };
+
   return (
     <>
-      <Form {...layout} onFinish={onFinish} className="user-from">
+      <Form {...formItemLayout} onFinish={onFinish} className="user-from">
         <Form.Item
           label="Nombre"
           name="name"

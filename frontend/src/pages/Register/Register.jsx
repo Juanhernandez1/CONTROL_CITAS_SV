@@ -20,8 +20,8 @@ const Register = () => {
 
   const openNotificationWithIcon = type => {
     notification[type]({
-      message: 'Ocurrio algun Error',
-      description: 'Puede que El Email ya Exixta'
+      message: 'Ocurrio algun error',
+      description: 'Puede que el email ya exista'
     });
   };
 
@@ -58,13 +58,12 @@ const Register = () => {
               1
             );
 
-            if (registerUserType === 'C' && status) push('/');
+            if (registerUserType === 'C' && status === 202) push('/');
           } else {
             openNotificationWithIcon('error');
           }
         } catch (error) {
-          push('/');
-          console.log(error);
+          openNotificationWithIcon('error');
         }
       })();
     }

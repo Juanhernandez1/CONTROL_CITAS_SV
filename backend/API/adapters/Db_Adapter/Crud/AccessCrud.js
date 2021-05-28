@@ -36,6 +36,23 @@ export default class AccessCrud extends CrudInterface {
     }
   };
 
+  FindCompareB = async (username, password, type) => {
+    try {
+      const PasswordHash = this.encrypter.EncryptUserPassword(password);
+
+      const data = await this.Model.findOne({
+        ...this.Config,
+        where: { username, password: PasswordHash, type }
+      });
+
+      const valid = this.encrypter.ComparePassword(data.password, PasswordHash);
+
+      return { data, success: valid };
+    } catch (error) {
+      return { success: false };
+    }
+  };
+
   Create = async obj => {
     try {
       obj.password = this.encrypter.EncryptUserPassword(obj.password);

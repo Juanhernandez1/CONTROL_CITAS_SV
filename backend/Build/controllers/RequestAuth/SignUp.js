@@ -564,13 +564,119 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
   );
   (0, _defineProperty2['default'])(
     this,
-    'Logout',
+    'LoginTraditionalBusiness',
     /*#__PURE__*/ (function () {
       var _ref5 = (0, _asyncToGenerator2['default'])(
         /*#__PURE__*/ _regenerator['default'].mark(function _callee5(req, res) {
-          return _regenerator['default'].wrap(function _callee5$(_context5) {
+          var _req$body3, username, password, type, Acces, User, token, ERDB404;
+
+          return _regenerator['default'].wrap(
+            function _callee5$(_context5) {
+              while (1) {
+                switch ((_context5.prev = _context5.next)) {
+                  case 0:
+                    _context5.prev = 0;
+                    (_req$body3 = req.body),
+                      (username = _req$body3.username),
+                      (password = _req$body3.password);
+                    type = req.params.type;
+                    _context5.next = 5;
+                    return _this.AccessCrud.FindCompareB(username, password, type);
+
+                  case 5:
+                    Acces = _context5.sent;
+
+                    if (!Acces.success) {
+                      _context5.next = 13;
+                      break;
+                    }
+
+                    _context5.next = 9;
+                    return _this.UserCrud.GetPk(Acces.data.iduser);
+
+                  case 9:
+                    User = _context5.sent;
+
+                    if (User.success) {
+                      token = _this.TokenAuth.CreateToken(User.data);
+                      res.cookie(
+                        'cookiauthControlCitas',
+                        JSON.stringify({
+                          auth: true,
+                          token: token,
+                          id: User.data.iduser
+                        }),
+                        {
+                          maxAge: 86400 * 1000,
+                          // 24 hours
+                          httpOnly: true // http only, prevents JavaScript cookie access
+                        }
+                      );
+                      res.status(202).send({
+                        mesage: 'Se a iniciado Secion',
+                        data: {
+                          iduser: User.data.iduser,
+                          lastname: User.data.lastname,
+                          name: User.data.name,
+                          state: User.data.state,
+                          type: Acces.data.type
+                        },
+                        auth: true,
+                        dateExpired: (0, _moment['default'])().format('l'),
+                        token: token,
+                        success: Acces.success
+                      });
+                    } else {
+                      res.status(409).send({
+                        User: User,
+                        Acces: Acces
+                      });
+                    }
+
+                    _context5.next = 14;
+                    break;
+
+                  case 13:
+                    res.status(409).send(Acces);
+
+                  case 14:
+                    _context5.next = 21;
+                    break;
+
+                  case 16:
+                    _context5.prev = 16;
+                    _context5.t0 = _context5['catch'](0);
+                    ERDB404 = _ErrorMessages['default'].ERDB404;
+                    console.log(ERDB404);
+                    res.status(404).send(ERDB404);
+
+                  case 21:
+                  case 'end':
+                    return _context5.stop();
+                }
+              }
+            },
+            _callee5,
+            null,
+            [[0, 16]]
+          );
+        })
+      );
+
+      return function (_x9, _x10) {
+        return _ref5.apply(this, arguments);
+      };
+    })()
+  );
+  (0, _defineProperty2['default'])(
+    this,
+    'Logout',
+    /*#__PURE__*/ (function () {
+      var _ref6 = (0, _asyncToGenerator2['default'])(
+        /*#__PURE__*/ _regenerator['default'].mark(function _callee6(req, res) {
+          return _regenerator['default'].wrap(function _callee6$(_context6) {
             while (1) {
-              switch ((_context5.prev = _context5.next)) {
+              switch ((_context6.prev = _context6.next)) {
                 case 0:
                   res.cookie(
                     'cookiauthControlCitas',
@@ -586,15 +692,15 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
 
                 case 1:
                 case 'end':
-                  return _context5.stop();
+                  return _context6.stop();
               }
             }
-          }, _callee5);
+          }, _callee6);
         })
       );
 
-      return function (_x9, _x10) {
-        return _ref5.apply(this, arguments);
+      return function (_x11, _x12) {
+        return _ref6.apply(this, arguments);
       };
     })()
   );

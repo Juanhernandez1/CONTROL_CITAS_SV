@@ -17,5 +17,6 @@ export const auth = {
   AuthFacebook: 'https://citasparatunegocio.herokuapp.com/connect/facebook',
   AuthGoogle: 'https://citasparatunegocio.herokuapp.com/connect/google',
   Login: '/API/Auth/Login',
+  LoginBusiness: type => `/API/Auth//Login/Business/${type}`,
   UserRegister: '/API/Auth/Registre/User'
 };

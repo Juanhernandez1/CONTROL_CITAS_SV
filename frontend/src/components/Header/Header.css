@@ -10,8 +10,16 @@
   justify-content: flex-end;
 }
 
-.header__logo-container,
-.header__logo-container img {
+.imgLogo {
   height: 2rem;
   width: 2rem;
+}
+
+.evitarErrorHerde {
+  width: 30%;
+  align-content: flex-end !important;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
 }
