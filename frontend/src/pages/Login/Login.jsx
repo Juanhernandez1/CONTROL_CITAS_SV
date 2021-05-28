@@ -3,7 +3,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaFacebookSquare } from 'react-icons/fa';
 
 import './Login.css';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { GlobalContext } from '../../context/GlobalState';
 import { auth } from '../../config/urls';
 import { paths } from '../../config/paths';
@@ -24,7 +24,7 @@ const layout = {
 
 const Login = () => {
   const [negociosLogin, setnegociosLogin] = useState(false);
-  const { setuserauthenticates, appintmentTime } = useContext(GlobalContext);
+  const { setuserauthenticates, appintmentTime, setRegisterType } = useContext(GlobalContext);
   const { push } = useHistory();
 
   const openNotificationWithIcon = type => {
@@ -71,6 +71,10 @@ const Login = () => {
     console.log('Failed:', errorInfo);
   };
 
+  useEffect(() => {
+    setRegisterType('C');
+  }, []);
+
   return (
     <Row justify="center" style={{ width: '-webkit-fill-available' }}>
       <Form
@@ -89,6 +93,7 @@ const Login = () => {
               type="link"
               onClick={() => {
                 setnegociosLogin(!negociosLogin);
+                setRegisterType(!negociosLogin ? 'N' : 'C');
               }}
             >
               {!negociosLogin ? 'Negocios' : 'Usuario'}
@@ -214,7 +219,12 @@ const Login = () => {
           )}
           <Col style={{ width: negociosLogin ? '100%' : 'auto' }}>
             <Row justify="end" align="bottom">
-              <Button type="link" block>
+              <Button
+                type="link"
+                onClick={() => {
+                  push(paths.register);
+                }}
+              >
                 Registrarse
               </Button>
             </Row>

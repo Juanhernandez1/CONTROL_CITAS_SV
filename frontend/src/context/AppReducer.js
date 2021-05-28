@@ -4,7 +4,8 @@ import {
   SET_BUSINESS_SERVICES_SELECTED,
   SET_APPOINTMENT_TIME,
   SET_USER_AUTHENTICATED,
-  SET_DETAIL_SERVICES
+  SET_DETAIL_SERVICES,
+  SET_REGISTER_TYPE
 } from './types';
 
 const appReducer = (state, action) => {
@@ -41,6 +42,11 @@ const appReducer = (state, action) => {
         detail: action.payload
       };
 
+    case SET_REGISTER_TYPE:
+      return {
+        ...state,
+        registerUserType: action.payload
+      };
     default:
       return state;
   }

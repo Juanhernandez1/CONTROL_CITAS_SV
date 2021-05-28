@@ -9,7 +9,8 @@ import BusinessDetail from './pages/BusinessDetail';
 import Landing from './pages/Landing';
 import AppointmentBook from './pages/AppointmentBook';
 import NotFound from './pages/NotFound';
-import LoginCitas from './pages/Login/Login';
+import LoginCitas from './pages/Login';
+import Register from './pages/Register';
 import AppointmentDetail from './pages/AppointmentDetail';
 import BusinessServicess from './pages/BusinessServicess/BusinessServicess';
 
@@ -20,6 +21,7 @@ const App = () => {
         <Switch>
           <Route exact path={paths.home} component={Landing} layout={LayoutHeader} />
           <Route exact path={paths.login} component={LoginCitas} layout={LayoutHeader} />
+          <Route exact path={paths.register} component={Register} layout={LayoutHeader} />
           <Route exact path={paths.businessResult} component={Business} layout={LayoutHeader} />
           <Route
             exact

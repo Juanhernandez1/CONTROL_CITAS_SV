@@ -2,6 +2,7 @@
 export const paths = {
   home: '/',
   login: '/login',
+  register: '/register',
   businessResult: '/business',
   businessDetail: (id = '') => `/business-detail/${id}`,
   businessServices: (id = '') => `/business-Services/${id}`,

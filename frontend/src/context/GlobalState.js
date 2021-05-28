@@ -10,7 +10,8 @@ import {
   SET_BUSINESS_SERVICES_SELECTED,
   SET_APPOINTMENT_TIME,
   SET_USER_AUTHENTICATED,
-  SET_DETAIL_SERVICES
+  SET_DETAIL_SERVICES,
+  SET_REGISTER_TYPE
 } from './types';
 import { getData } from '../api/baseClient';
 
@@ -42,6 +43,10 @@ export const GlobalProvider = ({ children }) => {
     dispatch({ type: SET_DETAIL_SERVICES, payload: detail });
   };
 
+  const setRegisterType = type => {
+    dispatch({ type: SET_REGISTER_TYPE, payload: type });
+  };
+
   useEffect(() => {
     const valid = checkExpired('authControlCitas');
     if (!valid) {
@@ -67,12 +72,14 @@ export const GlobalProvider = ({ children }) => {
         appintmentTime: state.appintmentTime,
         user: state.user,
         detail: state.detail,
+        registerUserType: state.registerUserType,
         setBusinessName,
         setBusinessSelected,
         setBusinessServicesSelected,
         setAppointmentTime,
         setuserauthenticates,
-        setDetailServices
+        setDetailServices,
+        setRegisterType
       }}
     >
       {children}

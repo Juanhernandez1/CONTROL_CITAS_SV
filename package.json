@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cross-env concurrently --kill-others \"cd frontend && npm start\" \"cd backend && npm rum start-dev\"",
-    "postinstall": "cross-env concurrently \" cd backend && npm install\"",
+    "postinstall": "cross-env concurrently \" cd backend && npm install\" \"cd frontend && npm install\"",
     "start-Front": "cross-env concurrently --kill-others \"cd frontend && npm start\" ",
     "start-Back": "cross-env concurrently \"cd backend && npm start\"",
     "transpilar": "cross-env concurrently --kill-others \"cd backend && npm run transpilar\"",
