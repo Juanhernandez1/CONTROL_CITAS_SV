@@ -61,7 +61,12 @@ const Header = ({ hasLogo = false }) => {
                   icon={<UserOutlined />}
                   onClick={() => {
                     console.log(user);
-                    user.access.type === 'N' && paths.businessDetail(user.business.idbusiness);
+                    user.access.type === 'N' &&
+                      paths.businessDetail(
+                        user.hasOwnProperty('idbusiness')
+                          ? user.idbusiness
+                          : user.business.idbusiness
+                      );
                   }}
                   type="link"
                   style={{ color: 'white' }}
@@ -76,6 +81,7 @@ const Header = ({ hasLogo = false }) => {
                     setCookie('authControlCitas', JSON.stringify({}), 1);
 
                     if (window.location.pathname !== '/login') {
+                      setCookie('authControlCitas', JSON.stringify({}), 1);
                       push('/');
                     }
                     window.location.reload();

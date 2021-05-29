@@ -57,7 +57,7 @@ const Login = () => {
             'authControlCitas',
             JSON.stringify({
               ...data,
-              data: { id: data.data.iduser }
+              data: { id: data.data.iduser, idbuissnes: data.data.idbuissnes }
             }),
             1
           );
@@ -67,7 +67,7 @@ const Login = () => {
             ? push(
                 appintmentTime.hasOwnProperty('idbusiness')
                   ? paths.appointmentDetail(appintmentTime.idbusiness)
-                  : paths.businessDetail(data.data.business.idbusiness)
+                  : paths.businessDetail(data.data.idbusiness)
               )
             : push('/');
         } else {

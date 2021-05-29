@@ -377,7 +377,7 @@ export default class SignUp {
               lastname: User.data.lastname,
               name: User.data.name,
               state: User.data.state,
-              idbuissnes: User.data.business.idbusiness,
+              idbusiness: User.data.business.idbusiness,
               type: Acces.data.type
             },
             auth: true,
