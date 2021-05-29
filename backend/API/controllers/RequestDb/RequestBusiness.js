@@ -384,18 +384,6 @@ export default class RequestBusiness {
     }
   };
 
-  RequestBusinessAppointmentGetPk = async (req, res) => {
-    try {
-      const { idappointmen, idbusiness } = req.body;
-      const DataList = await this.AppointmentCrud.GetPkForBusiness(idappointmen, idbusiness);
-      if (DataList.success) res.status(200).send(DataList);
-    } catch (error) {
-      const { ERDB404 } = ErrorMessages;
-      console.log(ERDB404);
-      res.status(404).send(ERDB404);
-    }
-  };
-
   RequestBusinessAppointmentDelete = async (req, res) => {
     try {
       const pk = req.params.Pk;

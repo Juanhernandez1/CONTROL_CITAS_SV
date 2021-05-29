@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons';
 
 import { Layout, Button, Menu } from 'antd';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { isEmpty } from 'lodash';
 import { paths } from '../../config/paths';
@@ -19,20 +19,34 @@ const { Item, SubMenu, ItemGroup } = Menu;
 
 const Header = ({ hasLogo = false }) => {
   const { setBusinessName, user } = useContext(GlobalContext);
-
+  const [AccesType, setAccesType] = useState('C');
   const className = hasLogo ? 'header header-space-between' : 'header header-flex-end';
   const { push } = useHistory();
 
   const handleMenuItem = ({ key }) => {
     if (key === '2') {
       setBusinessName('');
+
       push(
-        user.access.type === 'N'
-          ? paths.businessDetail(user.business.idbusiness)
+        AccesType === 'N'
+          ? paths.businessDetail(
+              user.hasOwnProperty('idbusiness') ? user.idbusiness : user.business.idbusiness
+            )
           : paths.businessResult
       );
     }
   };
+
+  useEffect(() => {
+    const accesType = isEmpty(user)
+      ? 'C'
+      : user.hasOwnProperty('type')
+      ? user.type
+      : user.hasOwnProperty('access')
+      ? user.access.type
+      : 'C';
+    setAccesType(accesType);
+  }, [AccesType]);
 
   return (
     <Layout.Header className={className}>
@@ -43,7 +57,17 @@ const Header = ({ hasLogo = false }) => {
       )}
       <Menu className="evitarErrorHerde" theme="dark" mode="horizontal" onClick={handleMenuItem}>
         <Item key="1" icon={<HomeOutlined />}>
-          <Link to={paths.home}>Inicio</Link>
+          <Link
+            to={() => {
+              return AccesType === 'N'
+                ? paths.businessDetail(
+                    user.hasOwnProperty('idbusiness') ? user.idbusiness : user.business.idbusiness
+                  )
+                : paths.home;
+            }}
+          >
+            Inicio
+          </Link>
         </Item>
         <Item key="2" icon={<StockOutlined />}>
           Negocios
@@ -61,11 +85,22 @@ const Header = ({ hasLogo = false }) => {
                   icon={<UserOutlined />}
                   onClick={() => {
                     console.log(user);
-                    user.access.type === 'N' &&
-                      paths.businessDetail(
-                        user.hasOwnProperty('idbusiness')
-                          ? user.idbusiness
-                          : user.business.idbusiness
+
+                    const AccesType = isEmpty(user)
+                      ? 'C'
+                      : user.hasOwnProperty('type')
+                      ? user.type
+                      : user.hasOwnProperty('access')
+                      ? user.access.type
+                      : 'C';
+
+                    AccesType === 'N' &&
+                      push(
+                        paths.businessDetail(
+                          user.hasOwnProperty('idbusiness')
+                            ? user.idbusiness
+                            : user.business.idbusiness
+                        )
                       );
                   }}
                   type="link"

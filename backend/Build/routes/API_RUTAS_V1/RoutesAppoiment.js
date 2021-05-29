@@ -9,9 +9,11 @@ function RoutesAppoiment(router, RequestAppoiment) {
   // * rutas de instancia
   var AppoimentRoutes = router();
   var RequestAppoimentLastFiveDay = RequestAppoiment.RequestAppoimentLastFiveDay,
-    RequestAppoimentCreate = RequestAppoiment.RequestAppoimentCreate; // * get
+    RequestAppoimentCreate = RequestAppoiment.RequestAppoimentCreate,
+    RequestBusinessAppointmentGetPk = RequestAppoiment.RequestBusinessAppointmentGetPk; // * get
 
-  AppoimentRoutes.get('/LastFiveDay', RequestAppoimentLastFiveDay); // * post
+  AppoimentRoutes.get('/LastFiveDay', RequestAppoimentLastFiveDay);
+  AppoimentRoutes.get('/Get/:idbusiness/:idappointmen', RequestBusinessAppointmentGetPk); // * post
 
   AppoimentRoutes.post('/Create', RequestAppoimentCreate);
   return AppoimentRoutes;

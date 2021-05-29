@@ -16,6 +16,8 @@ const useGetBusinessDetail = (isModal = false) => {
   const { businessSelected, setBusinessSelected } = useContext(GlobalContext);
   const { id } = useParams();
 
+  console.log(businessSelected);
+
   useEffect(() => {
     !businessSelected.hasOwnProperty('idbusiness') &&
       (async () => {
@@ -65,7 +67,7 @@ const useGetBusinessDetail = (isModal = false) => {
         </div>
         {!isModal && (
           <Col>
-            <Link href="/" target="_blank" rel="noreferrer noopener">
+            <Link href="#" target="_blank" rel="noreferrer noopener">
               Dirección
             </Link>
           </Col>
@@ -77,7 +79,7 @@ const useGetBusinessDetail = (isModal = false) => {
   const footer = isModal
     ? [
         <Row justify="space-between" key={businessSelected.idbusiness}>
-          <Link href="/" target="_blank" rel="noreferrer noopener">
+          <Link href="#" target="_blank" rel="noreferrer noopener">
             Dirección
           </Link>
           <Button type="primary">

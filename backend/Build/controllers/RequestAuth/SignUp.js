@@ -513,7 +513,7 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                           lastname: User.data.lastname,
                           name: User.data.name,
                           state: User.data.state,
-                          type: Acces.data.type
+                          type: Acces.data.type === 'C' ? Acces.data.type : 'C'
                         },
                         auth: true,
                         dateExpired: (0, _moment['default'])().format('l'),
@@ -620,7 +620,7 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                           name: User.data.name,
                           state: User.data.state,
                           idbusiness: User.data.business.idbusiness,
-                          type: Acces.data.type
+                          type: Acces.data.type === 'N' ? Acces.data.type : 'N'
                         },
                         auth: true,
                         dateExpired: (0, _moment['default'])().format('l'),

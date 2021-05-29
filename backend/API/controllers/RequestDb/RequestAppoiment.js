@@ -27,6 +27,22 @@ export default class RequestAppoiment {
     }
   };
 
+  RequestBusinessAppointmentGetPk = async (req, res) => {
+    try {
+      const { idappointmen, idbusiness } = req.body;
+
+      const idAppointmen = idappointmen.replace(/-/g, '/').replaceAt(2, '-');
+
+      const DataList = await this.AppointmentCrud.GetPkForBusiness(idAppointmen, idbusiness);
+      console.log(DataList);
+      if (DataList.success) res.status(200).send(DataList);
+    } catch (error) {
+      const { ERDB404 } = ErrorMessages;
+      console.log(ERDB404);
+      res.status(404).send(ERDB404);
+    }
+  };
+
   RequestAppoimentCreate = async (req, res) => {
     try {
       const { Objappointment, ArrayDetail } = req.body;

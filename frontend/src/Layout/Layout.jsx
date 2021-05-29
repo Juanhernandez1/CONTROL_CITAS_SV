@@ -1,9 +1,9 @@
 import { BookOutlined, CarryOutOutlined, ProfileOutlined } from '@ant-design/icons';
 import { Layout as LayoutAnt, Menu } from 'antd';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { business as getBusinessPath } from '../config/urls';
-
+import { isEmpty } from 'lodash';
 import { paths } from '../config/paths';
 import Header from '../components/Header';
 
@@ -16,7 +16,9 @@ const { Content, Sider } = LayoutAnt;
 export const Layout = ({ children }) => {
   const { id } = useParams();
   const { push } = useHistory();
-  const { businessSelected, setBusinessSelected } = useContext(GlobalContext);
+  const { businessSelected, setBusinessSelected, user } = useContext(GlobalContext);
+
+  const [AccesType, setAccesType] = useState('');
 
   useEffect(() => {
     !businessSelected.hasOwnProperty('idbusiness') &&
@@ -31,6 +33,16 @@ export const Layout = ({ children }) => {
           console.log(error);
         }
       })();
+
+    const accesType = isEmpty(user)
+      ? 'C'
+      : user.hasOwnProperty('type')
+      ? user.type
+      : user.hasOwnProperty('access')
+      ? user.access.type
+      : 'C';
+
+    setAccesType(accesType);
   }, [businessSelected]);
 
   return (
@@ -41,6 +53,7 @@ export const Layout = ({ children }) => {
             <img src="https://donejs.com/static/img/react-logo.png" alt="Logo" />
           </div>
         </div>
+
         <Menu mode="vertical-left" theme="dark">
           <Menu.Item key="1" icon={<ProfileOutlined />}>
             <Link to={paths.businessDetail(id)}>
@@ -56,6 +69,17 @@ export const Layout = ({ children }) => {
             <Link to={paths.appointmentBook(id)}>Libro de Citas</Link>
           </Menu.Item>
         </Menu>
+
+        {window.location.pathname === `/porfile/${user.iduser}` && (
+          <Menu mode="vertical-left" theme="dark">
+            <Menu.Item key="1" icon={<ProfileOutlined />}>
+              <Link to={paths.businessDetail(id)}>Informacion</Link>
+            </Menu.Item>
+            <Menu.Item key="3" icon={<BookOutlined />}>
+              <Link to={paths.appointmentBook(id)}>Libro de Citas</Link>
+            </Menu.Item>
+          </Menu>
+        )}
       </Sider>
       <LayoutAnt>
         <Header />

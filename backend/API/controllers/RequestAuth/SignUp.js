@@ -330,7 +330,7 @@ export default class SignUp {
               lastname: User.data.lastname,
               name: User.data.name,
               state: User.data.state,
-              type: Acces.data.type
+              type: Acces.data.type === 'C' ? Acces.data.type : 'C'
             },
             auth: true,
             dateExpired: MomentSv().format('l'),
@@ -378,7 +378,7 @@ export default class SignUp {
               name: User.data.name,
               state: User.data.state,
               idbusiness: User.data.business.idbusiness,
-              type: Acces.data.type
+              type: Acces.data.type === 'N' ? Acces.data.type : 'N'
             },
             auth: true,
             dateExpired: MomentSv().format('l'),

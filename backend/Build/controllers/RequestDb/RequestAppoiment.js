@@ -78,11 +78,11 @@ var RequestAppoiment = function RequestAppoiment(appointmentCrud, appointmentGen
   });
   (0, _defineProperty2['default'])(
     this,
-    'RequestAppoimentCreate',
+    'RequestBusinessAppointmentGetPk',
     /*#__PURE__*/ (function () {
       var _ref = (0, _asyncToGenerator2['default'])(
         /*#__PURE__*/ _regenerator['default'].mark(function _callee(req, res) {
-          var _req$body, Objappointment, ArrayDetail, ContactFindEmail, Appoiment, Detail, ERDB404;
+          var _req$body, idappointmen, idbusiness, idAppointmen, DataList, ERDB404;
 
           return _regenerator['default'].wrap(
             function _callee$(_context) {
@@ -91,24 +91,77 @@ var RequestAppoiment = function RequestAppoiment(appointmentCrud, appointmentGen
                   case 0:
                     _context.prev = 0;
                     (_req$body = req.body),
-                      (Objappointment = _req$body.Objappointment),
-                      (ArrayDetail = _req$body.ArrayDetail);
-                    _context.next = 4;
+                      (idappointmen = _req$body.idappointmen),
+                      (idbusiness = _req$body.idbusiness);
+                    idAppointmen = idappointmen.replace(/-/g, '/').replaceAt(2, '-');
+                    _context.next = 5;
+                    return _this.AppointmentCrud.GetPkForBusiness(idAppointmen, idbusiness);
+
+                  case 5:
+                    DataList = _context.sent;
+                    console.log(DataList);
+                    if (DataList.success) res.status(200).send(DataList);
+                    _context.next = 15;
+                    break;
+
+                  case 10:
+                    _context.prev = 10;
+                    _context.t0 = _context['catch'](0);
+                    ERDB404 = _ErrorMessages['default'].ERDB404;
+                    console.log(ERDB404);
+                    res.status(404).send(ERDB404);
+
+                  case 15:
+                  case 'end':
+                    return _context.stop();
+                }
+              }
+            },
+            _callee,
+            null,
+            [[0, 10]]
+          );
+        })
+      );
+
+      return function (_x, _x2) {
+        return _ref.apply(this, arguments);
+      };
+    })()
+  );
+  (0, _defineProperty2['default'])(
+    this,
+    'RequestAppoimentCreate',
+    /*#__PURE__*/ (function () {
+      var _ref2 = (0, _asyncToGenerator2['default'])(
+        /*#__PURE__*/ _regenerator['default'].mark(function _callee2(req, res) {
+          var _req$body2, Objappointment, ArrayDetail, ContactFindEmail, Appoiment, Detail, ERDB404;
+
+          return _regenerator['default'].wrap(
+            function _callee2$(_context2) {
+              while (1) {
+                switch ((_context2.prev = _context2.next)) {
+                  case 0:
+                    _context2.prev = 0;
+                    (_req$body2 = req.body),
+                      (Objappointment = _req$body2.Objappointment),
+                      (ArrayDetail = _req$body2.ArrayDetail);
+                    _context2.next = 4;
                     return _this.AppointmentCrud.GetAppointmen(Objappointment.uuidappointment);
 
                   case 4:
-                    ContactFindEmail = _context.sent;
+                    ContactFindEmail = _context2.sent;
 
                     if (!(ContactFindEmail.data === null)) {
-                      _context.next = 12;
+                      _context2.next = 12;
                       break;
                     }
 
-                    _context.next = 8;
+                    _context2.next = 8;
                     return _this.AppointmentCrud.Create(Objappointment);
 
                   case 8:
-                    Appoiment = _context.sent;
+                    Appoiment = _context2.sent;
 
                     if (Appoiment.success) {
                       Detail = [];
@@ -144,7 +197,7 @@ var RequestAppoiment = function RequestAppoiment(appointmentCrud, appointmentGen
                       });
                     }
 
-                    _context.next = 13;
+                    _context2.next = 13;
                     break;
 
                   case 12:
@@ -153,32 +206,32 @@ var RequestAppoiment = function RequestAppoiment(appointmentCrud, appointmentGen
                     });
 
                   case 13:
-                    _context.next = 21;
+                    _context2.next = 21;
                     break;
 
                   case 15:
-                    _context.prev = 15;
-                    _context.t0 = _context['catch'](0);
-                    console.log(_context.t0);
+                    _context2.prev = 15;
+                    _context2.t0 = _context2['catch'](0);
+                    console.log(_context2.t0);
                     ERDB404 = _ErrorMessages['default'].ERDB404;
                     console.log(ERDB404);
                     res.status(404).send(ERDB404);
 
                   case 21:
                   case 'end':
-                    return _context.stop();
+                    return _context2.stop();
                 }
               }
             },
-            _callee,
+            _callee2,
             null,
             [[0, 15]]
           );
         })
       );
 
-      return function (_x, _x2) {
-        return _ref.apply(this, arguments);
+      return function (_x3, _x4) {
+        return _ref2.apply(this, arguments);
       };
     })()
   );
