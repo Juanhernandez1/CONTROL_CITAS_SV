@@ -5,36 +5,7 @@ import { Form, Input, Button } from 'antd';
 import './UserFrom.css';
 
 const UserFrom = props => {
-  const onFinish = values => {
-    const objAccess = {
-      iduser: null,
-      username: values.username,
-      password: values.password,
-      type: props.registerUserType
-    };
-    console.log('success objAccess:', objAccess);
-    delete values['password'];
-    delete values['username'];
-    delete values['confirm'];
-
-    const objUser = {
-      iduser: null,
-      uuiduser: null,
-      name: values.name,
-      lastname: values.lastname,
-      phone: values.phone,
-      email: values.email,
-      uuidfacebook: null,
-      uuidgoogle: null,
-      state: 'Activo'
-    };
-    console.log('Success objUser:', objUser);
-
-    props.handledFinis({
-      objUser,
-      objAccess
-    });
-  };
+  const [form] = Form.useForm();
 
   const formItemLayout = {
     labelCol: {
@@ -42,14 +13,67 @@ const UserFrom = props => {
       sm: { span: 8 }
     },
     wrapperCol: {
-      xs: { span: 24 },
-      sm: { span: 10 }
+      xs: { span: 20 },
+      sm: { span: 12 }
+    }
+  };
+
+  const onCheck = async () => {
+    try {
+      const values = await form.validateFields();
+      const objAccess = {
+        iduser: null,
+        username: values.username,
+        password: values.password,
+        type: props.registerUserType
+      };
+      console.log('success objAccess:', objAccess);
+      delete values['password'];
+      delete values['username'];
+      delete values['confirm'];
+
+      const objUser = {
+        iduser: null,
+        uuiduser: null,
+        name: values.name,
+        lastname: values.lastname,
+        phone: values.phone,
+        email: values.email,
+        uuidfacebook: null,
+        uuidgoogle: null,
+        state: 'Activo'
+      };
+      console.log('Success objUser:', objUser);
+
+      props.handledFinis({
+        objUser,
+        objAccess
+      });
+      props.registerUserType === 'N' && props.setCurrent(props.current + 1);
+    } catch (errorInfo) {
+      console.log('Failed:', errorInfo);
+    }
+  };
+
+  const validateMessages = {
+    required: '${label} es Requerido!',
+    types: {
+      email: '${label} no es valido!'
     }
   };
 
   return (
     <>
-      <Form {...formItemLayout} onFinish={onFinish} className="user-from">
+      <Form
+        {...formItemLayout}
+        name="User"
+        initialValues={{
+          remember: true
+        }}
+        form={form}
+        validateMessages={validateMessages}
+        className="user-from"
+      >
         <Form.Item
           label="Nombre"
           name="name"
@@ -92,8 +116,7 @@ const UserFrom = props => {
           rules={[
             {
               type: 'email',
-              required: true,
-              message: 'Por Favor Ingres Su Numero de Telefono'
+              required: true
             }
           ]}
         >
@@ -125,13 +148,13 @@ const UserFrom = props => {
         </Form.Item>
         <Form.Item
           name="confirm"
-          label={`Confirmar \nContraseña`}
+          label={`Confirmacion`}
           dependencies={['password']}
           hasFeedback
           rules={[
             {
               required: true,
-              message: 'Please confirm your password!'
+              message: 'Por Favor Confirme la Contraseña!'
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
@@ -147,7 +170,7 @@ const UserFrom = props => {
           <Input.Password />
         </Form.Item>
         <Form.Item style={{ display: 'none' }}>
-          <Button ref={props.refObjUser} type="primary" htmlType="submit">
+          <Button ref={props.refObjUser} type="primary" onClick={onCheck}>
             Submit
           </Button>
         </Form.Item>

@@ -1,22 +1,29 @@
 import { Row, Steps, Button, message, notification } from 'antd';
-import { useContext, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import UserFrom from './UserFrom';
 import './Register.css';
 import { GlobalContext } from '../../context/GlobalState';
-import { auth } from '../../config/urls';
+import { auth, business } from '../../config/urls';
 import { postData } from '../../api/baseClient';
-import { setCookie } from '../../utils/Cookies';
-import { useHistory } from 'react-router';
+import { getCookie, setCookie } from '../../utils/Cookies';
+import { useHistory, useParams } from 'react-router';
+import ContacBusinessFrom from './ContacBusinessFrom/ContacBusinessFrom';
+import SettingBusinessForm from './SettingBusinessForm';
+import { paths } from '../../config/paths';
 
 const { Step } = Steps;
 
 const Register = () => {
   const [current, setCurrent] = useState(0);
+  const [ObjBusiness, setObjBusiness] = useState({});
+  const { setuserauthenticates } = useContext(GlobalContext);
 
-  const { setuserauthenticates, registerUserType } = useContext(GlobalContext);
-  console.log(registerUserType);
   const refObjUser = useRef();
+  const refObjBusiness = useRef();
+  const refObjBusinessSetting = useRef();
+
   const { push } = useHistory();
+  const { typeR } = useParams();
 
   const openNotificationWithIcon = type => {
     notification[type]({
@@ -25,28 +32,39 @@ const Register = () => {
     });
   };
 
+  const openNotificationWithIconB = type => {
+    notification[type]({
+      message: 'Ocurrio algun error',
+      description: 'Verificar su informacion'
+    });
+  };
+
   const next = () => {
-    setCurrent(current + 1);
-    refObjUser.current && refObjUser.current.click();
+    console.log(refObjUser.current);
+    refObjUser.current && current === 0 && refObjUser.current.click();
+    refObjBusiness.current && current === 1 && refObjBusiness.current.click();
   };
 
   const prev = () => {
-    setCurrent(current - 1);
+    setCurrent(current > 1 && typeR === 'N' ? current - 1 : current);
   };
 
   const done = () => {
-    if (registerUserType === 'C') {
+    if (typeR === 'C') {
       refObjUser.current && refObjUser.current.click();
+    }
+    if (typeR === 'N') {
+      refObjBusinessSetting.current && refObjBusinessSetting.current.click();
     }
   };
 
   const handledFinis = dataApi => {
-    if (registerUserType === 'C') {
+    if (current === 0) {
       (async () => {
         console.log('ejecutando', dataApi);
         try {
           const { data, status } = await postData(auth.UserRegister, dataApi);
-          if (status === 202) {
+          if (status === 201) {
             console.log(data);
             setuserauthenticates(data.data);
             setCookie(
@@ -58,12 +76,44 @@ const Register = () => {
               1
             );
 
-            if (registerUserType === 'C' && status === 202) push('/');
+            if (typeR === 'C' && status === 201) push('/');
           } else {
             openNotificationWithIcon('error');
           }
         } catch (error) {
           openNotificationWithIcon('error');
+        }
+      })();
+    }
+
+    if (typeR === 'N' && current === 2) {
+      (async () => {
+        console.log('ejecutando', dataApi);
+
+        try {
+          const { data, status } = await postData(business.businessCreate, dataApi);
+          if (status === 201) {
+            console.log(data);
+            const { Business } = data;
+
+            const cookiedata = getCookie('authControlCitas');
+
+            setCookie(
+              'authControlCitas',
+              JSON.stringify({
+                ...cookiedata,
+                data: { ...cookiedata.data, idbusiness: Business.data.idbusiness }
+              }),
+              1
+            );
+
+            if (Business.success && status === 201)
+              push(paths.appointmentDetail(Business.data.idbusiness));
+          } else {
+            openNotificationWithIconB('error');
+          }
+        } catch (error) {
+          openNotificationWithIconB('error');
         }
       })();
     }
@@ -75,20 +125,35 @@ const Register = () => {
       content: (
         <UserFrom
           refObjUser={refObjUser}
-          registerUserType={registerUserType}
+          registerUserType={typeR}
+          setCurrent={setCurrent}
+          current={current}
           handledFinis={handledFinis}
         />
       )
     },
     {
       title: 'Datos de Negocio',
-      content: 'Second-content',
-      style: { display: registerUserType === 'C' ? 'none' : 'auto' }
+      content: (
+        <ContacBusinessFrom
+          refObjBusiness={refObjBusiness}
+          setCurrent={setCurrent}
+          current={current}
+          setObjBusiness={setObjBusiness}
+        />
+      ),
+      style: { display: typeR === 'C' ? 'none' : 'auto' }
     },
     {
       title: 'Configuracion de citas',
-      content: 'Last-content',
-      style: { display: registerUserType === 'C' ? 'none' : 'auto' }
+      content: (
+        <SettingBusinessForm
+          refObjBusinessSetting={refObjBusinessSetting}
+          ObjBusiness={ObjBusiness}
+          handledFinis={handledFinis}
+        />
+      ),
+      style: { display: typeR === 'C' ? 'none' : 'auto' }
     }
   ];
 
@@ -105,22 +170,23 @@ const Register = () => {
       <div className="steps-action">
         {current > 0 && (
           <Button
-            style={{ margin: '0 8px', display: registerUserType === 'N' ? 'auto' : 'none' }}
+            style={{ margin: '0 8px', display: typeR === 'N' ? 'auto' : 'none' }}
             onClick={() => prev()}
           >
             Atras
           </Button>
         )}
-        {(current === steps.length - 1 || registerUserType === 'C') && (
+        {(current === steps.length - 1 || typeR === 'C') && (
           <Button type="primary" onClick={done}>
             Aceptar
           </Button>
         )}
+
         {current < steps.length - 1 && (
           <Button
             type="primary"
             onClick={() => next()}
-            style={{ display: registerUserType === 'N' ? 'auto' : 'none' }}
+            style={{ display: typeR === 'N' ? 'auto' : 'none' }}
           >
             Siguiente
           </Button>

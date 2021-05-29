@@ -157,7 +157,21 @@ var UserCrud = /*#__PURE__*/ (function (_CrudInterface) {
                     case 0:
                       _context.prev = 0;
                       _context.next = 3;
-                      return _this.Model.findByPk(pk, _objectSpread({}, _this.Config));
+                      return _this.Model.findByPk(
+                        pk,
+                        _objectSpread(
+                          _objectSpread({}, _this.Config),
+                          {},
+                          {
+                            include: [
+                              {
+                                association: 'access',
+                                attributes: ['type']
+                              }
+                            ]
+                          }
+                        )
+                      );
 
                     case 3:
                       data = _context.sent;
@@ -193,10 +207,10 @@ var UserCrud = /*#__PURE__*/ (function (_CrudInterface) {
     );
     (0, _defineProperty2['default'])(
       (0, _assertThisInitialized2['default'])(_this),
-      'GetOpenIdAuth',
+      'GetPk2',
       /*#__PURE__*/ (function () {
         var _ref2 = (0, _asyncToGenerator2['default'])(
-          /*#__PURE__*/ _regenerator['default'].mark(function _callee2(id, field) {
+          /*#__PURE__*/ _regenerator['default'].mark(function _callee2(pk) {
             var data;
             return _regenerator['default'].wrap(
               function _callee2$(_context2) {
@@ -205,12 +219,22 @@ var UserCrud = /*#__PURE__*/ (function (_CrudInterface) {
                     case 0:
                       _context2.prev = 0;
                       _context2.next = 3;
-                      return _this.Model.findOne(
+                      return _this.Model.findByPk(
+                        pk,
                         _objectSpread(
                           _objectSpread({}, _this.Config),
                           {},
                           {
-                            where: (0, _defineProperty2['default'])({}, field, id)
+                            include: [
+                              {
+                                association: 'access',
+                                attributes: ['type']
+                              },
+                              {
+                                association: 'business',
+                                attributes: ['idbusiness']
+                              }
+                            ]
                           }
                         )
                       );
@@ -218,7 +242,7 @@ var UserCrud = /*#__PURE__*/ (function (_CrudInterface) {
                     case 3:
                       data = _context2.sent;
                       return _context2.abrupt('return', {
-                        data: _objectSpread({}, data),
+                        data: data,
                         success: true
                       });
 
@@ -242,8 +266,64 @@ var UserCrud = /*#__PURE__*/ (function (_CrudInterface) {
           })
         );
 
-        return function (_x2, _x3) {
+        return function (_x2) {
           return _ref2.apply(this, arguments);
+        };
+      })()
+    );
+    (0, _defineProperty2['default'])(
+      (0, _assertThisInitialized2['default'])(_this),
+      'GetOpenIdAuth',
+      /*#__PURE__*/ (function () {
+        var _ref3 = (0, _asyncToGenerator2['default'])(
+          /*#__PURE__*/ _regenerator['default'].mark(function _callee3(id, field) {
+            var data;
+            return _regenerator['default'].wrap(
+              function _callee3$(_context3) {
+                while (1) {
+                  switch ((_context3.prev = _context3.next)) {
+                    case 0:
+                      _context3.prev = 0;
+                      _context3.next = 3;
+                      return _this.Model.findOne(
+                        _objectSpread(
+                          _objectSpread({}, _this.Config),
+                          {},
+                          {
+                            where: (0, _defineProperty2['default'])({}, field, id)
+                          }
+                        )
+                      );
+
+                    case 3:
+                      data = _context3.sent;
+                      return _context3.abrupt('return', {
+                        data: _objectSpread({}, data),
+                        success: true
+                      });
+
+                    case 7:
+                      _context3.prev = 7;
+                      _context3.t0 = _context3['catch'](0);
+                      return _context3.abrupt('return', {
+                        success: false
+                      });
+
+                    case 10:
+                    case 'end':
+                      return _context3.stop();
+                  }
+                }
+              },
+              _callee3,
+              null,
+              [[0, 7]]
+            );
+          })
+        );
+
+        return function (_x3, _x4) {
+          return _ref3.apply(this, arguments);
         };
       })()
     );
@@ -251,36 +331,36 @@ var UserCrud = /*#__PURE__*/ (function (_CrudInterface) {
       (0, _assertThisInitialized2['default'])(_this),
       'Create',
       /*#__PURE__*/ (function () {
-        var _ref3 = (0, _asyncToGenerator2['default'])(
-          /*#__PURE__*/ _regenerator['default'].mark(function _callee3(obj) {
+        var _ref4 = (0, _asyncToGenerator2['default'])(
+          /*#__PURE__*/ _regenerator['default'].mark(function _callee4(obj) {
             var data, _error$errors$, message, type, path, origin;
 
             return _regenerator['default'].wrap(
-              function _callee3$(_context3) {
+              function _callee4$(_context4) {
                 while (1) {
-                  switch ((_context3.prev = _context3.next)) {
+                  switch ((_context4.prev = _context4.next)) {
                     case 0:
-                      _context3.prev = 0;
+                      _context4.prev = 0;
                       obj.uuiduser = (0, _uuid.v4)();
-                      _context3.next = 4;
+                      _context4.next = 4;
                       return _this.Model.create(obj);
 
                     case 4:
-                      data = _context3.sent;
-                      return _context3.abrupt('return', {
+                      data = _context4.sent;
+                      return _context4.abrupt('return', {
                         data: JSON.parse(JSON.stringify(data)),
                         success: true
                       });
 
                     case 8:
-                      _context3.prev = 8;
-                      _context3.t0 = _context3['catch'](0);
-                      (_error$errors$ = _context3.t0.errors[0]),
+                      _context4.prev = 8;
+                      _context4.t0 = _context4['catch'](0);
+                      (_error$errors$ = _context4.t0.errors[0]),
                         (message = _error$errors$.message),
                         (type = _error$errors$.type),
                         (path = _error$errors$.path),
                         (origin = _error$errors$.origin);
-                      return _context3.abrupt('return', {
+                      return _context4.abrupt('return', {
                         success: false,
                         message: message,
                         type: type,
@@ -290,75 +370,13 @@ var UserCrud = /*#__PURE__*/ (function (_CrudInterface) {
 
                     case 12:
                     case 'end':
-                      return _context3.stop();
-                  }
-                }
-              },
-              _callee3,
-              null,
-              [[0, 8]]
-            );
-          })
-        );
-
-        return function (_x4) {
-          return _ref3.apply(this, arguments);
-        };
-      })()
-    );
-    (0, _defineProperty2['default'])(
-      (0, _assertThisInitialized2['default'])(_this),
-      'Update',
-      /*#__PURE__*/ (function () {
-        var _ref4 = (0, _asyncToGenerator2['default'])(
-          /*#__PURE__*/ _regenerator['default'].mark(function _callee4(obj) {
-            var FieldPk, pk, data, _error$errors$2, message, type, path, origin;
-
-            return _regenerator['default'].wrap(
-              function _callee4$(_context4) {
-                while (1) {
-                  switch ((_context4.prev = _context4.next)) {
-                    case 0:
-                      _context4.prev = 0;
-                      FieldPk = _this.Model.primaryKeyAttribute;
-                      pk = obj[FieldPk];
-                      delete obj[FieldPk];
-                      _context4.next = 6;
-                      return _this.Model.update(obj, {
-                        where: (0, _defineProperty2['default'])({}, FieldPk, pk)
-                      });
-
-                    case 6:
-                      data = _context4.sent;
-                      return _context4.abrupt('return', {
-                        success: true
-                      });
-
-                    case 10:
-                      _context4.prev = 10;
-                      _context4.t0 = _context4['catch'](0);
-                      (_error$errors$2 = _context4.t0.errors[0]),
-                        (message = _error$errors$2.message),
-                        (type = _error$errors$2.type),
-                        (path = _error$errors$2.path),
-                        (origin = _error$errors$2.origin);
-                      return _context4.abrupt('return', {
-                        success: false,
-                        message: message,
-                        type: type,
-                        path: path,
-                        origin: origin
-                      });
-
-                    case 14:
-                    case 'end':
                       return _context4.stop();
                   }
                 }
               },
               _callee4,
               null,
-              [[0, 10]]
+              [[0, 8]]
             );
           })
         );
@@ -370,11 +388,11 @@ var UserCrud = /*#__PURE__*/ (function (_CrudInterface) {
     );
     (0, _defineProperty2['default'])(
       (0, _assertThisInitialized2['default'])(_this),
-      'Delete',
+      'Update',
       /*#__PURE__*/ (function () {
         var _ref5 = (0, _asyncToGenerator2['default'])(
-          /*#__PURE__*/ _regenerator['default'].mark(function _callee5(pk) {
-            var FieldPk, data, _error$errors$3, message, type, path, origin;
+          /*#__PURE__*/ _regenerator['default'].mark(function _callee5(obj) {
+            var FieldPk, pk, data, _error$errors$2, message, type, path, origin;
 
             return _regenerator['default'].wrap(
               function _callee5$(_context5) {
@@ -383,7 +401,69 @@ var UserCrud = /*#__PURE__*/ (function (_CrudInterface) {
                     case 0:
                       _context5.prev = 0;
                       FieldPk = _this.Model.primaryKeyAttribute;
-                      _context5.next = 4;
+                      pk = obj[FieldPk];
+                      delete obj[FieldPk];
+                      _context5.next = 6;
+                      return _this.Model.update(obj, {
+                        where: (0, _defineProperty2['default'])({}, FieldPk, pk)
+                      });
+
+                    case 6:
+                      data = _context5.sent;
+                      return _context5.abrupt('return', {
+                        success: true
+                      });
+
+                    case 10:
+                      _context5.prev = 10;
+                      _context5.t0 = _context5['catch'](0);
+                      (_error$errors$2 = _context5.t0.errors[0]),
+                        (message = _error$errors$2.message),
+                        (type = _error$errors$2.type),
+                        (path = _error$errors$2.path),
+                        (origin = _error$errors$2.origin);
+                      return _context5.abrupt('return', {
+                        success: false,
+                        message: message,
+                        type: type,
+                        path: path,
+                        origin: origin
+                      });
+
+                    case 14:
+                    case 'end':
+                      return _context5.stop();
+                  }
+                }
+              },
+              _callee5,
+              null,
+              [[0, 10]]
+            );
+          })
+        );
+
+        return function (_x6) {
+          return _ref5.apply(this, arguments);
+        };
+      })()
+    );
+    (0, _defineProperty2['default'])(
+      (0, _assertThisInitialized2['default'])(_this),
+      'Delete',
+      /*#__PURE__*/ (function () {
+        var _ref6 = (0, _asyncToGenerator2['default'])(
+          /*#__PURE__*/ _regenerator['default'].mark(function _callee6(pk) {
+            var FieldPk, data, _error$errors$3, message, type, path, origin;
+
+            return _regenerator['default'].wrap(
+              function _callee6$(_context6) {
+                while (1) {
+                  switch ((_context6.prev = _context6.next)) {
+                    case 0:
+                      _context6.prev = 0;
+                      FieldPk = _this.Model.primaryKeyAttribute;
+                      _context6.next = 4;
                       return _this.Model.update(
                         {
                           state: 'inactivo'
@@ -394,20 +474,20 @@ var UserCrud = /*#__PURE__*/ (function (_CrudInterface) {
                       );
 
                     case 4:
-                      data = _context5.sent;
-                      return _context5.abrupt('return', {
+                      data = _context6.sent;
+                      return _context6.abrupt('return', {
                         success: true
                       });
 
                     case 8:
-                      _context5.prev = 8;
-                      _context5.t0 = _context5['catch'](0);
-                      (_error$errors$3 = _context5.t0.errors[0]),
+                      _context6.prev = 8;
+                      _context6.t0 = _context6['catch'](0);
+                      (_error$errors$3 = _context6.t0.errors[0]),
                         (message = _error$errors$3.message),
                         (type = _error$errors$3.type),
                         (path = _error$errors$3.path),
                         (origin = _error$errors$3.origin);
-                      return _context5.abrupt('return', {
+                      return _context6.abrupt('return', {
                         success: false,
                         message: message,
                         type: type,
@@ -417,19 +497,19 @@ var UserCrud = /*#__PURE__*/ (function (_CrudInterface) {
 
                     case 12:
                     case 'end':
-                      return _context5.stop();
+                      return _context6.stop();
                   }
                 }
               },
-              _callee5,
+              _callee6,
               null,
               [[0, 8]]
             );
           })
         );
 
-        return function (_x6) {
-          return _ref5.apply(this, arguments);
+        return function (_x7) {
+          return _ref6.apply(this, arguments);
         };
       })()
     );

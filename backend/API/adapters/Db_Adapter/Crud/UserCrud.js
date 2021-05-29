@@ -22,7 +22,23 @@ export default class UserCrud extends CrudInterface {
   GetPk = async pk => {
     try {
       const data = await this.Model.findByPk(pk, {
-        ...this.Config
+        ...this.Config,
+        include: [{ association: 'access', attributes: ['type'] }]
+      });
+      return { data, success: true };
+    } catch (error) {
+      return { success: false };
+    }
+  };
+
+  GetPk2 = async pk => {
+    try {
+      const data = await this.Model.findByPk(pk, {
+        ...this.Config,
+        include: [
+          { association: 'access', attributes: ['type'] },
+          { association: 'business', attributes: ['idbusiness'] }
+        ]
       });
       return { data, success: true };
     } catch (error) {

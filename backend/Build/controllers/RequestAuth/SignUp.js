@@ -118,7 +118,7 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                           httpOnly: true // http only, prevents JavaScript cookie access
                         }
                       );
-                      res.status(202).send({
+                      res.status(201).send({
                         mesage: 'Se a iniciado Secion',
                         data: {
                           iduser: User.data.iduser,

@@ -17,8 +17,9 @@ export default class RequestUsers {
     try {
       const { id } = req.params;
 
-      const User = await this.UserCrud.GetPk(id);
+      let User = await this.UserCrud.GetPk(id);
 
+      if (User.data.access.type === 'N') User = await this.UserCrud.GetPk2(id);
       if (User.success) res.status(User.data ? 200 : 204).send(User);
     } catch (error) {
       const { ERDB404 } = ErrorMessages;

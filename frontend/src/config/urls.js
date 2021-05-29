@@ -10,7 +10,8 @@ export const business = {
   getAllBusinessServicess: id => `/API/v1/Business/Services/GetAll/${id}/Client`,
   getBusinessPk: id => `/API/v1/Business/GetPk/${id}`,
   getUserPk: id => `/API/v1/Users/GetPk/${id}`,
-  postAppointment: '/API/v1/Appointment/Create'
+  postAppointment: '/API/v1/Appointment/Create',
+  businessCreate: '/API/v1/Business/Create'
 };
 
 export const auth = {

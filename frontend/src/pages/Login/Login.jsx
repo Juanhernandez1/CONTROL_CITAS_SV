@@ -24,7 +24,7 @@ const layout = {
 
 const Login = () => {
   const [negociosLogin, setnegociosLogin] = useState(false);
-  const { setuserauthenticates, appintmentTime, setRegisterType } = useContext(GlobalContext);
+  const { setuserauthenticates, appintmentTime } = useContext(GlobalContext);
   const { push } = useHistory();
 
   const openNotificationWithIcon = type => {
@@ -34,12 +34,22 @@ const Login = () => {
     });
   };
 
+  const openNotificationWithIcon2 = type => {
+    notification[type]({
+      message: 'No Se puede Acceder',
+      description: 'Credenciales no validas, Puede que su usario no pertenesca a algun negocio'
+    });
+  };
+
   const onFinish = values => {
     console.log('Success:', values);
     (async () => {
       console.log('ejecutando');
       try {
-        const { data, status } = await postData(auth.Login, values);
+        const { data, status } = await postData(
+          !negociosLogin ? auth.LoginBusiness('N') : auth.Login,
+          values
+        );
         if (status === 202) {
           console.log(data);
           setuserauthenticates(data.data);
@@ -52,16 +62,18 @@ const Login = () => {
             1
           );
 
-          push(
-            appintmentTime.hasOwnProperty('idbusiness')
-              ? paths.appointmentDetail(appintmentTime.idbusiness)
-              : '/'
-          );
+          !negociosLogin
+            ? push('/')
+            : push(
+                appintmentTime.hasOwnProperty('idbusiness')
+                  ? paths.appointmentDetail(appintmentTime.idbusiness)
+                  : '/'
+              );
         } else {
-          openNotificationWithIcon('error');
+          !negociosLogin ? openNotificationWithIcon2('error') : openNotificationWithIcon('error');
         }
       } catch (error) {
-        push('/');
+        !negociosLogin ? openNotificationWithIcon2('error') : openNotificationWithIcon('error');
         console.log(error);
       }
     })();
@@ -70,10 +82,6 @@ const Login = () => {
   const onFinishFailed = errorInfo => {
     console.log('Failed:', errorInfo);
   };
-
-  useEffect(() => {
-    setRegisterType('C');
-  }, []);
 
   return (
     <Row justify="center" style={{ width: '-webkit-fill-available' }}>
@@ -93,7 +101,6 @@ const Login = () => {
               type="link"
               onClick={() => {
                 setnegociosLogin(!negociosLogin);
-                setRegisterType(!negociosLogin ? 'N' : 'C');
               }}
             >
               {!negociosLogin ? 'Negocios' : 'Usuario'}
@@ -222,7 +229,7 @@ const Login = () => {
               <Button
                 type="link"
                 onClick={() => {
-                  push(paths.register);
+                  push(paths.register(negociosLogin ? 'N' : 'C'));
                 }}
               >
                 Registrarse

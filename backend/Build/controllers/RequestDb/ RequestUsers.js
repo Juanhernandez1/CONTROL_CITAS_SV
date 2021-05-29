@@ -83,18 +83,31 @@ var RequestUsers = function RequestUsers(userCrud, accessCrud, appointmentCrud) 
 
                   case 4:
                     User = _context.sent;
-                    if (User.success) res.status(User.data ? 200 : 204).send(User);
-                    _context.next = 13;
-                    break;
+
+                    if (!(User.data.access.type === 'N')) {
+                      _context.next = 9;
+                      break;
+                    }
+
+                    _context.next = 8;
+                    return _this.UserCrud.GetPk2(id);
 
                   case 8:
-                    _context.prev = 8;
+                    User = _context.sent;
+
+                  case 9:
+                    if (User.success) res.status(User.data ? 200 : 204).send(User);
+                    _context.next = 17;
+                    break;
+
+                  case 12:
+                    _context.prev = 12;
                     _context.t0 = _context['catch'](0);
                     ERDB404 = _ErrorMessages['default'].ERDB404;
                     console.log(ERDB404);
                     res.status(404).send(ERDB404);
 
-                  case 13:
+                  case 17:
                   case 'end':
                     return _context.stop();
                 }
@@ -102,7 +115,7 @@ var RequestUsers = function RequestUsers(userCrud, accessCrud, appointmentCrud) 
             },
             _callee,
             null,
-            [[0, 8]]
+            [[0, 12]]
           );
         })
       );

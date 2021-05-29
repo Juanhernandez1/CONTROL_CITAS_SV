@@ -9,6 +9,7 @@ import './AppointmentBook.css';
 import { useHistory, useParams } from 'react-router';
 import { paths } from '../../config/paths';
 import { GlobalContext } from '../../context/GlobalState';
+import { getCookie, setCookie } from '../../utils/Cookies';
 
 const { Title, Text } = Typography;
 
@@ -27,6 +28,9 @@ const AppointmentBook = () => {
   const { push } = useHistory();
   const { id } = useParams();
 
+  console.log(user);
+
+  console.log('mejorada', getCookie('authControlCitas'));
   const handleDateSelection = (date = '') => {
     setAppointmentTime(date);
     setDateSelected(date.fulldate.split('/').join('-'));

@@ -15,7 +15,9 @@ const AvailabilityTable = ({ handleTimeSelection, dateSelected }) => {
   );
   let cotnadorId = 0;
   const dataTable = availability.map(element => {
-    const timing = `${element.hour}:${element.minute} ${element.time}`;
+    const timing = `${element.hour}:${
+      element.minute < 10 ? `0${element.minute}` : element.minute
+    } ${element.time}`;
     const key = timing;
     cotnadorId++;
     return { time: timing, key, state: element.state, obtHora: element, id: cotnadorId };

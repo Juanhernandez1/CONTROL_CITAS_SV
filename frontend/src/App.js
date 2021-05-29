@@ -21,7 +21,7 @@ const App = () => {
         <Switch>
           <Route exact path={paths.home} component={Landing} layout={LayoutHeader} />
           <Route exact path={paths.login} component={LoginCitas} layout={LayoutHeader} />
-          <Route exact path={paths.register} component={Register} layout={LayoutHeader} />
+          <Route exact path={paths.register(':typeR')} component={Register} layout={LayoutHeader} />
           <Route exact path={paths.businessResult} component={Business} layout={LayoutHeader} />
           <Route
             exact
