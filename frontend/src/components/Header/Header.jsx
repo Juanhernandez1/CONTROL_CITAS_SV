@@ -15,17 +15,22 @@ import { GlobalContext } from '../../context/GlobalState';
 import './Header.css';
 import { setCookie } from '../../utils/Cookies';
 
-const { Item, SubMenu } = Menu;
+const { Item, SubMenu, ItemGroup } = Menu;
 
 const Header = ({ hasLogo = false }) => {
   const { setBusinessName, user } = useContext(GlobalContext);
+
   const className = hasLogo ? 'header header-space-between' : 'header header-flex-end';
   const { push } = useHistory();
 
   const handleMenuItem = ({ key }) => {
     if (key === '2') {
       setBusinessName('');
-      push(paths.businessResult);
+      push(
+        user.access.type === 'N'
+          ? paths.businessDetail(user.business.idbusiness)
+          : paths.businessResult
+      );
     }
   };
 
@@ -50,26 +55,26 @@ const Header = ({ hasLogo = false }) => {
         )}
         {!isEmpty(user) && (
           <SubMenu key="SubMenu" icon={<UserOutlined />} title={`${user.name} ${user.lastname}`}>
-            <Menu.ItemGroup>
-              <Menu.Item key="setting:1">
+            <ItemGroup key="GroupMenu">
+              <Item key="GroupMenu1">
                 <Button
                   icon={<UserOutlined />}
                   onClick={() => {
-                    setCookie('authControlCitas', JSON.stringify({}), 1);
-                    window.location.reload();
+                    console.log(user);
+                    user.access.type === 'N' && paths.businessDetail(user.business.idbusiness);
                   }}
                   type="link"
                   style={{ color: 'white' }}
                 >
                   Perfil
                 </Button>
-              </Menu.Item>
-              <Menu.Item key="setting:2">
+              </Item>
+              <Item key="GroupMenu2">
                 <Button
                   icon={<LogoutOutlined />}
                   onClick={() => {
                     setCookie('authControlCitas', JSON.stringify({}), 1);
-                    console.log(window.location.pathname);
+
                     if (window.location.pathname !== '/login') {
                       push('/');
                     }
@@ -80,8 +85,8 @@ const Header = ({ hasLogo = false }) => {
                 >
                   Salir
                 </Button>
-              </Menu.Item>
-            </Menu.ItemGroup>
+              </Item>
+            </ItemGroup>
           </SubMenu>
         )}
       </Menu>

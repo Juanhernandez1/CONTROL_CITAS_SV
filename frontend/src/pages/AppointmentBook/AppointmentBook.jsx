@@ -24,13 +24,10 @@ const AppointmentBook = () => {
       message.error(errorMessage);
     }
   );
-
+  console.log(user);
   const { push } = useHistory();
   const { id } = useParams();
 
-  console.log(user);
-
-  console.log('mejorada', getCookie('authControlCitas'));
   const handleDateSelection = (date = '') => {
     setAppointmentTime(date);
     setDateSelected(date.fulldate.split('/').join('-'));

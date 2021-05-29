@@ -358,7 +358,7 @@ export default class SignUp {
       const Acces = await this.AccessCrud.FindCompareB(username, password, type);
 
       if (Acces.success) {
-        const User = await this.UserCrud.GetPk(Acces.data.iduser);
+        const User = await this.UserCrud.GetPk2(Acces.data.iduser);
         if (User.success) {
           const token = this.TokenAuth.CreateToken(User.data);
 

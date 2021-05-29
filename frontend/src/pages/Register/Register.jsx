@@ -108,7 +108,7 @@ const Register = () => {
             );
 
             if (Business.success && status === 201)
-              push(paths.appointmentDetail(Business.data.idbusiness));
+              push(paths.businessDetail(Business.data.idbusiness));
           } else {
             openNotificationWithIconB('error');
           }

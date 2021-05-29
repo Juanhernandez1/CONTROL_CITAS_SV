@@ -9,7 +9,7 @@ import { auth } from '../../config/urls';
 import { paths } from '../../config/paths';
 
 import popupTools from 'popup-tools';
-import { setCookie } from '../../utils/Cookies';
+import { getCookie, setCookie } from '../../utils/Cookies';
 import { useHistory } from 'react-router';
 import { postData } from '../../api/baseClient';
 
@@ -44,10 +44,10 @@ const Login = () => {
   const onFinish = values => {
     console.log('Success:', values);
     (async () => {
-      console.log('ejecutando');
+      console.log('ejecutando', negociosLogin ? auth.LoginBusiness('N') : auth.Login);
       try {
         const { data, status } = await postData(
-          !negociosLogin ? auth.LoginBusiness('N') : auth.Login,
+          negociosLogin ? auth.LoginBusiness('N') : auth.Login,
           values
         );
         if (status === 202) {
@@ -62,18 +62,19 @@ const Login = () => {
             1
           );
 
-          !negociosLogin
-            ? push('/')
-            : push(
+          console.log(getCookie('authControlCitas'));
+          negociosLogin
+            ? push(
                 appintmentTime.hasOwnProperty('idbusiness')
                   ? paths.appointmentDetail(appintmentTime.idbusiness)
-                  : '/'
-              );
+                  : paths.businessDetail(appintmentTime.idbusiness)
+              )
+            : push('/');
         } else {
-          !negociosLogin ? openNotificationWithIcon2('error') : openNotificationWithIcon('error');
+          negociosLogin ? openNotificationWithIcon2('error') : openNotificationWithIcon('error');
         }
       } catch (error) {
-        !negociosLogin ? openNotificationWithIcon2('error') : openNotificationWithIcon('error');
+        negociosLogin ? openNotificationWithIcon2('error') : openNotificationWithIcon('error');
         console.log(error);
       }
     })();
