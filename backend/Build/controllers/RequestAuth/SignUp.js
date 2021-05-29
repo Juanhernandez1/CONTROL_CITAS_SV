@@ -592,7 +592,7 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                     }
 
                     _context5.next = 9;
-                    return _this.UserCrud.GetPk(Acces.data.iduser);
+                    return _this.UserCrud.GetPk2(Acces.data.iduser);
 
                   case 9:
                     User = _context5.sent;

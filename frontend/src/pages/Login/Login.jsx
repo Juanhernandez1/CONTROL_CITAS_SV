@@ -67,7 +67,7 @@ const Login = () => {
             ? push(
                 appintmentTime.hasOwnProperty('idbusiness')
                   ? paths.appointmentDetail(appintmentTime.idbusiness)
-                  : paths.businessDetail(appintmentTime.idbusiness)
+                  : paths.businessDetail(data.data.business.idbusiness)
               )
             : push('/');
         } else {
