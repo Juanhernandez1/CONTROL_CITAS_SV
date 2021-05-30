@@ -346,7 +346,10 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
       'GetPkForBusiness',
       /*#__PURE__*/ (function () {
         var _ref4 = (0, _asyncToGenerator2['default'])(
-          /*#__PURE__*/ _regenerator['default'].mark(function _callee4(pk, idbusiness) {
+          /*#__PURE__*/ _regenerator['default'].mark(function _callee4(
+            uuidappointment,
+            idbusiness
+          ) {
             var data;
             return _regenerator['default'].wrap(
               function _callee4$(_context4) {
@@ -355,13 +358,13 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
                     case 0:
                       _context4.prev = 0;
                       _context4.next = 3;
-                      return _this.Model.findByPk(
-                        pk,
+                      return _this.Model.findAll(
                         _objectSpread(
                           _objectSpread(
                             {
                               where: {
-                                idbusiness: idbusiness
+                                idbusiness: idbusiness,
+                                uuidappointment: uuidappointment
                               }
                             },
                             _this.Config
@@ -371,16 +374,15 @@ var AppointmentCrud = /*#__PURE__*/ (function (_CrudInterface) {
                             include: [
                               {
                                 association: 'AppointmentiduserUser',
-                                attributes: ['name', 'lastname', 'phone']
+                                attributes: ['name', 'lastname', 'phone', 'state']
                               },
                               {
-                                association: 'DetailidappointmentAppointment',
-                                include: {
-                                  association: 'DetailidservicesService',
-                                  attributes: ['servicename']
-                                },
-                                raw: true,
-                                nest: true
+                                association: 'details',
+                                include: [
+                                  {
+                                    association: 'DetailidservicesService'
+                                  }
+                                ]
                               }
                             ]
                           }

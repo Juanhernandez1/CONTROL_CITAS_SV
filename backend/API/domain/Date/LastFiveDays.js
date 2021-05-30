@@ -7,7 +7,7 @@ function LastFiveDays() {
 
   for (let index = 0; index <= 7; index++) {
     const DateName = MomentSv().add(index, 'days').format('dddd');
-    if (DateName === 'sábado') index = index + 2;
+    if (DateName === 'sábado' || DateName === 'domingo') index = index + 1;
 
     if (ListFiveDays.length < 5)
       ListFiveDays.push({

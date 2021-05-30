@@ -181,7 +181,7 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
     /*#__PURE__*/ (function () {
       var _ref2 = (0, _asyncToGenerator2['default'])(
         /*#__PURE__*/ _regenerator['default'].mark(function _callee2(req, res) {
-          var GoogleProfiel, User, objUsers, Users, token, _token, ERDB404;
+          var GoogleProfiel, UserG, objUsers, UsersC, token, _token, ERDB404;
 
           return _regenerator['default'].wrap(
             function _callee2$(_context2) {
@@ -194,9 +194,9 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                     return _this.UserCrud.GetOpenIdAuth(GoogleProfiel.sub, 'uuidgoogle');
 
                   case 4:
-                    User = _context2.sent;
+                    UserG = _context2.sent;
 
-                    if (!(User.data.uuidgoogle === undefined)) {
+                    if (!(UserG.data.uuidgoogle === undefined)) {
                       _context2.next = 13;
                       break;
                     }
@@ -216,17 +216,17 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                     return _this.UserCrud.Create(objUsers);
 
                   case 9:
-                    Users = _context2.sent;
+                    UsersC = _context2.sent;
 
-                    if (Users.success) {
-                      token = _this.TokenAuth.CreateToken(User.data);
+                    if (UsersC.success) {
+                      token = _this.TokenAuth.CreateToken(UsersC.data);
                       console.log(token);
                       res.cookie(
                         'cookiauthControlCitas',
                         JSON.stringify({
                           auth: true,
                           token: token,
-                          id: User.data.iduser
+                          id: UsersC.data.iduser
                         }),
                         {
                           maxAge: 86400 * 1000,
@@ -235,19 +235,20 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                         }
                       ); //  res.status(201).send({ Users });
 
-                      res.status(202).send(
+                      res.status(201).send(
                         _popupTools['default'].popupResponse({
                           mesage: 'Se a iniciado Secion',
-                          success: true,
                           data: {
-                            iduser: User.data.iduser,
-                            lastname: User.data.lastname,
-                            name: User.data.name,
-                            state: User.data.state
+                            iduser: UsersC.data.iduser,
+                            lastname: UsersC.data.lastname,
+                            name: UsersC.data.name,
+                            state: UsersC.data.state,
+                            type: 'C'
                           },
                           auth: true,
                           dateExpired: (0, _moment['default'])().format('l'),
-                          token: token
+                          token: token,
+                          success: true
                         })
                       );
                     }
@@ -256,13 +257,13 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                     break;
 
                   case 13:
-                    _token = _this.TokenAuth.CreateToken(User.data);
+                    _token = _this.TokenAuth.CreateToken(UserG.data);
                     res.cookie(
                       'cookiauthControlCitas',
                       JSON.stringify({
                         auth: true,
                         token: _token,
-                        id: User.data.iduser
+                        id: UserG.data.iduser
                       }),
                       {
                         maxAge: 86400 * 1000,
@@ -274,16 +275,17 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                     res.status(202).send(
                       _popupTools['default'].popupResponse({
                         mesage: 'Se a iniciado Secion',
-                        success: true,
                         data: {
-                          iduser: User.data.iduser,
-                          lastname: User.data.lastname,
-                          name: User.data.name,
-                          state: User.data.state
+                          iduser: UserG.data.iduser,
+                          lastname: UserG.data.lastname,
+                          name: UserG.data.name,
+                          state: UserG.data.state,
+                          type: 'C'
                         },
                         auth: true,
                         dateExpired: (0, _moment['default'])().format('l'),
-                        token: _token
+                        token: _token,
+                        success: true
                       })
                     );
 
@@ -322,7 +324,7 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
     /*#__PURE__*/ (function () {
       var _ref3 = (0, _asyncToGenerator2['default'])(
         /*#__PURE__*/ _regenerator['default'].mark(function _callee3(req, res) {
-          var facebookProfiel, User, objUsers, Users, token, _token2, ERDB404;
+          var facebookProfiel, UserFb, objUsers, UsersC, token, _token2, ERDB404;
 
           return _regenerator['default'].wrap(
             function _callee3$(_context3) {
@@ -335,9 +337,9 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                     return _this.UserCrud.GetOpenIdAuth(facebookProfiel.id, 'uuidfacebook');
 
                   case 4:
-                    User = _context3.sent;
+                    UserFb = _context3.sent;
 
-                    if (!(User.data.uuidfacebook === undefined)) {
+                    if (!(UserFb.data.uuidfacebook === undefined)) {
                       _context3.next = 13;
                       break;
                     }
@@ -348,7 +350,7 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                       name: facebookProfiel.name,
                       lastname: '',
                       phone: '0000-0000',
-                      email: '',
+                      email: ''.concat(facebookProfiel.id, '@FakeMail.com'),
                       uuidfacebook: facebookProfiel.id,
                       uuidgoogle: null,
                       state: 'Activo'
@@ -357,17 +359,16 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                     return _this.UserCrud.Create(objUsers);
 
                   case 9:
-                    Users = _context3.sent;
+                    UsersC = _context3.sent;
 
-                    if (Users.success) {
-                      token = _this.TokenAuth.CreateToken(User.data);
-                      console.log(token);
+                    if (UsersC.success) {
+                      token = _this.TokenAuth.CreateToken(UsersC.data);
                       res.cookie(
                         'cookiauthControlCitas',
                         JSON.stringify({
                           auth: true,
                           token: token,
-                          id: User.data
+                          id: UsersC.data
                         }),
                         {
                           maxAge: 86400 * 1000,
@@ -376,19 +377,20 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                         }
                       ); // res.status(201).send({ Users });
 
-                      res.status(202).send(
+                      res.status(201).send(
                         _popupTools['default'].popupResponse({
                           mesage: 'Se a iniciado Secion',
-                          success: true,
                           data: {
-                            iduser: User.data.iduser,
-                            lastname: User.data.lastname,
-                            name: User.data.name,
-                            state: User.data.state
+                            iduser: UsersC.data.iduser,
+                            lastname: UsersC.data.lastname,
+                            name: UsersC.data.name,
+                            state: UsersC.data.state,
+                            type: 'C'
                           },
                           auth: true,
                           dateExpired: (0, _moment['default'])().format('l'),
-                          token: token
+                          token: token,
+                          success: true
                         })
                       );
                     }
@@ -397,13 +399,13 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                     break;
 
                   case 13:
-                    _token2 = _this.TokenAuth.CreateToken(User.data);
+                    _token2 = _this.TokenAuth.CreateToken(UserFb.data);
                     res.cookie(
                       'cookiauthControlCitas',
                       JSON.stringify({
                         auth: true,
                         token: _token2,
-                        id: User.data.iduser
+                        id: UserFb.data.iduser
                       }),
                       {
                         maxAge: 86400 * 1000,
@@ -415,16 +417,17 @@ var SignUp = function SignUp(TokenAuth, userCrud, accessCrud) {
                     res.status(202).send(
                       _popupTools['default'].popupResponse({
                         mesage: 'Se a iniciado Secion',
-                        success: true,
                         data: {
-                          iduser: User.data.iduser,
-                          lastname: User.data.lastname,
-                          name: User.data.name,
-                          state: User.data.state
+                          iduser: UserFb.data.iduser,
+                          lastname: UserFb.data.lastname,
+                          name: UserFb.data.name,
+                          state: UserFb.data.state,
+                          type: 'C'
                         },
                         auth: true,
                         dateExpired: (0, _moment['default'])().format('l'),
-                        token: _token2
+                        token: _token2,
+                        success: true
                       })
                     );
 

@@ -17,6 +17,38 @@ var _defineProperty2 = _interopRequireDefault(require('@babel/runtime/helpers/de
 
 var _ErrorMessages = _interopRequireDefault(require('../../assets/ErrorMessages'));
 
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) {
+      symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+    }
+    keys.push.apply(keys, symbols);
+  }
+  return keys;
+}
+
+function _objectSpread(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        (0, _defineProperty2['default'])(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+  return target;
+}
+
 function _classStaticPrivateFieldSpecSet(receiver, classConstructor, descriptor, value) {
   _classCheckPrivateStaticAccess(receiver, classConstructor);
   _classCheckPrivateStaticFieldDescriptor(descriptor, 'set');
@@ -64,6 +96,15 @@ var RequestAppoiment = function RequestAppoiment(appointmentCrud, appointmentGen
   var _this = this;
 
   (0, _classCallCheck2['default'])(this, RequestAppoiment);
+  (0, _defineProperty2['default'])(this, 'replaceAt', function (index, replacement, string) {
+    if (index >= _this.length) {
+      return string.valueOf();
+    }
+
+    var chars = string.split('');
+    chars[index] = replacement;
+    return chars.join('');
+  });
   (0, _defineProperty2['default'])(this, 'RequestAppoimentLastFiveDay', function (req, res) {
     try {
       var LastFiveDay = _this.AppointmentGen.GetLastFiveDays();
@@ -82,7 +123,14 @@ var RequestAppoiment = function RequestAppoiment(appointmentCrud, appointmentGen
     /*#__PURE__*/ (function () {
       var _ref = (0, _asyncToGenerator2['default'])(
         /*#__PURE__*/ _regenerator['default'].mark(function _callee(req, res) {
-          var _req$body, idappointmen, idbusiness, idAppointmen, DataList, ERDB404;
+          var _req$params,
+            idappointmen,
+            idbusiness,
+            idAppointmen,
+            DataList,
+            ArrDetails,
+            responseData,
+            ERDB404;
 
           return _regenerator['default'].wrap(
             function _callee$(_context) {
@@ -90,28 +138,40 @@ var RequestAppoiment = function RequestAppoiment(appointmentCrud, appointmentGen
                 switch ((_context.prev = _context.next)) {
                   case 0:
                     _context.prev = 0;
-                    (_req$body = req.body),
-                      (idappointmen = _req$body.idappointmen),
-                      (idbusiness = _req$body.idbusiness);
-                    idAppointmen = idappointmen.replace(/-/g, '/').replaceAt(2, '-');
-                    _context.next = 5;
-                    return _this.AppointmentCrud.GetPkForBusiness(idAppointmen, idbusiness);
+                    (_req$params = req.params),
+                      (idappointmen = _req$params.idappointmen),
+                      (idbusiness = _req$params.idbusiness);
+                    console.log(idappointmen, idbusiness);
+                    idAppointmen = idappointmen.replace(/-/g, '/');
+                    console.log(_this.replaceAt(1, '-', idAppointmen));
+                    _context.next = 7;
+                    return _this.AppointmentCrud.GetPkForBusiness(
+                      _this.replaceAt(1, '-', idAppointmen),
+                      idbusiness
+                    );
 
-                  case 5:
+                  case 7:
                     DataList = _context.sent;
-                    console.log(DataList);
-                    if (DataList.success) res.status(200).send(DataList);
-                    _context.next = 15;
+                    ArrDetails = [];
+                    responseData = _objectSpread({}, DataList.data[0]);
+                    DataList.data.forEach(function (element) {
+                      console.log(element.details);
+                      ArrDetails.push(element.details.DetailidservicesService);
+                    });
+                    responseData.details = ArrDetails;
+                    console.log(responseData);
+                    if (DataList.success) res.status(200).send(responseData);
+                    _context.next = 21;
                     break;
 
-                  case 10:
-                    _context.prev = 10;
+                  case 16:
+                    _context.prev = 16;
                     _context.t0 = _context['catch'](0);
                     ERDB404 = _ErrorMessages['default'].ERDB404;
                     console.log(ERDB404);
                     res.status(404).send(ERDB404);
 
-                  case 15:
+                  case 21:
                   case 'end':
                     return _context.stop();
                 }
@@ -119,7 +179,7 @@ var RequestAppoiment = function RequestAppoiment(appointmentCrud, appointmentGen
             },
             _callee,
             null,
-            [[0, 10]]
+            [[0, 16]]
           );
         })
       );
@@ -135,7 +195,7 @@ var RequestAppoiment = function RequestAppoiment(appointmentCrud, appointmentGen
     /*#__PURE__*/ (function () {
       var _ref2 = (0, _asyncToGenerator2['default'])(
         /*#__PURE__*/ _regenerator['default'].mark(function _callee2(req, res) {
-          var _req$body2, Objappointment, ArrayDetail, ContactFindEmail, Appoiment, Detail, ERDB404;
+          var _req$body, Objappointment, ArrayDetail, ContactFindEmail, Appoiment, Detail, ERDB404;
 
           return _regenerator['default'].wrap(
             function _callee2$(_context2) {
@@ -143,9 +203,9 @@ var RequestAppoiment = function RequestAppoiment(appointmentCrud, appointmentGen
                 switch ((_context2.prev = _context2.next)) {
                   case 0:
                     _context2.prev = 0;
-                    (_req$body2 = req.body),
-                      (Objappointment = _req$body2.Objappointment),
-                      (ArrayDetail = _req$body2.ArrayDetail);
+                    (_req$body = req.body),
+                      (Objappointment = _req$body.Objappointment),
+                      (ArrayDetail = _req$body.ArrayDetail);
                     _context2.next = 4;
                     return _this.AppointmentCrud.GetAppointmen(Objappointment.uuidappointment);
 
