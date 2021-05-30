@@ -139,9 +139,9 @@ export default class SignUp {
     try {
       const GoogleProfiel = req.session.grant.response.profile;
 
-      const User = await this.UserCrud.GetOpenIdAuth(GoogleProfiel.sub, 'uuidgoogle');
+      const UserG = await this.UserCrud.GetOpenIdAuth(GoogleProfiel.sub, 'uuidgoogle');
 
-      if (User.data.uuidgoogle === undefined) {
+      if (UserG.data.uuidgoogle === undefined) {
         const objUsers = {
           iduser: null,
           uuiduser: GoogleProfiel.sub,
@@ -154,42 +154,43 @@ export default class SignUp {
           state: 'Activo'
         };
 
-        const Users = await this.UserCrud.Create(objUsers);
+        const UsersC = await this.UserCrud.Create(objUsers);
 
-        if (Users.success) {
-          const token = this.TokenAuth.CreateToken(User.data);
+        if (UsersC.success) {
+          const token = this.TokenAuth.CreateToken(UsersC.data);
           console.log(token);
           res.cookie(
             'cookiauthControlCitas',
-            JSON.stringify({ auth: true, token, id: User.data.iduser }),
+            JSON.stringify({ auth: true, token, id: UsersC.data.iduser }),
             {
               maxAge: 86400 * 1000, // 24 hours
               httpOnly: true // http only, prevents JavaScript cookie access
             }
           );
           //  res.status(201).send({ Users });
-          res.status(202).send(
+          res.status(201).send(
             popupTools.popupResponse({
               mesage: 'Se a iniciado Secion',
-              success: true,
               data: {
-                iduser: User.data.iduser,
-                lastname: User.data.lastname,
-                name: User.data.name,
-                state: User.data.state
+                iduser: UsersC.data.iduser,
+                lastname: UsersC.data.lastname,
+                name: UsersC.data.name,
+                state: UsersC.data.state,
+                type: 'C'
               },
               auth: true,
               dateExpired: MomentSv().format('l'),
-              token
+              token,
+              success: true
             })
           );
         }
       } else {
-        const token = this.TokenAuth.CreateToken(User.data);
+        const token = this.TokenAuth.CreateToken(UserG.data);
 
         res.cookie(
           'cookiauthControlCitas',
-          JSON.stringify({ auth: true, token, id: User.data.iduser }),
+          JSON.stringify({ auth: true, token, id: UserG.data.iduser }),
           {
             maxAge: 86400 * 1000, // 24 hours
             httpOnly: true // http only, prevents JavaScript cookie access
@@ -199,16 +200,17 @@ export default class SignUp {
         res.status(202).send(
           popupTools.popupResponse({
             mesage: 'Se a iniciado Secion',
-            success: true,
             data: {
-              iduser: User.data.iduser,
-              lastname: User.data.lastname,
-              name: User.data.name,
-              state: User.data.state
+              iduser: UserG.data.iduser,
+              lastname: UserG.data.lastname,
+              name: UserG.data.name,
+              state: UserG.data.state,
+              type: 'C'
             },
             auth: true,
             dateExpired: MomentSv().format('l'),
-            token
+            token,
+            success: true
           })
         );
       }
@@ -223,57 +225,58 @@ export default class SignUp {
     try {
       const facebookProfiel = req.session.grant.response.profile;
 
-      const User = await this.UserCrud.GetOpenIdAuth(facebookProfiel.id, 'uuidfacebook');
+      const UserFb = await this.UserCrud.GetOpenIdAuth(facebookProfiel.id, 'uuidfacebook');
 
-      if (User.data.uuidfacebook === undefined) {
+      if (UserFb.data.uuidfacebook === undefined) {
         const objUsers = {
           iduser: null,
           uuiduser: facebookProfiel.id,
           name: facebookProfiel.name,
           lastname: '',
           phone: '0000-0000',
-          email: '',
+          email: `${facebookProfiel.id}@FakeMail.com`,
           uuidfacebook: facebookProfiel.id,
           uuidgoogle: null,
           state: 'Activo'
         };
 
-        const Users = await this.UserCrud.Create(objUsers);
+        const UsersC = await this.UserCrud.Create(objUsers);
 
-        if (Users.success) {
-          const token = this.TokenAuth.CreateToken(User.data);
-          console.log(token);
+        if (UsersC.success) {
+          const token = this.TokenAuth.CreateToken(UsersC.data);
+
           res.cookie(
             'cookiauthControlCitas',
-            JSON.stringify({ auth: true, token, id: User.data }),
+            JSON.stringify({ auth: true, token, id: UsersC.data }),
             {
               maxAge: 86400 * 1000, // 24 hours
               httpOnly: true // http only, prevents JavaScript cookie access
             }
           );
           // res.status(201).send({ Users });
-          res.status(202).send(
+          res.status(201).send(
             popupTools.popupResponse({
               mesage: 'Se a iniciado Secion',
-              success: true,
               data: {
-                iduser: User.data.iduser,
-                lastname: User.data.lastname,
-                name: User.data.name,
-                state: User.data.state
+                iduser: UsersC.data.iduser,
+                lastname: UsersC.data.lastname,
+                name: UsersC.data.name,
+                state: UsersC.data.state,
+                type: 'C'
               },
               auth: true,
               dateExpired: MomentSv().format('l'),
-              token
+              token,
+              success: true
             })
           );
         }
       } else {
-        const token = this.TokenAuth.CreateToken(User.data);
+        const token = this.TokenAuth.CreateToken(UserFb.data);
 
         res.cookie(
           'cookiauthControlCitas',
-          JSON.stringify({ auth: true, token, id: User.data.iduser }),
+          JSON.stringify({ auth: true, token, id: UserFb.data.iduser }),
           {
             maxAge: 86400 * 1000, // 24 hours
             httpOnly: true // http only, prevents JavaScript cookie access
@@ -284,16 +287,17 @@ export default class SignUp {
         res.status(202).send(
           popupTools.popupResponse({
             mesage: 'Se a iniciado Secion',
-            success: true,
             data: {
-              iduser: User.data.iduser,
-              lastname: User.data.lastname,
-              name: User.data.name,
-              state: User.data.state
+              iduser: UserFb.data.iduser,
+              lastname: UserFb.data.lastname,
+              name: UserFb.data.name,
+              state: UserFb.data.state,
+              type: 'C'
             },
             auth: true,
             dateExpired: MomentSv().format('l'),
-            token
+            token,
+            success: true
           })
         );
       }

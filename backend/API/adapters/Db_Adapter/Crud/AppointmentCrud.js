@@ -84,19 +84,17 @@ export default class AppointmentCrud extends CrudInterface {
     }
   };
 
-  GetPkForBusiness = async (pk, idbusiness) => {
+  GetPkForBusiness = async (uuidappointment, idbusiness) => {
     try {
-      const data = await this.Model.findByPk(pk, {
-        where: { idbusiness },
+      const data = await this.Model.findAll({
+        where: { idbusiness, uuidappointment },
         ...this.Config,
         include: [
-          { association: 'AppointmentiduserUser', attributes: ['name', 'lastname', 'phone'] },
           {
-            association: 'DetailidappointmentAppointment',
-            include: { association: 'DetailidservicesService', attributes: ['servicename'] },
-            raw: true,
-            nest: true
-          }
+            association: 'AppointmentiduserUser',
+            attributes: ['name', 'lastname', 'phone', 'state']
+          },
+          { association: 'details', include: [{ association: 'DetailidservicesService' }] }
         ]
       });
 

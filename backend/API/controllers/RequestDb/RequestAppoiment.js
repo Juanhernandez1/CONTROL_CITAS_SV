@@ -14,6 +14,16 @@ export default class RequestAppoiment {
     RequestAppoiment.#instance = this;
   }
 
+  replaceAt = (index, replacement, string) => {
+    if (index >= this.length) {
+      return string.valueOf();
+    }
+
+    const chars = string.split('');
+    chars[index] = replacement;
+    return chars.join('');
+  };
+
   RequestAppoimentLastFiveDay = (req, res) => {
     try {
       const LastFiveDay = this.AppointmentGen.GetLastFiveDays();
@@ -29,13 +39,28 @@ export default class RequestAppoiment {
 
   RequestBusinessAppointmentGetPk = async (req, res) => {
     try {
-      const { idappointmen, idbusiness } = req.body;
+      const { idappointmen, idbusiness } = req.params;
+      console.log(idappointmen, idbusiness);
+      const idAppointmen = idappointmen.replace(/-/g, '/');
 
-      const idAppointmen = idappointmen.replace(/-/g, '/').replaceAt(2, '-');
+      console.log(this.replaceAt(1, '-', idAppointmen));
 
-      const DataList = await this.AppointmentCrud.GetPkForBusiness(idAppointmen, idbusiness);
-      console.log(DataList);
-      if (DataList.success) res.status(200).send(DataList);
+      const DataList = await this.AppointmentCrud.GetPkForBusiness(
+        this.replaceAt(1, '-', idAppointmen),
+        idbusiness
+      );
+
+      const ArrDetails = [];
+      const responseData = { ...DataList.data[0] };
+      DataList.data.forEach(element => {
+        console.log(element.details);
+        ArrDetails.push(element.details.DetailidservicesService);
+      });
+
+      responseData.details = ArrDetails;
+      console.log(responseData);
+
+      if (DataList.success) res.status(200).send(responseData);
     } catch (error) {
       const { ERDB404 } = ErrorMessages;
       console.log(ERDB404);
