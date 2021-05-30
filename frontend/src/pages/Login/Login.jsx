@@ -24,7 +24,7 @@ const layout = {
 
 const Login = () => {
   const [negociosLogin, setnegociosLogin] = useState(false);
-  const { setuserauthenticates, appintmentTime } = useContext(GlobalContext);
+  const { setuserauthenticates, appintmentTime, setAccesType } = useContext(GlobalContext);
   const { push } = useHistory();
 
   const openNotificationWithIcon = type => {
@@ -53,6 +53,7 @@ const Login = () => {
         if (status === 202) {
           console.log(data);
           setuserauthenticates(data.data);
+          setAccesType(data.data.type);
           setCookie(
             'authControlCitas',
             JSON.stringify({

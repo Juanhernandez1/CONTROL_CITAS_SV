@@ -1,11 +1,13 @@
 import { Button, message, Table, Tag } from 'antd';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { business } from '../../config/urls';
+import { GlobalContext } from '../../context/GlobalState';
 import useGetBusinessResolveSetting from '../../hooks/useGetBusinessResolveSetting';
 
 const AvailabilityTable = ({ handleTimeSelection, dateSelected }) => {
+  const { AccesType } = useContext(GlobalContext);
   const { id } = useParams();
   const [isAvailabilityLoading, availability] = useGetBusinessResolveSetting(
     business.availability(id, dateSelected),
@@ -36,15 +38,24 @@ const AvailabilityTable = ({ handleTimeSelection, dateSelected }) => {
       title: '',
       dataIndex: '',
       key: 'x',
-      render: record => (
-        <Button
-          disabled={record.state === 'C'}
-          onClick={() => handleTimeSelection(record)}
-          type="link"
-        >
-          Seleccionar
-        </Button>
-      )
+      render: record =>
+        AccesType === 'N' ? (
+          <Button
+            onClick={() => handleTimeSelection(record)}
+            type="link"
+            style={{ display: record.state === 'O' ? 'none' : 'auto' }}
+          >
+            Ver
+          </Button>
+        ) : (
+          <Button
+            disabled={record.state === 'C'}
+            onClick={() => handleTimeSelection(record)}
+            type="link"
+          >
+            Seleccionar
+          </Button>
+        )
     }
   ];
 

@@ -1,7 +1,7 @@
-import React, { createContext, useEffect, useReducer } from 'react';
+import React, { createContext, useEffect, useReducer, useState } from 'react';
 import { checkExpired, getCookie } from '../utils/Cookies';
 import { business as getBusinessPath } from '../config/urls';
-
+import { isEmpty } from 'lodash';
 import appReducer from './AppReducer';
 import { initialState } from './initialState';
 import {
@@ -19,7 +19,7 @@ export const GlobalContext = createContext(initialState);
 
 export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(appReducer, initialState);
-
+  const [AccesType, setAccesType] = useState('C');
   const setBusinessSelected = business => {
     dispatch({ type: SET_BUSINESS_SELECTED, payload: business });
   };
@@ -55,7 +55,18 @@ export const GlobalProvider = ({ children }) => {
         const path = getBusinessPath.getUserPk(data.data.id);
         try {
           const { data, status } = await getData(path);
-          if (status === 200) setuserauthenticates(data.data);
+          console.log('contexto', data);
+          if (status === 200) {
+            setuserauthenticates(data.data);
+            const accesType = isEmpty(data.data)
+              ? 'C'
+              : data.data.hasOwnProperty('type')
+              ? data.data.type
+              : data.data.hasOwnProperty('access')
+              ? data.data.access.type
+              : 'C';
+            setAccesType(accesType);
+          }
         } catch (error) {
           console.log(error);
         }
@@ -73,6 +84,8 @@ export const GlobalProvider = ({ children }) => {
         user: state.user,
         detail: state.detail,
         registerUserType: state.registerUserType,
+        AccesType,
+        setAccesType,
         setBusinessName,
         setBusinessSelected,
         setBusinessServicesSelected,

@@ -1,6 +1,6 @@
-import { Button, message, Spin, Row, Col, Divider } from 'antd';
+import { Button, message, notification, Spin, Row, Col, Divider } from 'antd';
 import Title from 'antd/lib/typography/Title';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { isEmpty } from 'lodash';
 import { GlobalContext } from '../../context/GlobalState';
 
@@ -8,15 +8,24 @@ import './AppointmentDetail.css';
 import ServicesTable from '../../components/ServicesTable';
 import { useHistory, useParams } from 'react-router';
 import { paths } from '../../config/paths';
-import { postData } from '../../api/baseClient';
+import { postData, getData } from '../../api/baseClient';
 import { business } from '../../config/urls';
 
 const AppointmentDetail = () => {
   const [price, setPrice] = useState(0);
 
-  const { businessSelected, user, appintmentTime, detail } = useContext(GlobalContext);
+  const { businessSelected, user, appintmentTime, detail, AccesType } = useContext(GlobalContext);
   const { push } = useHistory();
   const { id } = useParams();
+
+  const [Detail, setDetail] = useState({});
+
+  const openNotificationWithIcon = type => {
+    notification[type]({
+      message: 'Completado',
+      description: 'Resevacion Completa'
+    });
+  };
 
   console.log(appintmentTime);
   const handleAppointmentButton = () => {
@@ -60,10 +69,28 @@ const AppointmentDetail = () => {
         ArrayDetail
       });
       if (status) {
+        openNotificationWithIcon('success');
         push(paths.appointmentBook(id));
       }
     })();
+    console.log(Detail);
   };
+
+  useEffect(() => {
+    AccesType === 'N' &&
+      (async () => {
+        const { data, status } = await getData(
+          business.getAppointmentBisness(
+            id,
+            `${appintmentTime.complemtouuid}-${appintmentTime.fulldate.split('/').join('-')}`
+          )
+        );
+        if (status === 200) {
+          console.log(data);
+          setDetail(data.data);
+        }
+      })();
+  }, []);
 
   if (!appintmentTime.hasOwnProperty('fulldate')) {
     push(paths.appointmentBook(id));
@@ -137,14 +164,16 @@ const AppointmentDetail = () => {
                   <Title level={4}>{`$ ${price.toFixed(2)}`}</Title>
                 </Row>
                 <Row justify="center" style={{ marginTop: '25px' }}>
-                  <Button
-                    className="booking-button"
-                    disabled={isEmpty(businessSelected)}
-                    type="primary"
-                    onClick={handleAppointmentButton}
-                  >
-                    Reservar cita
-                  </Button>
+                  {AccesType === 'C' && (
+                    <Button
+                      className="booking-button"
+                      disabled={isEmpty(businessSelected)}
+                      type="primary"
+                      onClick={handleAppointmentButton}
+                    >
+                      Reservar cita
+                    </Button>
+                  )}
                 </Row>
               </Col>
             </Row>

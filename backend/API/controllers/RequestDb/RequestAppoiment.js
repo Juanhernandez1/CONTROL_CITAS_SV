@@ -54,13 +54,13 @@ export default class RequestAppoiment {
       const responseData = { ...DataList.data[0] };
       DataList.data.forEach(element => {
         console.log(element.details);
+        element.details.DetailidservicesService.price = element.details.price;
         ArrDetails.push(element.details.DetailidservicesService);
       });
 
       responseData.details = ArrDetails;
-      console.log(responseData);
 
-      if (DataList.success) res.status(200).send(responseData);
+      if (DataList.success) res.status(200).send({ data: responseData, success: true });
     } catch (error) {
       const { ERDB404 } = ErrorMessages;
       console.log(ERDB404);
