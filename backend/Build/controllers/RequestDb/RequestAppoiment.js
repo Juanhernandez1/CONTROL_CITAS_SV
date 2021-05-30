@@ -156,22 +156,26 @@ var RequestAppoiment = function RequestAppoiment(appointmentCrud, appointmentGen
                     responseData = _objectSpread({}, DataList.data[0]);
                     DataList.data.forEach(function (element) {
                       console.log(element.details);
+                      element.details.DetailidservicesService.price = element.details.price;
                       ArrDetails.push(element.details.DetailidservicesService);
                     });
                     responseData.details = ArrDetails;
-                    console.log(responseData);
-                    if (DataList.success) res.status(200).send(responseData);
-                    _context.next = 21;
+                    if (DataList.success)
+                      res.status(200).send({
+                        data: responseData,
+                        success: true
+                      });
+                    _context.next = 20;
                     break;
 
-                  case 16:
-                    _context.prev = 16;
+                  case 15:
+                    _context.prev = 15;
                     _context.t0 = _context['catch'](0);
                     ERDB404 = _ErrorMessages['default'].ERDB404;
                     console.log(ERDB404);
                     res.status(404).send(ERDB404);
 
-                  case 21:
+                  case 20:
                   case 'end':
                     return _context.stop();
                 }
@@ -179,7 +183,7 @@ var RequestAppoiment = function RequestAppoiment(appointmentCrud, appointmentGen
             },
             _callee,
             null,
-            [[0, 16]]
+            [[0, 15]]
           );
         })
       );
