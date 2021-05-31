@@ -41,7 +41,7 @@ const Header = ({ hasLogo = false }) => {
     <Layout.Header className={className}>
       {hasLogo && (
         <div>
-          <img className="imgLogo" src="https://donejs.com/static/img/react-logo.png" alt="Logo" />
+          <img className="imgLogo" src={`${process.env.PUBLIC_URL}/logo.png`} alt="Logo" />
         </div>
       )}
       <Menu className="evitarErrorHerde" theme="dark" mode="horizontal" onClick={handleMenuItem}>

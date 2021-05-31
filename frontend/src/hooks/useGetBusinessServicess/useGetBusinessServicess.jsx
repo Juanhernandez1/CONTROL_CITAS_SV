@@ -5,7 +5,7 @@ import { useParams } from 'react-router';
 import { getData } from '../../api/baseClient';
 import { business as getBusinessServicessPath } from '../../config/urls';
 
-const useGetBusinessServicess = callback => {
+const useGetBusinessServicess = (reload, callback) => {
   const [isLoading, setIsLoading] = useState(false);
   const [businessServicess, setData] = useState([]);
 
@@ -25,7 +25,7 @@ const useGetBusinessServicess = callback => {
         callback(error.message);
       }
     })();
-  }, []);
+  }, [reload]);
 
   return { isLoading, businessServicess };
 };

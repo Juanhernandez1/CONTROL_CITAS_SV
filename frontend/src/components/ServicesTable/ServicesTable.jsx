@@ -1,6 +1,5 @@
 import { Table, message, Spin, Input, Button, Row } from 'antd';
-import e from 'cors';
-
+import { isEmpty } from 'lodash';
 import React, { useContext, useState } from 'react';
 import { useParams } from 'react-router';
 import { business } from '../../config/urls';
@@ -10,7 +9,7 @@ import useGetData from '../../hooks/useGetData/useGetData';
 import FilterDropdow from './FilterDropdow';
 
 const ServicesTable = props => {
-  const { appintmentTime, setDetailServices, detail } = useContext(GlobalContext);
+  const { appintmentTime, setDetailServices, AccesType } = useContext(GlobalContext);
   const [state, setstate] = useState({
     selectedRowKeys: [], // Check here to configure the default column
     loading: false
@@ -27,11 +26,21 @@ const ServicesTable = props => {
   );
 
   const data = [];
-  dataAPI.success &&
+  AccesType === 'C' &&
+    dataAPI.success &&
     dataAPI.data.forEach(element => {
       data.push({ ...element, key: element.idservices });
     });
 
+  if (AccesType === 'N') {
+    let perci2 = 0;
+    !isEmpty(props.DetailBusinessView) &&
+      props.DetailBusinessView.forEach(element => {
+        data.push({ ...element, key: element.idservices });
+        perci2 += parseFloat(element.price);
+        props.SetPrice(perci2);
+      });
+  }
   const start = () => {
     setstate({ ...state, loading: true });
     // ajax request after empty completing
@@ -68,14 +77,19 @@ const ServicesTable = props => {
       props.SetPrice(perci);
       setDetailServices(arraydetalle);
       setstate({ ...state, selectedRowKeys });
+      console.log(selectedRowKeys);
     }
   };
 
   const { loading, selectedRowKeys } = state;
   const rowSelection = {
     selectedRowKeys,
-    onChange: onSelectChange
+    onChange: onSelectChange,
+    hideSelectAll: true,
+    type: 'checkbox'
   };
+
+  if (AccesType === 'N') rowSelection.renderCell = checked => (checked = true);
 
   const hasSelected = () => {
     return selectedRowKeys.length > 0 && selectedRowKeys.length <= appintmentTime.limitService;
@@ -101,24 +115,26 @@ const ServicesTable = props => {
   ];
   return (
     <Row style={{ width: '100%' }}>
-      <div style={{ marginBottom: 16 }}>
-        <Button type="primary" onClick={start} disabled={!hasSelected} loading={loading}>
-          Reload
-        </Button>
-        <span style={{ marginLeft: 8 }}>
-          {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
-        </span>
-      </div>
-      {isLoading && <Spin />}
-      {dataAPI.success && (
-        <Table
-          style={{ width: '-webkit-fill-available', height: '-webkit-fill-available' }}
-          rowSelection={rowSelection}
-          pagination={paginationConfig}
-          columns={columns}
-          dataSource={data}
-        />
+      {isEmpty(props.DetailBusinessView) && (
+        <div style={{ marginBottom: 16 }}>
+          <Button type="primary" onClick={start} disabled={!hasSelected} loading={loading}>
+            Recargar
+          </Button>
+          <span style={{ marginLeft: 8 }}>
+            {hasSelected
+              ? `Selecionados ${selectedRowKeys.length} de ${appintmentTime.limitService}`
+              : ''}
+          </span>
+        </div>
       )}
+      {isLoading && <Spin />}
+      <Table
+        style={{ width: '-webkit-fill-available', height: '-webkit-fill-available' }}
+        rowSelection={rowSelection}
+        pagination={paginationConfig}
+        columns={columns}
+        dataSource={data}
+      />
     </Row>
   );
 };

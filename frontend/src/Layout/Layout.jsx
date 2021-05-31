@@ -50,7 +50,7 @@ export const Layout = ({ children }) => {
       <Sider>
         <div className="logo-container">
           <div className="logo-image-container">
-            <img src="https://donejs.com/static/img/react-logo.png" alt="Logo" />
+            <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="Logo" />
           </div>
         </div>
 

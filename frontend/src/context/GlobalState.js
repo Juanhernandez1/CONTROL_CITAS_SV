@@ -61,9 +61,13 @@ export const GlobalProvider = ({ children }) => {
             const accesType = isEmpty(data.data)
               ? 'C'
               : data.data.hasOwnProperty('type')
-              ? data.data.type
+              ? data.data.type === null
+                ? 'C'
+                : data.type
               : data.data.hasOwnProperty('access')
-              ? data.data.access.type
+              ? data.data.access.type === null
+                ? 'C'
+                : data.data.access.type
               : 'C';
             setAccesType(accesType);
           }

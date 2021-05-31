@@ -17,7 +17,7 @@ const AppointmentBook = () => {
   const [dateSelected, setDateSelected] = useState('');
   const [timeSelected, setTimeSelected] = useState('');
   const [dateDisplayed, setDateDisplayed] = useState('');
-  const { appintmentTime, setAppointmentTime, user } = useContext(GlobalContext);
+  const { appintmentTime, setAppointmentTime, user, AccesType } = useContext(GlobalContext);
   const [isLastFiveDaysLoading, lastFiveDays] = useGetBusinessResolveSetting(
     business.lastFiveDays,
     errorMessage => {
@@ -90,7 +90,7 @@ const AppointmentBook = () => {
           type="primary"
           onClick={handleBookingButton}
         >
-          Reservar cita
+          {AccesType === 'N' ? 'Ver Detalle de Cita' : 'Reservar cita'}
         </Button>
       </Row>
     </>

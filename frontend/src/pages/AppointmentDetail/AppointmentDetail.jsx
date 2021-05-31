@@ -73,7 +73,6 @@ const AppointmentDetail = () => {
         push(paths.appointmentBook(id));
       }
     })();
-    console.log(Detail);
   };
 
   useEffect(() => {
@@ -90,6 +89,7 @@ const AppointmentDetail = () => {
           setDetail(data.data);
         }
       })();
+    console.log(Detail);
   }, []);
 
   if (!appintmentTime.hasOwnProperty('fulldate')) {
@@ -105,8 +105,15 @@ const AppointmentDetail = () => {
             </Row>
           </Col>
           <Col className="Col-UserFullName-Root-AppointmentDetail">
-            <Row justify="start">
-              <Title level={4}>{`${user.name} ${user.lastname}`}</Title>
+            <Row justify="space-between">
+              <Title level={4}>
+                {AccesType === 'N' && !isEmpty(Detail)
+                  ? `${Detail.AppointmentiduserUser.name} ${Detail.AppointmentiduserUser.lastname}`
+                  : `${user.name} ${user.lastname}`}
+              </Title>
+              {AccesType === 'N' && !isEmpty(Detail) && (
+                <Title level={5}>{`Telefono: ${Detail.AppointmentiduserUser.phone}`}</Title>
+              )}
             </Row>
           </Col>
         </Row>
@@ -117,7 +124,11 @@ const AppointmentDetail = () => {
               <Title level={4}>Fecha</Title>
             </Row>
             <Row justify="center" className="Col-DateTime-Item-AppointmentDetail">
-              <Title level={5}>{`${appintmentTime.fulldate}`}</Title>
+              <Title level={5}>
+                {AccesType === 'N' && !isEmpty(Detail)
+                  ? `${Detail.dateappointment.fulldate}`
+                  : `${appintmentTime.fulldate}`}
+              </Title>
             </Row>
           </Col>
           <Col className="Col-DateTime-Root-AppointmentDetail">
@@ -127,9 +138,11 @@ const AppointmentDetail = () => {
                   <Title level={4}>Hora</Title>
                 </Row>
                 <Row justify="center">
-                  <Title
-                    level={5}
-                  >{`${appintmentTime.hour}:${appintmentTime.minute} ${appintmentTime.time}`}</Title>
+                  <Title level={5}>
+                    {AccesType === 'N' && !isEmpty(Detail)
+                      ? `${Detail.dateappointment.hour}:${Detail.dateappointment.minute} ${Detail.dateappointment.time}`
+                      : `${appintmentTime.hour}:${appintmentTime.minute} ${appintmentTime.time}`}
+                  </Title>
                 </Row>
               </Col>
             </Row>
@@ -145,7 +158,7 @@ const AppointmentDetail = () => {
           <Col className="Col-Table-Item-AppointmentDetail">
             <Row justify="center" align="middle" style={{ width: '100%' }}>
               <Col style={{ width: '100%' }}>
-                <ServicesTable SetPrice={setPrice} />
+                <ServicesTable SetPrice={setPrice} DetailBusinessView={Detail.details} />
               </Col>
             </Row>
           </Col>
