@@ -1,0 +1,4 @@
+{
+  "descripcionPre": { "type": "string", "maxLength": 255 },
+  "canUniPre": { "type": "number", "format": "double" }
+}

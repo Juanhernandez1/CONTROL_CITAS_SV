@@ -1,0 +1,4 @@
+{
+  "idDevolucion": { "type": "integer", "format": "int32" },
+  "idVenta": { "type": "integer", "format": "int32" }
+}

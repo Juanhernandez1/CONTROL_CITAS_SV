@@ -1,0 +1,8 @@
+{
+  "idCorte": { "type": "integer", "format": "int32" },
+  "idCaja": { "type": "integer", "format": "int32" },
+  "idSucursal": { "type": "integer", "format": "int32" },
+  "idEmpleado": { "type": "string", "maxLength": 255 },
+  "inicioSesion": { "type": "string", "format": "date-time" },
+  "cierreSesion": { "type": "string", "format": "date-time" }
+}

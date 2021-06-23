@@ -1,0 +1,10 @@
+{
+  "serie": { "type": "integer", "format": "int32" },
+  "codFactura": { "type": "string", "maxLength": 255 },
+  "numerotarjeta": { "type": "string", "maxLength": 255 },
+  "nombre": { "type": "string", "maxLength": 255 },
+  "numerotransaccion": { "type": "string", "maxLength": 255 },
+  "fecha": { "type": "string", "format": "date" },
+  "total": { "type": "number", "format": "double" },
+  "estado": { "type": "string", "maxLength": 255 }
+}

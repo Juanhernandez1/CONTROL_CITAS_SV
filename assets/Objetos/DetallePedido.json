@@ -1,0 +1,7 @@
+{
+  "codOrden": { "type": "integer", "format": "int32" },
+  "idProducto": { "type": "string", "maxLength": 255 },
+  "idMarca": { "type": "integer", "format": "int32" },
+  "idPresentacion": { "type": "integer", "format": "int32" },
+  "cantidad": { "type": "integer", "format": "int32" }
+}

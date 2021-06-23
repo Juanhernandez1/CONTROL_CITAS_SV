@@ -1,0 +1,5 @@
+{
+  "nombre": { "type": "string", "maxLength": 255 },
+  "idSucursal": { "type": "integer", "format": "int32" },
+  "estado": { "type": "string", "maxLength": 255 }
+}

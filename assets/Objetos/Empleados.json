@@ -1,0 +1,10 @@
+{
+  "idEmpleado": { "type": "string", "maxLength": 255 },
+  "nombre": { "type": "string", "maxLength": 255 },
+  "apellido": { "type": "string", "maxLength": 255 },
+  "sexo": { "type": "string" },
+  "telefono": { "type": "string", "maxLength": 255 },
+  "idSucursal": { "type": "integer", "format": "int32" },
+  "idCargo": { "type": "integer", "format": "int32" },
+  "estado": { "type": "string", "maxLength": 255 }
+}

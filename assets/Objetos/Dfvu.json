@@ -1,0 +1,5 @@
+{
+  "serie": { "type": "integer", "format": "int32" },
+  "codFactura": { "type": "string", "maxLength": 255 },
+  "idVenta": { "type": "integer", "format": "int32" }
+}

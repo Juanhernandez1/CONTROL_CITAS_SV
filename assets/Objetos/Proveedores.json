@@ -1,0 +1,8 @@
+{
+  "idProveedor": { "type": "string", "maxLength": 255 },
+  "nomProveedor": { "type": "string", "maxLength": 255 },
+  "direccion": { "type": "string", "maxLength": 255 },
+  "telefono": { "type": "string", "maxLength": 255 },
+  "email": { "type": "string", "maxLength": 255 },
+  "estado": { "type": "string", "maxLength": 255 }
+}

@@ -1,0 +1,6 @@
+{
+  "fechaPedido": { "type": "string", "format": "date" },
+  "idSucursal": { "type": "integer", "format": "int32" },
+  "idProveedor": { "type": "string", "maxLength": 255 },
+  "estado": { "type": "string", "maxLength": 255 }
+}

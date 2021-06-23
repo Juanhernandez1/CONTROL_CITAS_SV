@@ -1,0 +1,10 @@
+{
+  "codBarras": { "type": "string", "maxLength": 255 },
+  "idProducto": { "type": "string", "maxLength": 255 },
+  "idMarca": { "type": "integer", "format": "int32" },
+  "idColor": { "type": "integer", "format": "int32" },
+  "idPresentacion": { "type": "integer", "format": "int32" },
+  "existencia": { "type": "integer", "format": "int32" },
+  "idSucursal": { "type": "integer", "format": "int32" },
+  "estado": { "type": "string", "maxLength": 255 }
+}

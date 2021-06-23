@@ -1,0 +1,5 @@
+{
+  "idDevolucion": { "type": "integer", "format": "int32" },
+  "serie": { "type": "integer", "format": "int32" },
+  "codFactura": { "type": "string", "maxLength": 255 }
+}

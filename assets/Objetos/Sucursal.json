@@ -1,0 +1,5 @@
+{
+  "direccion": { "type": "string", "maxLength": 255 },
+  "telefono": { "type": "string", "maxLength": 255 },
+  "estado": { "type": "string", "maxLength": 255 }
+}

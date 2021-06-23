@@ -1,0 +1,3 @@
+{
+  "marca": { "type": "string", "maxLength": 255 }
+}

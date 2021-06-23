@@ -1,0 +1,10 @@
+{
+  "codBarras": { "type": "string", "maxLength": 255 },
+  "idProducto": { "type": "string", "maxLength": 255 },
+  "idMarca": { "type": "integer", "format": "int32" },
+  "idSucursal": { "type": "integer", "format": "int32" },
+  "cantidad": { "type": "integer", "format": "int32" },
+  "fechaSolicitado": { "type": "string", "format": "date-time" },
+  "fechaRecibido": { "type": "string", "format": "date-time" },
+  "estado": { "type": "string", "maxLength": 255 }
+}

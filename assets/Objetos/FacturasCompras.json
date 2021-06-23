@@ -1,0 +1,9 @@
+{
+  "codOrden": { "type": "integer", "format": "int32" },
+  "nFactura": { "type": "string", "maxLength": 255 },
+  "fechaRecibe": { "type": "string", "format": "date" },
+  "tCredito": { "type": "boolean" },
+  "fechaFinalpago": { "type": "string", "format": "date" },
+  "total": { "type": "number", "format": "double" },
+  "estado": { "type": "string", "maxLength": 255 }
+}

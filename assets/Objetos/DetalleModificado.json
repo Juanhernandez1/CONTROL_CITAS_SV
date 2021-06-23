@@ -1,0 +1,10 @@
+{
+  "serie": { "type": "integer", "format": "int32" },
+  "codFactura": { "type": "string", "maxLength": 255 },
+  "codBarras": { "type": "string", "maxLength": 255 },
+  "idSucursal": { "type": "integer", "format": "int32" },
+  "cantidadComp": { "type": "integer", "format": "int32" },
+  "total": { "type": "number", "format": "double" },
+  "estado": { "type": "string", "maxLength": 255 },
+  "descripcion": { "type": "string", "maxLength": 500 }
+}

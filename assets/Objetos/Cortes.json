@@ -1,0 +1,9 @@
+{
+  "idCaja": { "type": "integer", "format": "int32" },
+  "idSucursal": { "type": "integer", "format": "int32" },
+  "mInicial": { "type": "number", "format": "double" },
+  "apertura": { "type": "string", "format": "date-time" },
+  "cierre": { "type": "string", "format": "date-time" },
+  "mFinal": { "type": "number", "format": "double" },
+  "estado": { "type": "string", "maxLength": 255 }
+}

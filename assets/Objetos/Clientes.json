@@ -1,0 +1,10 @@
+{
+  "idCliente": { "type": "string", "maxLength": 255 },
+  "nombre": { "type": "string", "maxLength": 255 },
+  "apellido": { "type": "string", "maxLength": 255 },
+  "sexo": { "type": "string" },
+  "nit": { "type": "string", "maxLength": 255 },
+  "nrc": { "type": "string", "maxLength": 255 },
+  "dui": { "type": "string", "maxLength": 255 },
+  "telefono": { "type": "string", "maxLength": 255 }
+}

@@ -1,0 +1,8 @@
+{
+  "idProducto": { "type": "string", "maxLength": 255 },
+  "idMarca": { "type": "integer", "format": "int32" },
+  "nombre": { "type": "string", "maxLength": 255 },
+  "costo": { "type": "number", "format": "double" },
+  "existenciaTotal": { "type": "integer", "format": "int32" },
+  "estado": { "type": "string", "maxLength": 255 }
+}

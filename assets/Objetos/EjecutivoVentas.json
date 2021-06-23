@@ -1,0 +1,6 @@
+{
+  "idProveedor": { "type": "string", "maxLength": 255 },
+  "nombre": { "type": "string", "maxLength": 255 },
+  "apellido": { "type": "string", "maxLength": 255 },
+  "celular": { "type": "string", "maxLength": 255 }
+}

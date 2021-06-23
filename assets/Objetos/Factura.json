@@ -1,0 +1,13 @@
+{
+  "serie": { "type": "integer", "format": "int32" },
+  "codFactura": { "type": "string", "maxLength": 255 },
+  "fechaFactura": { "type": "string", "format": "date" },
+  "idEmpleado": { "type": "string", "maxLength": 255 },
+  "tipo": { "type": "string", "maxLength": 255 },
+  "total": { "type": "number", "format": "double" },
+  "iva": { "type": "number", "format": "double" },
+  "ventaExenta": { "type": "number", "format": "double" },
+  "ventaGravada": { "type": "number", "format": "double" },
+  "tipoPago": { "type": "number", "maxLength": 255 },
+  "estado": { "type": "string", "maxLength": 255 }
+}

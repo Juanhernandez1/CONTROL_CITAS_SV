@@ -1,0 +1,7 @@
+{
+  "codBarras": { "type": "string", "maxLength": 255 },
+  "idSucursal": { "type": "integer", "format": "int32" },
+  "precioVenta": { "type": "number", "format": "double" },
+  "precioVentam": { "type": "number", "format": "double" },
+  "poseeIva": { "type": "string", "maxLength": 255 }
+}

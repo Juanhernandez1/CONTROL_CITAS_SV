@@ -1,0 +1,8 @@
+{
+  "cargo": { "type": "string", "maxLength": 255 },
+  "ver": { "type": "boolean" },
+  "crear": { "type": "boolean" },
+  "editar": { "type": "boolean" },
+  "eliminar": { "type": "boolean" },
+  "estado": { "type": "string", "maxLength": 255 }
+}

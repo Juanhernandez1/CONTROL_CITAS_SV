@@ -1,0 +1,6 @@
+{
+  "serie": { "type": "integer", "format": "int32" },
+  "codFactura": { "type": "string", "maxLength": 255 },
+  "idCaja": { "type": "integer", "format": "int32" },
+  "idSucursal": { "type": "integer", "format": "int32" }
+}

@@ -1,0 +1,11 @@
+{
+  "serie": { "type": "integer", "format": "int32" },
+  "codFactura": { "type": "string", "maxLength": 255 },
+  "nombreremitente": { "type": "string", "maxLength": 255 },
+  "nombrerecibe": { "type": "string", "maxLength": 255 },
+  "numerocheque": { "type": "string", "maxLength": 255 },
+  "numerocuenta": { "type": "string", "maxLength": 255 },
+  "fecha": { "type": "string", "format": "date" },
+  "total": { "type": "number", "format": "double" },
+  "estado": { "type": "string", "maxLength": 255 }
+}

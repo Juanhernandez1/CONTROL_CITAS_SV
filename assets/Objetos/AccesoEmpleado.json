@@ -1,0 +1,5 @@
+{
+  "idEmpleado": { "type": "string", "maxLength": 255 },
+  "nomUsuario": { "type": "string", "maxLength": 255 },
+  "contrasena": { "type": "string", "maxLength": 255 }
+}
